@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.avidly.sdk.account.AvidlyAccountSdk;
+
 import account.avidly.com.accountsdk.R;
 
 public class TestFragment extends Fragment {
@@ -19,7 +21,15 @@ public class TestFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.testfragment, container, false);
-        //return super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.testfragment, container, false);
+
+        view.findViewById(R.id.click_layout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AvidlyAccountSdk.accountLogin(getContext());
+            }
+        });
+
+        return view;
     }
 }

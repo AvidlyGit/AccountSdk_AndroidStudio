@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="account.avidly.com.accountsdk">
+    package="account.avidly.com.accountsdk">
 
     <application
         android:allowBackup="true"
@@ -13,7 +13,7 @@
         <activity
             android:name="com.avildy.account.app.MainActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:screenOrientation="reverseLandscape">
+            android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
