@@ -18,5 +18,12 @@
 
         </activity>
 
+        <activity
+            android:name="com.avidly.sdk.account.activity.UserManagerActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:screenOrientation="user">
+
+        </activity>
+
     </application>
 </manifest>
