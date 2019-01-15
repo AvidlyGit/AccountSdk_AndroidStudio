@@ -10,7 +10,8 @@ import com.avidly.sdk.account.callback.AccountLoginCallback;
 import com.avidly.sdk.account.fragment.AccountHomeFragment;
 import com.avidly.sdk.account.fragment.AccountLoginFragment;
 
-import account.avidly.com.sdk.R;
+import com.sdk.avidly.account.R;
+
 
 public class AccountLoginActivity extends Activity implements AccountLoginCallback {
     private static final String TAG = "AccountLoginSdk";

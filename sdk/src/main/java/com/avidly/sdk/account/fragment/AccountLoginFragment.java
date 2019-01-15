@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import account.avidly.com.sdk.R;
+import com.sdk.avidly.account.R;
 
 /**
  * Created by t.wang on 2019/1/15.
