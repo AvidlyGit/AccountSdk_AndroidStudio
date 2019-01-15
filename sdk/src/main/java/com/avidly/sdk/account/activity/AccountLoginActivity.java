@@ -4,7 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import account.avidly.com.sdk.R;
+import com.sdk.avidly.account.R;
+
 
 public class AccountLoginActivity extends Activity {
     @Override
