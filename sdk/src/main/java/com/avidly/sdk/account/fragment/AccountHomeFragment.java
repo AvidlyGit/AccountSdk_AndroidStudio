@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.avidly.sdk.account.callback.AccountLoginCallback;
 
-import account.avidly.com.sdk.R;
+import com.sdk.avidly.account.R;
 
 /**
  * Created by t.wang on 2019/1/14.
