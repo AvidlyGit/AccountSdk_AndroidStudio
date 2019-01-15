@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:background="@color/avildy_color_error_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/avildy_color_white"
+            android:textSize="@dimen/avidly_dimen_text_size_14sp"
+            tools:text="@string/avidly_string_email_error" />
+
+        <ImageView
+            android:id="@+id/avidly_error_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/avidly_dimen_margin_16dp"
+            android:src="@drawable/avidly_icon_close" />
+    </RelativeLayout>
+</FrameLayout>
+

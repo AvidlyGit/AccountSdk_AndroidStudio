@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="avildy_color_error_bg">#F56685</color>
+    <color name="avildy_color_white">#FFFFFF</color>
+
+    <color name="avidly_color_translucent">#AB000000</color>
+    <color name="avidly_color_transparent">#00000000</color>
+</resources>
