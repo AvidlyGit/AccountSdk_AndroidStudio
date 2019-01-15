@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="avidly_dimen_text_size_14sp">14sp</dimen>
+
+    <dimen name="avidly_dimen_margin_16dp">16dp</dimen>
+</resources>

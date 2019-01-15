@@ -10,125 +10,126 @@
         android:orientation="vertical"
         android:padding="8dp">
 
-        <!--<ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/avidly_logo" />-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/avidly_icon_back" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/avidly_logo" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/avidly_bind_user_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="新用户绑定" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/avidly_login_user_title"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="用户登录" />
+
+                <TextView
+                    android:id="@+id/avidly_register_user_title"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="用户注册" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Avid.ly"
-            android:textSize="25dp" />
+            android:layout_marginTop="8dp"
+            android:hint="邮箱" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="密码" />
 
         <Button
+            android:id="@+id/avidly_account_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="游客登录" />
+            android:text="登录" />
 
-        <Button
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Avid.ly账户登录" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:background="@android:color/darker_gray" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="第三方登录"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="12dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:background="@android:color/darker_gray" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="8dp">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/avidly_forgot_password"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:src="@drawable/avidly_facebook_logo" />
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Facebook" />
-
+                    android:layout_centerInParent="true"
+                    android:text="忘记密码？"
+                    android:textSize="16dp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/avidly_agree_protocol"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:src="@drawable/avidly_twitter_logo" />
+                    android:id="@+id/avidly_agree_box"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/avidly_icon_checked" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Twitter" />
-
+                    android:gravity="center_horizontal"
+                    android:text="统一Avid.ly用户服务协议"
+                    android:textSize="16dp" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:src="@drawable/avidly_gp_logo" />
+        </RelativeLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Google Play" />
 
-            </LinearLayout>
-
-        </LinearLayout>
     </LinearLayout>
 </FrameLayout>
 
