@@ -5,4 +5,8 @@
 
     <color name="avidly_color_translucent">#AB000000</color>
     <color name="avidly_color_transparent">#00000000</color>
+
+
+    <color name="avidly_color_common_line_gray">#19000000</color>
+    <color name="avidly_color_common_text_black">#030303</color>
 </resources>

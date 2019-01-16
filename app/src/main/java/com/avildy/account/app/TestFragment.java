@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.avidly.sdk.account.AvidlyAccountSdk;
-
 import account.avidly.com.accountsdk.R;
 
 public class TestFragment extends Fragment {
@@ -26,7 +24,7 @@ public class TestFragment extends Fragment {
         view.findViewById(R.id.click_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AvidlyAccountSdk.accountLogin(getContext());
+                //AvidlyAccountSdk.accountLogin(getContext());
             }
         });
 
