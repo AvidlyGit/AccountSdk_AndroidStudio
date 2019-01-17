@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.avidly.sdk.account.adapter.BaseAdapter;
 import com.avidly.sdk.account.data.adapter.UserOperationData;
@@ -102,20 +103,28 @@ public class AccountUserRootFragment extends BaseFragment {
     private void showChangePasswordUI() {
         getView().findViewById(R.id.avidly_fragment_user_alter_pwd_root).setVisibility(View.VISIBLE);
         isShowChangePwdUI = true;
+        TextView textView = getView().findViewById(R.id.avidly_user_common_title_textview);
+        textView.setText(R.string.avidly_string_userpwd_alter_title);
     }
 
     private void hideChangePasswordUI() {
         getView().findViewById(R.id.avidly_fragment_user_alter_pwd_root).setVisibility(View.GONE);
         isShowChangePwdUI = false;
+        TextView textView = getView().findViewById(R.id.avidly_user_common_title_textview);
+        textView.setText(R.string.avidly_string_usermanger_title);
     }
 
     private void showBindOtherAccountUI() {
         getView().findViewById(R.id.avidly_fragment_user_account_bind_root).setVisibility(View.VISIBLE);
         isShowBindAccountUI = true;
+        TextView textView = getView().findViewById(R.id.avidly_user_common_title_textview);
+        textView.setText(R.string.avidly_string_usermanger_bind_other_title);
     }
 
     private void hideBindOtherAccountUI() {
         getView().findViewById(R.id.avidly_fragment_user_account_bind_root).setVisibility(View.GONE);
         isShowBindAccountUI = false;
+        TextView textView = getView().findViewById(R.id.avidly_user_common_title_textview);
+        textView.setText(R.string.avidly_string_usermanger_title);
     }
 }

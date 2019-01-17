@@ -28,7 +28,7 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/avidly_user_manager_title_textview"
+            android:id="@+id/avidly_user_common_title_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

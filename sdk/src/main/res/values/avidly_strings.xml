@@ -39,6 +39,7 @@
 
 
     <string name="avidly_string_usermanger_title">用户中心</string>
+    <string name="avidly_string_usermanger_bind_other_title">绑定第三方账户</string>
     <string name="avidly_string_usermanger_guest">游客</string>
     <string name="avidly_string_usermanger_id">ID: %1$s</string>
     <string name="avidly_string_usermanger_bind_alter_pwd">修改密码</string>

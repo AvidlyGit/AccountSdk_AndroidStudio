@@ -85,6 +85,9 @@ public class AccountUserBindFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.avidly_useraccount_bind_listview);
         UserAccountBindAdatper adatper = new UserAccountBindAdatper(getContext());
         recyclerView.setAdapter(adatper);
+        if (!LoginCenter.isScreenLandscape() && !LoginCenter.isScreenPortrait()) {
+            LoginCenter.checkScreenOrietation(getActivity());
+        }
         final int gridnum = LoginCenter.isScreenLandscape() ? 2 : 1;
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), gridnum);
         recyclerView.setLayoutManager(layoutManager);

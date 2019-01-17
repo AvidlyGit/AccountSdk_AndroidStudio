@@ -19,7 +19,7 @@
             layout="@layout/avidly_user_manager_common_avidly_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/avidly_user_manager_common_avidly_image_margin_top2"
+            android:layout_marginTop="@dimen/avidly_user_manager_pwd_margintop"
             android:layout_gravity="top"/>
 
         <!-- add user look up password ui-->
@@ -27,6 +27,7 @@
             android:id="@+id/avidly_user_lookup_pwd_root"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/avidly_user_manager_pwd_marginbottom"
             android:orientation="vertical"
             android:gravity="center"
             android:layout_gravity="center">
