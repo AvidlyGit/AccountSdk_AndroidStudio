@@ -7,6 +7,6 @@ package com.avidly.sdk.account.business;
  */
 public interface LoginPresenter {
 
-    void guestLogin();
+    void accountLogin();
 
 }

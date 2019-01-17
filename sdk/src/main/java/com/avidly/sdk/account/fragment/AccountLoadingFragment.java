@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.avidly.sdk.account.callback.AccountLoadingCallback;
+import com.avidly.sdk.account.listener.AccountLoadingListener;
 import com.sdk.avidly.account.R;
 
 /**
@@ -16,9 +16,9 @@ import com.sdk.avidly.account.R;
  * Copyright © 2018 Adrealm. All rights reserved.
  */
 public class AccountLoadingFragment extends DialogFragment implements View.OnClickListener {
-    private AccountLoadingCallback mCallback;
+    private AccountLoadingListener mCallback;
 
-    public void setCallback(AccountLoadingCallback callback) {
+    public void setCallback(AccountLoadingListener callback) {
         mCallback = callback;
     }
 

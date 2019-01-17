@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.avidly.sdk.account.callback.AccountHomeCallback;
+import com.avidly.sdk.account.listener.AccountHomeListener;
 
 import com.sdk.avidly.account.R;
 
@@ -16,9 +16,9 @@ import com.sdk.avidly.account.R;
  * Copyright © 2018 Adrealm. All rights reserved.
  */
 public class AccountHomeFragment extends DialogFragment implements View.OnClickListener {
-    private AccountHomeCallback mCallback;
+    private AccountHomeListener mCallback;
 
-    public void setCallback(AccountHomeCallback callback) {
+    public void setCallback(AccountHomeListener callback) {
         mCallback = callback;
     }
 

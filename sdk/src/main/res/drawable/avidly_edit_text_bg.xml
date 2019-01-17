@@ -5,7 +5,7 @@
 
     <stroke
         android:width="@dimen/avidly_dimen_2dp"
-        android:color="@color/avildy_color_red_bg" />
+        android:color="@color/avildy_color_view_start" />
 
     <!-- 内填充颜色 -->
     <padding

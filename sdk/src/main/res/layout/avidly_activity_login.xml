@@ -4,11 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment
-        android:id="@+id/avidly_fragment_error"
-        android:name="com.avidly.sdk.account.fragment.AccountErrorFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <include
+        android:id="@+id/avidly_error_layout"
+        layout="@layout/avidly_view_error"
+        android:visibility="gone" />
 
     <fragment
         android:id="@+id/avidly_fragment_login"
