@@ -17,7 +17,7 @@
 
         <!-- add user manager ui-->
         <FrameLayout
-            android:id="@+id/avidly_fragment_user_manager_root"
+            android:id="@+id/avidly_fragment_user_manager_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="top">
@@ -47,6 +47,21 @@
             <fragment
                 android:id="@+id/avidly_fragment_user_account_bind_fragment"
                 android:name="com.avidly.sdk.account.fragment.AccountUserBindFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <!-- add user alter password ui-->
+        <LinearLayout
+            android:id="@+id/avidly_fragment_user_alter_pwd_root"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:visibility="gone">
+
+            <fragment
+                android:id="@+id/avidly_fragment_user_alter_pwd_fragment"
+                android:name="com.avidly.sdk.account.fragment.AccountUserPwdAlterFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </LinearLayout>

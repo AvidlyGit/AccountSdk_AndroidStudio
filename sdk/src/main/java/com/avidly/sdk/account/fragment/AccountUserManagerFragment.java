@@ -21,6 +21,8 @@ import java.util.List;
 
 public class AccountUserManagerFragment extends Fragment {
 
+    private BaseAdapter.onRecyclerViewItemClickListener itemClickListener;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +76,10 @@ public class AccountUserManagerFragment extends Fragment {
         super.onDestroy();
     }
 
+    public void setItemClickListener(BaseAdapter.onRecyclerViewItemClickListener clickListener) {
+        itemClickListener = clickListener;
+    }
+
     private void initView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.avidly_usermanger_listview);
         UserManagerAdatper adatper = new UserManagerAdatper(getContext());
@@ -87,6 +93,9 @@ public class AccountUserManagerFragment extends Fragment {
             @Override
             public void onItemClick(Object data, int position) {
                 Log.d("xxxx", "onItemClick type:" + position);
+                if (itemClickListener != null) {
+                    itemClickListener.onItemClick(data, position);
+                }
             }
         });
     }
@@ -113,7 +122,7 @@ public class AccountUserManagerFragment extends Fragment {
 
         list.add(createGuestBindData(getString(R.string.avidly_string_usermanger_bind_other),
                 R.drawable.avidly_icon_bind,
-                UserOperationData.USER_OPERATION_TYPE_OTHER,
+                UserOperationData.USER_OPERATION_TYPE_BIND_OTHER,
                 isgrid));
 
         adatper.setDataList(list);

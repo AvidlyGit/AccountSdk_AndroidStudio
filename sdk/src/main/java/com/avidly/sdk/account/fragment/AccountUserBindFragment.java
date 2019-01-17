@@ -22,6 +22,8 @@ import java.util.List;
 
 public class AccountUserBindFragment extends Fragment {
 
+    private BaseAdapter.onRecyclerViewItemClickListener itemClickListener;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +77,10 @@ public class AccountUserBindFragment extends Fragment {
         super.onDestroy();
     }
 
+    public void setItemClickListener(BaseAdapter.onRecyclerViewItemClickListener clickListener) {
+        itemClickListener = clickListener;
+    }
+
     private void initView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.avidly_useraccount_bind_listview);
         UserAccountBindAdatper adatper = new UserAccountBindAdatper(getContext());
@@ -88,6 +94,9 @@ public class AccountUserBindFragment extends Fragment {
             @Override
             public void onItemClick(Object data, int position) {
                 Log.d("xxxx", "onItemClick type:" + position);
+                if (null != itemClickListener) {
+                    itemClickListener.onItemClick(data, position);
+                }
             }
         });
     }
@@ -108,6 +117,13 @@ public class AccountUserBindFragment extends Fragment {
                 getString(R.string.avidly_string_user_unbind_status),
                 R.drawable.avidly_twitter_logo,
                 Account.ACCOUNT_MODE_TWITTER,
+                isgrid,
+                false));
+
+        list.add(createGuestBindData(getString(R.string.avidly_string_user_bind_account_googleplay),
+                getString(R.string.avidly_string_user_unbind_status),
+                R.drawable.avidly_google_logo,
+                Account.ACCOUNT_MODE_GOOGLEPLAY,
                 isgrid,
                 false));
 

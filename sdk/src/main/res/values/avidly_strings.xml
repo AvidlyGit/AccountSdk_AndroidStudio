@@ -1,5 +1,7 @@
 <resources>
 
+    <string name="avildy_editor_number_letter_digits">&#034;&#039;&#060;&#160;&#038;{}[]\|>/;:,.?`~!@#$%^*()_+-=1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM </string>
+
     <string name="avidly_string_email_error">输入邮件格式错误！</string>
 
     <string name="avidly_string_loading">登录中</string>
@@ -32,7 +34,7 @@
     <string name="avidly_string_userpwd_alter_title">修改密码</string>
     <string name="avidly_string_userpwd_alter_old_hit">旧密码</string>
     <string name="avidly_string_userpwd_alter_new_hit">新密码(6~16位)</string>
-    <string name="avidly_string_userpwd_alter_new2_hit">再次输入新密码</string>
+    <string name="avidly_string_userpwd_alter_new_hit2">再次输入新密码</string>
     <string name="avidly_string_userpwd_alter_btn">确认修改</string>
 
 
@@ -49,6 +51,7 @@
     <string name="avidly_string_user_binded_status">解绑</string>
     <string name="avidly_string_user_bind_account_facebook">Facebook</string>
     <string name="avidly_string_user_bind_account_twitter">Twitter</string>
+    <string name="avidly_string_user_bind_account_googleplay">Google Play</string>
 
 
 </resources>

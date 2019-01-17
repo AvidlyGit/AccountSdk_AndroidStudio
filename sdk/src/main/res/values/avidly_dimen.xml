@@ -57,5 +57,11 @@
     <dimen name="avidly_user_account_bind_listview_flag_size">28dp</dimen>
 
 
+    <dimen name="avidly_user_account_editor_padding_left_or_rigjt">21dp</dimen>
+    <dimen name="avidly_user_account_editor_width">252dp</dimen>
+    <dimen name="avidly_user_account_editor_height">38dp</dimen>
+    <dimen name="avidly_user_account_editor_between_distance">9dp</dimen>
+
+
 
 </resources>

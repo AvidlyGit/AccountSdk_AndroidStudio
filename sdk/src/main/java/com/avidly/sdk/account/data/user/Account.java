@@ -7,7 +7,7 @@ public class Account extends JsonData {
     public static final int ACCOUNT_MODE_GUEST = 1;
     public static final int ACCOUNT_MODE_AVIDLY = 2;
     public static final int ACCOUNT_MODE_FACEBOOK = 3;
-    public static final int ACCOUNT_MODE_GOOGLE = 4;
+    public static final int ACCOUNT_MODE_GOOGLEPLAY = 4;
     public static final int ACCOUNT_MODE_TWITTER = 6;
 
     public int mode;
