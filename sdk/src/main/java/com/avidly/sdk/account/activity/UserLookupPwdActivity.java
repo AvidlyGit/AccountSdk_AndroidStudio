@@ -9,15 +9,15 @@ import com.sdk.avidly.account.R;
 
 import static android.view.KeyEvent.KEYCODE_BACK;
 
-public class UserManagerActivity extends BaseEditorActivity {
+public class UserLookupPwdActivity extends BaseEditorActivity {
 
     private BaseFragment baseFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.avidly_activity_user_manager_layout);
-        baseFragment = (BaseFragment) getSupportFragmentManager().findFragmentById(R.id.avidly_fragment_user_root);
+        setContentView(R.layout.avidly_activity_user_lookup_pwd_layout);
+        baseFragment = (BaseFragment) getSupportFragmentManager().findFragmentById(R.id.avidly_fragment_user_lookup_pwd);
     }
 
     @Override

@@ -9,7 +9,7 @@ import android.view.WindowManager;
 
 public class LoginCenter {
 
-    private static int gameOrietation;
+    private static int gameOrietation = 99999;
 
     public static void checkScreenOrietation(Context context) {
         LoginCenter.gameOrietation = context.getResources().getConfiguration().orientation;

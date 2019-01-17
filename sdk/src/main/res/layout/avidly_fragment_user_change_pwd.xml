@@ -11,12 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:layout_marginTop="@dimen/avidly_user_manager_common_avidly_image_margin_top2"/>
+        android:layout_marginTop="@dimen/avidly_user_manager_pwd_margintop"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/avidly_user_manager_pwd_marginbottom"
         android:orientation="vertical">
 
         <EditText
@@ -82,6 +83,7 @@
             />
 
         <Button
+            android:id="@+id/avidly_fragment_user_change_pwd_btn"
             android:layout_width="@dimen/avidly_user_account_editor_width"
             android:layout_height="@dimen/avidly_user_account_editor_height"
             android:layout_marginTop="@dimen/avidly_user_account_editor_between_distance"

@@ -66,7 +66,9 @@ public class AccountUserRootFragment extends BaseFragment {
         view.findViewById(R.id.avidly_user_manager_title_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackKeyDown();
+                if (!onBackKeyDown()) {
+                    getActivity().finish();
+                }
             }
         });
     }

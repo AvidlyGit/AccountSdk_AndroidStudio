@@ -37,6 +37,9 @@
     <dimen name="avidly_user_manager_common_avidly_image_margin_top2">21dp</dimen>
     <dimen name="avidly_user_manager_common_avidly_image_margin_right">20dp</dimen>
 
+    <dimen name="avidly_user_manager_pwd_margintop">21dp</dimen>
+    <dimen name="avidly_user_manager_pwd_marginbottom">0dp</dimen>
+
 
     <dimen name="avidly_user_manager_account_info_margin_top">22dp</dimen>
     <dimen name="avidly_user_manager_account_info_margin_left">26dp</dimen>
@@ -61,6 +64,10 @@
     <dimen name="avidly_user_account_editor_width">252dp</dimen>
     <dimen name="avidly_user_account_editor_height">38dp</dimen>
     <dimen name="avidly_user_account_editor_between_distance">9dp</dimen>
+
+    <dimen name="avildy_user_lookup_tip_textszie">17sp</dimen>
+    <dimen name="avildy_user_lookup_mail_margintop">16dp</dimen>
+    <dimen name="avildy_user_lookup_text_width">255dp</dimen>
 
 
 

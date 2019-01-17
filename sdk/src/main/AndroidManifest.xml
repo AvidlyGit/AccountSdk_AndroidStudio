@@ -18,9 +18,12 @@
         <activity
             android:name="com.avidly.sdk.account.activity.UserManagerActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
 
-        </activity>
+        <activity
+            android:name="com.avidly.sdk.account.activity.UserLookupPwdActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:windowSoftInputMode="adjustResize|stateHidden"/>
 
     </application>
 </manifest>
