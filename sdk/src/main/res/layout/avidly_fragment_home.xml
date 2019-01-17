@@ -4,11 +4,12 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="250dp"
+        android:layout_width="@dimen/avidly_dimen_dialog_home_width"
+        android:layout_height="@dimen/avidly_dimen_dialog_home_height"
         android:background="@drawable/avidly_dialog_bg"
+        android:gravity="center"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="@dimen/avidly_dimen_8dp">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -16,113 +17,131 @@
             android:layout_gravity="center_horizontal"
             android:src="@drawable/avidly_logo" />
 
-        <Button
+        <TextView
             android:id="@+id/guest_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="游客登录" />
+            android:layout_width="@dimen/avidly_dimen_250dp"
+            android:layout_height="@dimen/avidly_dimen_36dp"
+            android:layout_marginTop="@dimen/avidly_dimen_8dp"
+            android:background="@drawable/avidly_button_bg"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/avidly_string_guest_login"
+            android:textColor="@color/avildy_color_white"
+            android:textSize="@dimen/avidly_dimen_text_size_14sp" />
 
-        <Button
+        <TextView
             android:id="@+id/avidly_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Avid.ly账户登录" />
+            android:layout_width="@dimen/avidly_dimen_250dp"
+            android:layout_height="@dimen/avidly_dimen_36dp"
+            android:layout_marginTop="@dimen/avidly_dimen_8dp"
+            android:background="@drawable/avidly_button_bg"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/avidly_string_avidly_login"
+            android:textColor="@color/avildy_color_white"
+            android:textSize="@dimen/avidly_dimen_text_size_14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginLeft="@dimen/avidly_dimen_16dp"
+            android:layout_marginTop="@dimen/avidly_dimen_8dp"
+            android:layout_marginRight="@dimen/avidly_dimen_16dp"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="1dp"
+                android:layout_width="@dimen/avidly_dimen_0dp"
+                android:layout_height="@dimen/avidly_dimen_2dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/avildy_color_line_gray" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="@dimen/avidly_dimen_0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="第三方登录"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="12dp" />
+                android:text="@string/avidly_string_thrid_login"
+                android:textColor="@color/avildy_color_text_3"
+                android:textSize="@dimen/avidly_dimen_text_size_12sp" />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="1dp"
+                android:layout_width="@dimen/avidly_dimen_0dp"
+                android:layout_height="@dimen/avidly_dimen_2dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:background="@android:color/darker_gray" />
+                android:background="@color/avildy_color_line_gray" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/avidly_dimen_8dp"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/facebook_login"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/avidly_dimen_0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="@dimen/avidly_dimen_36dp"
+                    android:layout_height="@dimen/avidly_dimen_36dp"
                     android:src="@drawable/avidly_facebook_logo" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Facebook" />
+                    android:text="@string/avidly_string_facebook"
+                    android:textColor="@color/avildy_color_text_1"
+                    android:textSize="@dimen/avidly_dimen_text_size_12sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/twitter_login"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/avidly_dimen_0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="@dimen/avidly_dimen_36dp"
+                    android:layout_height="@dimen/avidly_dimen_36dp"
                     android:src="@drawable/avidly_twitter_logo" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Twitter" />
+                    android:text="@string/avidly_string_twitter"
+                    android:textColor="@color/avildy_color_text_1"
+                    android:textSize="@dimen/avidly_dimen_text_size_12sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/google_login"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/avidly_dimen_0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="@dimen/avidly_dimen_36dp"
+                    android:layout_height="@dimen/avidly_dimen_36dp"
                     android:src="@drawable/avidly_google_logo" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Google Play" />
+                    android:text="@string/avidly_string_google"
+                    android:textColor="@color/avildy_color_text_1"
+                    android:textSize="@dimen/avidly_dimen_text_size_12sp" />
 
             </LinearLayout>
 

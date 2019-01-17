@@ -1,0 +1,20 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="@color/avildy_color_white" />
+
+    <stroke
+        android:width="@dimen/avidly_dimen_2dp"
+        android:color="@color/avildy_color_red_bg" />
+
+    <!-- 内填充颜色 -->
+    <padding
+        android:bottom="@dimen/avidly_dimen_8dp"
+        android:left="@dimen/avidly_dimen_8dp"
+        android:right="@dimen/avidly_dimen_8dp"
+        android:top="@dimen/avidly_dimen_8dp" />
+
+    <!-- 圆角 -->
+    <corners android:radius="@dimen/avidly_dimen_8dp" />
+
+</shape>

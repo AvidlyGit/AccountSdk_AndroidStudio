@@ -2,7 +2,8 @@ package com.avildy.account.app;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
+
 import android.util.Log;
 import android.view.View;
 
@@ -10,21 +11,12 @@ import com.avidly.sdk.account.AvidlyAccountSdk;
 
 import account.avidly.com.accountsdk.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account_login);
-
-        //AvidlyAccountSdk.accountLogin(this);
-
-//        (new Handler(Looper.getMainLooper())).postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                AvidlyAccountSdk.accountLogin(MainActivity.this);
-//            }
-//        }, 500);
+        setContentView(R.layout.activity_main);
 
         findViewById(R.id.login_id).setOnClickListener(new View.OnClickListener() {
             @Override

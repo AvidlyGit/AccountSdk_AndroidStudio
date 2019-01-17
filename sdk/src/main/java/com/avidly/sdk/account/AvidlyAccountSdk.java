@@ -1,6 +1,5 @@
 package com.avidly.sdk.account;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -10,11 +9,10 @@ import com.avidly.sdk.account.business.LoginCenter;
 
 public class AvidlyAccountSdk {
 
-    public static void accountLogin(Activity context) {
+    public static void accountLogin(Context context) {
         LoginCenter.checkScreenOrietation(context);
         context.startActivity(new Intent(context, AccountLoginActivity.class));
     }
-
 
     public static void showUserManagerUI(Context context) {
         LoginCenter.checkScreenOrietation(context);

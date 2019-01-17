@@ -12,7 +12,7 @@
 
     <fragment
         android:id="@+id/avidly_fragment_login"
-        android:name="com.avidly.sdk.account.fragment.AccountHomeFragment"
+        android:name="com.avidly.sdk.account.fragment.AccountLoadingFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />

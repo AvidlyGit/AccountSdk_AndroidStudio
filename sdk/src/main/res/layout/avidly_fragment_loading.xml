@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="@dimen/avidly_dimen_dialog_loading_width"
+        android:layout_height="@dimen/avidly_dimen_dialog_loading_height"
+        android:background="@drawable/avidly_dialog_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/avidly_dimen_8dp">
+
+        <TextView
+            android:id="@+id/avidly_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/avildy_color_text_1"
+            android:textSize="@dimen/avidly_dimen_text_size_14sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/avidly_dimen_8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/avidly_dimen_4dp"
+                android:text="@string/avidly_string_loading"
+                android:textColor="@color/avildy_color_text_2"
+                android:textSize="@dimen/avidly_dimen_text_size_12sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/avidly_icon_loading" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/avidly_switch_user"
+            android:layout_width="@dimen/avidly_dimen_100dp"
+            android:layout_height="@dimen/avidly_dimen_20dp"
+            android:layout_marginTop="@dimen/avidly_dimen_8dp"
+            android:background="@drawable/avidly_button_bg"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="@string/avidly_string_switch_user"
+            android:textColor="@color/avildy_color_white"
+            android:textSize="@dimen/avidly_dimen_text_size_12sp" />
+    </LinearLayout>
+</FrameLayout>
+

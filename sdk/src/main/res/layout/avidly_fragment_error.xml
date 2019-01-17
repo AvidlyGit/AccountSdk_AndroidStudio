@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="38dp"
-        android:background="@color/avildy_color_error_bg">
+        android:background="@color/avildy_color_red_bg">
 
         <TextView
             android:layout_width="wrap_content"
@@ -23,8 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/avidly_dimen_margin_16dp"
-            android:src="@drawable/avidly_icon_close" />
+            android:layout_marginRight="@dimen/avidly_dimen_16dp"
+            android:src="@drawable/avidly_icon_clear" />
     </RelativeLayout>
 </FrameLayout>
 

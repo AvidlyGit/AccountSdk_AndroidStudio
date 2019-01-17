@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="avidly_dimen_dialog_loading_width">190dp</dimen>
+    <dimen name="avidly_dimen_dialog_loading_height">120dp</dimen>
+
+    <dimen name="avidly_dimen_dialog_home_width">300dp</dimen>
+    <dimen name="avidly_dimen_dialog_home_height">245dp</dimen>
+
+    <dimen name="avidly_dimen_dialog_login_width">300dp</dimen>
+    <dimen name="avidly_dimen_dialog_login_height">270dp</dimen>
+
+    <dimen name="avidly_dimen_text_size_12sp">12sp</dimen>
     <dimen name="avidly_dimen_text_size_14sp">14sp</dimen>
 
-    <dimen name="avidly_dimen_margin_16dp">16dp</dimen>
+    <dimen name="avidly_dimen_0dp">0dp</dimen>
+    <dimen name="avidly_dimen_2dp">2dp</dimen>
+    <dimen name="avidly_dimen_4dp">4dp</dimen>
+    <dimen name="avidly_dimen_8dp">8dp</dimen>
+    <dimen name="avidly_dimen_16dp">16dp</dimen>
+    <dimen name="avidly_dimen_20dp">20dp</dimen>
+    <dimen name="avidly_dimen_28dp">28dp</dimen>
+    <dimen name="avidly_dimen_36dp">36dp</dimen>
+    <dimen name="avidly_dimen_100dp">100dp</dimen>
+    <dimen name="avidly_dimen_250dp">250dp</dimen>
 
+    <dimen name="avidly_dimen_margin_16dp">16dp</dimen>
 
     <dimen name="avidly_user_manager_common_title_height">46dp</dimen>
     <dimen name="avidly_user_manager_common_title_textsize">17sp</dimen>
