@@ -14,9 +14,7 @@
             android:name="com.avidly.sdk.account.activity.AccountLoginActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:screenOrientation="sensorLandscape"
-            android:theme="@style/AvidlyTranslucentStyle">
-
-        </activity>
+            android:theme="@style/AvidlyTranslucentStyle" />
 
     </application>
 </manifest>

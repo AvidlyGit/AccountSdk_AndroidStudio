@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="avildy_color_error_bg">#F56685</color>
-    <color name="avildy_color_white">#FFFFFF</color>
-
     <color name="avidly_color_translucent">#AB000000</color>
     <color name="avidly_color_transparent">#00000000</color>
+
+    <color name="avildy_color_white">#FFFFFFFF</color>
+    <color name="avildy_color_red_bg">#FFF56685</color>
+    <color name="avildy_color_button_bg">#FFF98483</color>
+    <color name="avildy_color_line_gray">#FFC4D4E6</color>
+    <color name="avildy_color_line_red">#FFF88383</color>
+
+    <color name="avildy_color_text_1">#FF85A1C4</color>
+    <color name="avildy_color_text_2">#FF9FB0C5</color>
+    <color name="avildy_color_text_3">#FF3C71AE</color>
+    <color name="avildy_color_text_4">#FFF98383</color>
+
 </resources>

@@ -2,4 +2,27 @@
 
     <string name="avidly_string_email_error">输入邮件格式错误！</string>
 
+    <string name="avidly_string_loading">登录中</string>
+    <string name="avidly_string_switch_user">切换账户</string>
+
+    <string name="avidly_string_guest_login">游客登录</string>
+    <string name="avidly_string_avidly_login">Avid.ly账户登录</string>
+    <string name="avidly_string_thrid_login">第三方登录</string>
+    <string name="avidly_string_facebook">Facebook</string>
+    <string name="avidly_string_twitter">Twitter</string>
+    <string name="avidly_string_google">Google Play</string>
+
+    <string name="avidly_string_user_bind">新用户绑定</string>
+    <string name="avidly_string_action_bind">注册并绑定</string>
+    <string name="avidly_string_user_login">用户登录</string>
+    <string name="avidly_string_action_login">登录</string>
+    <string name="avidly_string_user_regist">用户注册</string>
+    <string name="avidly_string_action_regist">注册</string>
+
+    <string name="avidly_string_hint_account">账号</string>
+    <string name="avidly_string_hint_password">密码</string>
+    <string name="avidly_string_forgot_password">忘记密码？</string>
+    <string name="avidly_string_agree_protocol">同意Avid.ly用户服务协议</string>
+
+
 </resources>

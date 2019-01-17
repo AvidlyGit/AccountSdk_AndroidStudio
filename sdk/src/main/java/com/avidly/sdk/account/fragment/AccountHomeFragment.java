@@ -1,12 +1,12 @@
 package com.avidly.sdk.account.fragment;
 
-import android.app.DialogFragment;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.avidly.sdk.account.callback.AccountLoginCallback;
+import com.avidly.sdk.account.callback.AccountHomeCallback;
 
 import com.sdk.avidly.account.R;
 
@@ -16,9 +16,9 @@ import com.sdk.avidly.account.R;
  * Copyright © 2018 Adrealm. All rights reserved.
  */
 public class AccountHomeFragment extends DialogFragment implements View.OnClickListener {
-    AccountLoginCallback mCallback;
+    private AccountHomeCallback mCallback;
 
-    public void setCallback(AccountLoginCallback callback) {
+    public void setCallback(AccountHomeCallback callback) {
         mCallback = callback;
     }
 
@@ -42,20 +42,20 @@ public class AccountHomeFragment extends DialogFragment implements View.OnClickL
             return;
         }
 
-        int i = view.getId();
-        if (i == R.id.guest_login) {
+        int id = view.getId();
+        if (id == R.id.guest_login) {
             mCallback.onGuestLoginClicked();
         }
-        if (i == R.id.avidly_login) {
+        if (id == R.id.avidly_login) {
             mCallback.onAvidlyLoginClicked();
         }
-        if (i == R.id.facebook_login) {
-            mCallback.onFacebookeLoginClicked();
+        if (id == R.id.facebook_login) {
+            mCallback.onFacebookLoginClicked();
         }
-        if (i == R.id.twitter_login) {
+        if (id == R.id.twitter_login) {
             mCallback.onTwitterLoginClicked();
         }
-        if (i == R.id.google_login) {
+        if (id == R.id.google_login) {
             mCallback.onGoogleLoginClicked();
         }
 
