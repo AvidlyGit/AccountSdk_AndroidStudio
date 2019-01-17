@@ -11,9 +11,11 @@ public class LoginUser extends JsonData {
 
     List<Account> accounts = new ArrayList<>(5);
 
-    private int loginedMode;//当前登陆的帐号
+    private int loginedMode;// 当前登陆的帐号
 
-    public boolean logined;
+    public boolean isActived; // 是否激活的帐号，即最后一次登陆帐号为活跃
+
+    public boolean isNowLogined; // 当前是否已经登陆
 
     public String ggid; // game guest id
 
@@ -22,8 +24,9 @@ public class LoginUser extends JsonData {
             return;
         }
         Account a = findAccountByMode(account.mode);
-        if (a != null) {
+        while (a != null) {
             accounts.remove(a);
+            a = findAccountByMode(account.mode);
         }
         accounts.add(account);
     }
@@ -37,6 +40,9 @@ public class LoginUser extends JsonData {
     }
 
     public Account findAccountByMode(int mode) {
+        if (accounts.size() == 0) {
+            return null;
+        }
         for (Account account : accounts) {
             if (mode == account.mode) {
                 return account;
@@ -51,7 +57,7 @@ public class LoginUser extends JsonData {
         if (null != jsonObject) {
             ggid = jsonObject.optString("ggid");
             loginedMode = jsonObject.optInt("loginedMode");
-            logined = jsonObject.optBoolean("logined");
+            isActived = jsonObject.optBoolean("actived");
             JSONArray array = jsonObject.optJSONArray("accounts");
             if (array != null) {
                 int size = array.length();
@@ -75,7 +81,7 @@ public class LoginUser extends JsonData {
     protected JSONObject converToJsonObject(JSONObject jsonObject) {
         JSONObject o = super.converToJsonObject(jsonObject);
         try {
-            o.put("logined", logined);
+            o.put("actived", isActived);
             o.put("loginedMode", loginedMode);
             o.put("ggid", ggid);
             if (accounts.size() > 0) {

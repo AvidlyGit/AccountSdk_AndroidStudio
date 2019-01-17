@@ -25,16 +25,20 @@ public class LoginUserCache {
 
         initSpShare(context);
 
-        String guest = spHelper.getString("guest_user");
-        if (!TextUtils.isEmpty(guest)) {
-            guestUser = new LoginUser();
-            guestUser.thisFromString(guest);
+        if (guestUser == null) {
+            String guest = spHelper.getString("guest_user");
+            if (!TextUtils.isEmpty(guest)) {
+                guestUser = new LoginUser();
+                guestUser.thisFromString(guest);
+            }
         }
 
-        String account = spHelper.getString("account_user");
-        if (!TextUtils.isEmpty(account)) {
-            accountUser = new LoginUser();
-            accountUser.thisFromString(account);
+        if (guestUser == null) {
+            String account = spHelper.getString("account_user");
+            if (!TextUtils.isEmpty(account)) {
+                accountUser = new LoginUser();
+                accountUser.thisFromString(account);
+            }
         }
 
     }
