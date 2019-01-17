@@ -189,7 +189,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/avidly_agree_protocol"
+                android:id="@+id/avidly_protocol_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -197,13 +197,14 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/avidly_agree_box"
+                    android:id="@+id/avidly_agree_protocol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/avidly_dimen_4dp"
                     android:src="@drawable/avidly_check_box_bg" />
 
                 <TextView
+                    android:id="@+id/avidly_read_protocol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"

@@ -6,10 +6,11 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:background="@color/avildy_color_red_bg">
+        android:layout_height="@dimen/avidly_dimen_36dp"
+        android:background="@color/avildy_color_view_start">
 
         <TextView
+            android:id="@+id/avidly_error_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -19,11 +20,11 @@
 
         <ImageView
             android:id="@+id/avidly_error_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/avidly_dimen_36dp"
+            android:layout_height="@dimen/avidly_dimen_36dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/avidly_dimen_16dp"
+            android:scaleType="centerInside"
             android:src="@drawable/avidly_icon_clear" />
     </RelativeLayout>
 </FrameLayout>

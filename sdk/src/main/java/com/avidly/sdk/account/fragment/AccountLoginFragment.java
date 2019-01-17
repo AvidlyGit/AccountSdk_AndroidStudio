@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.avidly.sdk.account.base.Constants;
-import com.avidly.sdk.account.callback.AccountLoginCallback;
+import com.avidly.sdk.account.listener.AccountLoginListener;
 import com.sdk.avidly.account.R;
 
 /**
@@ -21,7 +21,7 @@ import com.sdk.avidly.account.R;
  * Copyright © 2018 Adrealm. All rights reserved.
  */
 public class AccountLoginFragment extends DialogFragment implements View.OnClickListener {
-    private AccountLoginCallback mCallback;
+    private AccountLoginListener mCallback;
     private int mOperationType = Constants.LOGIN_TYPE_LOGIN;
     private static String OPERATION_KEY = "operation";
     private boolean isOpenEye = false;
@@ -41,7 +41,8 @@ public class AccountLoginFragment extends DialogFragment implements View.OnClick
 
     private View mForgotPassword;
     private View mAgreeProtocol;
-    private View mAgreeBox;
+    private View mReadProtocol;
+    private View mProtocolLayout;
 
     public static AccountLoginFragment newInstance(int operationType) {
         AccountLoginFragment loginFragment = new AccountLoginFragment();
@@ -51,7 +52,7 @@ public class AccountLoginFragment extends DialogFragment implements View.OnClick
         return loginFragment;
     }
 
-    public void setCallback(AccountLoginCallback callback) {
+    public void setCallback(AccountLoginListener callback) {
         mCallback = callback;
     }
 
@@ -78,15 +79,20 @@ public class AccountLoginFragment extends DialogFragment implements View.OnClick
         mIconEye = view.findViewById(R.id.avidly_icon_eye);
         mIconEye.setOnClickListener(this);
         mActionButton = view.findViewById(R.id.avidly_account_action);
+        mActionButton.setOnClickListener(this);
 
         mForgotPassword = view.findViewById(R.id.avidly_forgot_password);
         mForgotPassword.setOnClickListener(this);
         mAgreeProtocol = view.findViewById(R.id.avidly_agree_protocol);
         mAgreeProtocol.setOnClickListener(this);
-        mAgreeBox = view.findViewById(R.id.avidly_agree_box);
-        mAgreeBox.setSelected(isAgreeProtocol);
+        mAgreeProtocol.setSelected(isAgreeProtocol);
+        mReadProtocol = view.findViewById(R.id.avidly_read_protocol);
+        mReadProtocol.setOnClickListener(this);
+        mProtocolLayout = view.findViewById(R.id.avidly_protocol_layout);
 
-        mOperationType = getArguments().getInt(OPERATION_KEY);
+        if (getArguments() != null) {
+            mOperationType = getArguments().getInt(OPERATION_KEY);
+        }
         switchUiFromType();
         return view;
     }
@@ -106,7 +112,7 @@ public class AccountLoginFragment extends DialogFragment implements View.OnClick
 
             mActionButton.setText(R.string.avidly_string_action_bind);
             mForgotPassword.setVisibility(View.GONE);
-            mAgreeProtocol.setVisibility(View.VISIBLE);
+            mProtocolLayout.setVisibility(View.VISIBLE);
         }
 
         if (mOperationType == Constants.LOGIN_TYPE_LOGIN) {
@@ -125,7 +131,7 @@ public class AccountLoginFragment extends DialogFragment implements View.OnClick
 
             mActionButton.setText(R.string.avidly_string_action_login);
             mForgotPassword.setVisibility(View.VISIBLE);
-            mAgreeProtocol.setVisibility(View.GONE);
+            mProtocolLayout.setVisibility(View.GONE);
         }
 
         if (mOperationType == Constants.LOGIN_TYPE_REGIST) {
@@ -144,21 +150,13 @@ public class AccountLoginFragment extends DialogFragment implements View.OnClick
 
             mActionButton.setText(R.string.avidly_string_action_regist);
             mForgotPassword.setVisibility(View.GONE);
-            mAgreeProtocol.setVisibility(View.VISIBLE);
+            mProtocolLayout.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
     public void onClick(View view) {
-        if (mCallback == null) {
-
-            return;
-        }
-
         int id = view.getId();
-        if (id == R.id.avidly_login_back) {
-            mCallback.onBackToHomePressed();
-        }
 
         if (id == R.id.avidly_user_login_title) {
             mOperationType = Constants.LOGIN_TYPE_LOGIN;
@@ -183,18 +181,35 @@ public class AccountLoginFragment extends DialogFragment implements View.OnClick
             }
             mInputPassword.setSelection(mInputPassword.getText().length());
         }
-        if (id == R.id.avidly_forgot_password) {
-
-        }
         if (id == R.id.avidly_agree_protocol) {
             if (isAgreeProtocol) {
                 isAgreeProtocol = false;
-                mAgreeBox.setSelected(false);
+                mAgreeProtocol.setSelected(false);
             } else {
                 isAgreeProtocol = true;
-                mAgreeBox.setSelected(true);
+                mAgreeProtocol.setSelected(true);
             }
         }
 
+        if (mCallback == null) {
+            return;
+        }
+
+        if (id == R.id.avidly_login_back) {
+            mCallback.onBackToHomePressed();
+        }
+        if (id == R.id.avidly_forgot_password) {
+            mCallback.onForgotPasswordClicked();
+        }
+        if (id == R.id.avidly_read_protocol) {
+            mCallback.onReadProtocolClicked();
+        }
+        if (id == R.id.avidly_account_action) {
+            if (mOperationType == Constants.LOGIN_TYPE_LOGIN) {
+                mCallback.onAccountLogin();
+            } else {
+                mCallback.onAccountRegist();
+            }
+        }
     }
 }

@@ -16,7 +16,11 @@ public class LoginPresenterImpl implements LoginPresenter {
     }
 
     @Override
-    public void guestLogin() {
-        mView.showErrorFragment();
+    public void accountLogin() {
+        if (false) {
+            mView.onUserLoginSuccessed();
+        } else {
+            mView.onUserLoginFailed("错误");
+        }
     }
 }

@@ -16,6 +16,7 @@
     <dimen name="avidly_dimen_2dp">2dp</dimen>
     <dimen name="avidly_dimen_4dp">4dp</dimen>
     <dimen name="avidly_dimen_8dp">8dp</dimen>
+    <dimen name="avidly_dimen_12dp">12dp</dimen>
     <dimen name="avidly_dimen_16dp">16dp</dimen>
     <dimen name="avidly_dimen_20dp">20dp</dimen>
     <dimen name="avidly_dimen_40dp">40dp</dimen>

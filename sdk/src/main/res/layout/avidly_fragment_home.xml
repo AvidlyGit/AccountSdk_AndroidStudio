@@ -8,22 +8,23 @@
         android:layout_height="@dimen/avidly_dimen_dialog_home_height"
         android:background="@drawable/avidly_dialog_bg"
         android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/avidly_dimen_8dp">
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/avidly_dimen_8dp"
             android:src="@drawable/avidly_logo" />
 
         <TextView
             android:id="@+id/guest_login"
             android:layout_width="@dimen/avidly_dimen_250dp"
             android:layout_height="@dimen/avidly_dimen_36dp"
-            android:layout_marginTop="@dimen/avidly_dimen_8dp"
+            android:layout_marginTop="@dimen/avidly_dimen_16dp"
             android:background="@drawable/avidly_button_bg"
             android:clickable="true"
+            android:elevation="@dimen/avidly_dimen_8dp"
             android:gravity="center"
             android:text="@string/avidly_string_guest_login"
             android:textColor="@color/avildy_color_white"
@@ -33,9 +34,10 @@
             android:id="@+id/avidly_login"
             android:layout_width="@dimen/avidly_dimen_250dp"
             android:layout_height="@dimen/avidly_dimen_36dp"
-            android:layout_marginTop="@dimen/avidly_dimen_8dp"
+            android:layout_marginTop="@dimen/avidly_dimen_12dp"
             android:background="@drawable/avidly_button_bg"
             android:clickable="true"
+            android:elevation="@dimen/avidly_dimen_8dp"
             android:gravity="center"
             android:text="@string/avidly_string_avidly_login"
             android:textColor="@color/avildy_color_white"
@@ -44,9 +46,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/avidly_dimen_16dp"
-            android:layout_marginTop="@dimen/avidly_dimen_8dp"
-            android:layout_marginRight="@dimen/avidly_dimen_16dp"
+            android:layout_marginLeft="@dimen/avidly_dimen_36dp"
+            android:layout_marginTop="@dimen/avidly_dimen_12dp"
+            android:layout_marginRight="@dimen/avidly_dimen_36dp"
             android:orientation="horizontal">
 
             <TextView
@@ -76,7 +78,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/avidly_dimen_16dp"
             android:layout_marginTop="@dimen/avidly_dimen_8dp"
+            android:layout_marginRight="@dimen/avidly_dimen_16dp"
             android:orientation="horizontal">
 
             <LinearLayout

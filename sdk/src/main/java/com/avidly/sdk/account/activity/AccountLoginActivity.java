@@ -6,27 +6,31 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.business.LoginPresenter;
 import com.avidly.sdk.account.business.LoginPresenterImpl;
-import com.avidly.sdk.account.callback.AccountHomeCallback;
-import com.avidly.sdk.account.callback.AccountLoadingCallback;
-import com.avidly.sdk.account.callback.AccountLoginCallback;
-import com.avidly.sdk.account.fragment.AccountErrorFragment;
+import com.avidly.sdk.account.listener.AccountHomeListener;
+import com.avidly.sdk.account.listener.AccountLoadingListener;
+import com.avidly.sdk.account.listener.AccountLoginListener;
 import com.avidly.sdk.account.fragment.AccountHomeFragment;
 import com.avidly.sdk.account.fragment.AccountLoadingFragment;
 import com.avidly.sdk.account.fragment.AccountLoginFragment;
 
 import com.sdk.avidly.account.R;
 
-
 public class AccountLoginActivity extends FragmentActivity implements AccountLoginView,
-        AccountHomeCallback, AccountLoadingCallback, AccountLoginCallback {
+        AccountHomeListener, AccountLoadingListener, AccountLoginListener {
     private static final String TAG = "AccountLoginSdk";
 
     private FragmentManager mFragmentManager = getSupportFragmentManager();
     private LoginPresenter mPresenter;
+
+    private View mErrorLayout;
+    private TextView mMessgeText;
+    private View mMessgeClose;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,52 +38,55 @@ public class AccountLoginActivity extends FragmentActivity implements AccountLog
         setContentView(R.layout.avidly_activity_login);
 
         mPresenter = new LoginPresenterImpl(this);
-        hideErrorFragment();
+        mErrorLayout = findViewById(R.id.avidly_error_layout);
+        mMessgeText = findViewById(R.id.avidly_error_message);
+        mMessgeClose = findViewById(R.id.avidly_error_close);
+        mMessgeClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideErrorMessage();
+            }
+        });
 
         if (false) {
             AccountLoadingFragment loadingFragment = (AccountLoadingFragment) mFragmentManager.findFragmentById(R.id.avidly_fragment_login);
             loadingFragment.setCallback(this);
+
+            mPresenter.accountLogin();
         } else {
             showAccountHomeFragment();
         }
     }
 
-    @Override
-    public void onSwitchAccountClicked() {
-        Log.i(TAG, "onSwitchAccountClicked: ");
-        showAccountHomeFragment();
-    }
-
+    // from view interface
     @Override
     public void onUserLoginSuccessed() {
         Log.i(TAG, "onUserLoginSuccessed: ");
 
+        finish();
     }
 
     @Override
-    public void onUserLoginFailed() {
+    public void onUserLoginFailed(String message) {
         Log.i(TAG, "onUserLoginFailed: ");
 
+        showErrorMessage(message);
+//        showAccountHomeFragment();
     }
 
-    public void showAccountHomeFragment() {
-        AccountHomeFragment homeFragment = new AccountHomeFragment();
-        homeFragment.setCallback(this);
-        android.support.v4.app.FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        transaction.replace(R.id.avidly_fragment_login, homeFragment);
-        transaction.commit();
-    }
-
+    // from loading fragment
     @Override
-    public void onBackToHomePressed() {
-        Log.i(TAG, "onGuestLoginClicked: ");
+    public void onSwitchAccountClicked() {
+        Log.i(TAG, "onSwitchAccountClicked: ");
+
         showAccountHomeFragment();
     }
 
+    // from home fragment
     @Override
     public void onGuestLoginClicked() {
         Log.i(TAG, "onGuestLoginClicked: ");
-        mPresenter.guestLogin();
+        mPresenter.accountLogin();
     }
 
     @Override
@@ -113,20 +120,67 @@ public class AccountLoginActivity extends FragmentActivity implements AccountLog
 
     }
 
+    // from login fragment
     @Override
-    public void hideErrorFragment() {
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        AccountErrorFragment errorFragment = (AccountErrorFragment) mFragmentManager.findFragmentById(R.id.avidly_fragment_error);
-        transaction.hide(errorFragment);
-        transaction.commit();
+    public void onBackToHomePressed() {
+        Log.i(TAG, "onBackToHomePressed: ");
+        super.onBackPressed();
     }
 
     @Override
-    public void showErrorFragment() {
+    public void onAccountLogin() {
+        Log.i(TAG, "onAccountLogin: ");
+
+    }
+
+    @Override
+    public void onAccountRegist() {
+        Log.i(TAG, "onAccountRegist: ");
+
+    }
+
+    @Override
+    public void onForgotPasswordClicked() {
+        Log.i(TAG, "onForgotPasswordClicked: ");
+
+    }
+
+    @Override
+    public void onReadProtocolClicked() {
+        Log.i(TAG, "onReadProtocolClicked: ");
+
+    }
+
+    private void showAccountHomeFragment() {
+        Log.i(TAG, "showAccountHomeFragment: ");
+
+        AccountHomeFragment homeFragment = new AccountHomeFragment();
+        homeFragment.setCallback(this);
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        AccountErrorFragment errorFragment = (AccountErrorFragment) mFragmentManager.findFragmentById(R.id.avidly_fragment_error);
-        transaction.show(errorFragment);
+        transaction.replace(R.id.avidly_fragment_login, homeFragment);
         transaction.commit();
     }
 
+    private void hideErrorMessage() {
+        Log.i(TAG, "hideErrorMessage: ");
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mErrorLayout.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void showErrorMessage(final String message) {
+        Log.i(TAG, "showErrorMessage: ");
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mMessgeText.setText(message);
+                mErrorLayout.setVisibility(View.VISIBLE);
+            }
+        });
+    }
 }

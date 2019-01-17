@@ -6,7 +6,7 @@ package com.avidly.sdk.account.activity;
  * Copyright © 2018 Adrealm. All rights reserved.
  */
 public interface AccountLoginView {
-    void hideErrorFragment();
+    void onUserLoginSuccessed();
 
-    void showErrorFragment();
+    void onUserLoginFailed(String message);
 }
