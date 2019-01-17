@@ -24,5 +24,23 @@
     <string name="avidly_string_forgot_password">忘记密码？</string>
     <string name="avidly_string_agree_protocol">同意Avid.ly用户服务协议</string>
 
+    <string name="avidly_string_userpwd_lookup_title">找回密码</string>
+    <string name="avidly_string_userpwd_lookup_tip">请输入你的注册邮箱，系统会发送一个随机新密码到你的邮箱里。</string>
+    <string name="avidly_string_userpwd_lookup_eidtor_hit">邮箱</string>
+    <string name="avidly_string_userpwd_lookup_btn">发送</string>
+
+    <string name="avidly_string_userpwd_alter_title">修改密码</string>
+    <string name="avidly_string_userpwd_alter_old_hit">旧密码</string>
+    <string name="avidly_string_userpwd_alter_new_hit">新密码(6~16位)</string>
+    <string name="avidly_string_userpwd_alter_new2_hit">再次输入新密码</string>
+    <string name="avidly_string_userpwd_alter_btn">确认修改</string>
+
+    <string name="avidly_string_usermanger_title">用户中心</string>
+    <string name="avidly_string_usermanger_guest">游客</string>
+    <string name="avidly_string_usermanger_id">ID: %1$s</string>
+    <string name="avidly_string_usermanger_bind_avidly">绑定Avid.ly账户</string>
+    <string name="avidly_string_usermanger_bind_switch">切换账户</string>
+    <string name="avidly_string_usermanger_bind_other">绑定第三方账户</string>
+    <string name="avidly_string_usermanger_bind_tip">请尽快绑定账户，以免游戏数据丢失。</string>
 
 </resources>

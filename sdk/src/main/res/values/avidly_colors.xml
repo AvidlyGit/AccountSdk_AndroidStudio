@@ -14,4 +14,7 @@
     <color name="avildy_color_text_3">#FF3C71AE</color>
     <color name="avildy_color_text_4">#FFF98383</color>
 
+    <color name="avidly_color_common_line_gray">#19000000</color>
+    <color name="avidly_color_common_text_black">#030303</color>
+
 </resources>

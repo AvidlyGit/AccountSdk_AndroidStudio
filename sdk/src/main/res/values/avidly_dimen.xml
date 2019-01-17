@@ -22,4 +22,30 @@
     <dimen name="avidly_dimen_36dp">36dp</dimen>
     <dimen name="avidly_dimen_100dp">100dp</dimen>
     <dimen name="avidly_dimen_250dp">250dp</dimen>
+
+    <dimen name="avidly_dimen_margin_16dp">16dp</dimen>
+
+    <dimen name="avidly_user_manager_common_title_height">46dp</dimen>
+    <dimen name="avidly_user_manager_common_title_textsize">17sp</dimen>
+    <dimen name="avidly_user_manager_common_back_leftmargin">10dp</dimen>
+    <dimen name="avidly_user_manager_common_back_width">9dp</dimen>
+    <dimen name="avidly_user_manager_common_back_height">19dp</dimen>
+
+    <dimen name="avidly_user_manager_common_avidly_image_width">129dp</dimen>
+    <dimen name="avidly_user_manager_common_avidly_image_height">39dp</dimen>
+    <dimen name="avidly_user_manager_common_avidly_image_margin_top">35dp</dimen>
+    <dimen name="avidly_user_manager_common_avidly_image_margin_right">20dp</dimen>
+
+
+    <dimen name="avidly_user_manager_account_info_margin_top">22dp</dimen>
+    <dimen name="avidly_user_manager_account_info_margin_left">26dp</dimen>
+    <dimen name="avidly_user_manager_account_info_guest_textsize">28sp</dimen>
+    <dimen name="avidly_user_manager_account_info_id_textsize">16sp</dimen>
+
+    <dimen name="avidly_user_manager_listview_margin_top">27dp</dimen>
+
+    <dimen name="avidly_user_guest_listview_item_height">44dp</dimen>
+    <dimen name="avidly_user_guest_listview_item_marginleft">26dp</dimen>
+    <dimen name="avidly_user_guest_listview_item_marginright">20dp</dimen>
+
 </resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_gravity="top"
+        android:layout_marginTop="@dimen/avidly_user_manager_common_avidly_image_margin_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/avidly_user_manager_back"
+            android:layout_width="@dimen/avidly_user_manager_common_avidly_image_width"
+            android:layout_height="@dimen/avidly_user_manager_common_avidly_image_height"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/avidly_user_manager_common_avidly_image_margin_right"
+            android:alpha="0.13"
+            android:scaleType="centerCrop"
+            android:src="@drawable/avidly_logo"/>
+    </RelativeLayout>
+
+</FrameLayout>

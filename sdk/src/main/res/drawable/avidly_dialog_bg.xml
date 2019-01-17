@@ -4,6 +4,7 @@
     <corners
         android:bottomLeftRadius="@dimen/avidly_dimen_8dp"
         android:bottomRightRadius="@dimen/avidly_dimen_8dp"
+        android:radius="@dimen/avidly_dimen_8dp"
         android:topLeftRadius="@dimen/avidly_dimen_8dp"
         android:topRightRadius="@dimen/avidly_dimen_8dp" />
 </shape>
