@@ -32,6 +32,13 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
+        findViewById(R.id.user_lookuppwd_id).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AvidlyAccountSdk.showUserLookupPasswordrUI(MainActivity.this);
+            }
+        });
+
     }
 
     @Override

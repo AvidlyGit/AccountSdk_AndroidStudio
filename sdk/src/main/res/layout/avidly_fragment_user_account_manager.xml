@@ -12,6 +12,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/avidly_user_manager_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/avidly_color_common_text_black"
@@ -30,7 +31,7 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/avidly_usermanger_bind_listview"
+        android:id="@+id/avidly_usermanger_listview"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/avidly_user_manager_listview_margin_top"
         android:layout_height="match_parent"/>

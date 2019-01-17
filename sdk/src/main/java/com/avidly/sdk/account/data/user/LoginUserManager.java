@@ -10,6 +10,10 @@ public class LoginUserManager {
         cache.freshCache(context);
     }
 
+    public static LoginUser getGuestLoginUser() {
+        return cache.guestUser;
+    }
+
     public static LoginUser getOrCreateGuestLoginUser() {
         if (cache.guestUser == null) {
             cache.guestUser = new LoginUser();
@@ -18,7 +22,7 @@ public class LoginUserManager {
         return cache.guestUser;
     }
 
-    public static LoginUser accountLoginUser() {
+    public static LoginUser getAccountLoginUser() {
         return cache.accountUser;
     }
 

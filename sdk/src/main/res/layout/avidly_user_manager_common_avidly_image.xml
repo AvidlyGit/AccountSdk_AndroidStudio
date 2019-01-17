@@ -5,7 +5,6 @@
 
     <RelativeLayout
         android:layout_gravity="top"
-        android:layout_marginTop="@dimen/avidly_user_manager_common_avidly_image_margin_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

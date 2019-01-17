@@ -3,7 +3,6 @@ package com.avidly.sdk.account.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 
 /**
  * Created by sam on 2018/11/4.
@@ -26,6 +25,6 @@ public abstract class BaseAdapter<VH extends RecyclerView.ViewHolder> extends Re
     }
 
     public interface onRecyclerViewItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(Object data, int position);
     }
 }
