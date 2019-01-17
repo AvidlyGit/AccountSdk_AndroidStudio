@@ -15,12 +15,20 @@
     <string name="avidly_string_userpwd_alter_new2_hit">再次输入新密码</string>
     <string name="avidly_string_userpwd_alter_btn">确认修改</string>
 
+
     <string name="avidly_string_usermanger_title">用户中心</string>
     <string name="avidly_string_usermanger_guest">游客</string>
     <string name="avidly_string_usermanger_id">ID: %1$s</string>
+    <string name="avidly_string_usermanger_bind_alter_pwd">修改密码</string>
     <string name="avidly_string_usermanger_bind_avidly">绑定Avid.ly账户</string>
     <string name="avidly_string_usermanger_bind_switch">切换账户</string>
     <string name="avidly_string_usermanger_bind_other">绑定第三方账户</string>
     <string name="avidly_string_usermanger_bind_tip">请尽快绑定账户，以免游戏数据丢失。</string>
+
+    <string name="avidly_string_user_unbind_status">去绑定</string>
+    <string name="avidly_string_user_binded_status">解绑</string>
+    <string name="avidly_string_user_bind_account_facebook">Facebook</string>
+    <string name="avidly_string_user_bind_account_twitter">Twitter</string>
+
 
 </resources>

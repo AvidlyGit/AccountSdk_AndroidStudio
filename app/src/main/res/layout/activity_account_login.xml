@@ -21,10 +21,12 @@
         android:text="login"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
+        android:textAllCaps="false"
         android:layout_height="wrap_content"/>
     <Button
         android:id="@+id/usermanager_id"
         android:text="user manager"
+        android:textAllCaps="false"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

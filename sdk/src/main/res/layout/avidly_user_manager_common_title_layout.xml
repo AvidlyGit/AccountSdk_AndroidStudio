@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFFFFFFF">
+                android:background="@color/avildy_color_white">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -10,7 +10,7 @@
         >
 
         <ImageView
-            android:id="@+id/avidly_user_manager_back"
+            android:id="@+id/avidly_user_manager_title_back"
             android:layout_width="@dimen/avidly_user_manager_common_back_width"
             android:layout_height="@dimen/avidly_user_manager_common_back_height"
             android:layout_alignParentLeft="true"
@@ -20,6 +20,7 @@
             android:src="@drawable/avidly_icon_back"/>
 
         <TextView
+            android:id="@+id/avidly_user_manager_title_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
