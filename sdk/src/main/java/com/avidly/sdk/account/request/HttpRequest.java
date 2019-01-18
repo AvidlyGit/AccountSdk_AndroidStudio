@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class HttpRequest {
+
     private static ExecutorService mSingleThreadPool = Executors.newSingleThreadExecutor();
 
     public static void requestHttpByPost(final String url, final Map<String, String> params, final HttpCallback<String> callback) {
@@ -17,7 +18,10 @@ public class HttpRequest {
             public void run() {
                 int code = 0;
                 String result = null;
-                String request = new UrlQuery().addParams(params).toString();
+                String request = null;
+                if (params != null && params.size() > 0) {
+                    request = new UrlQuery().addParams(params).toString();
+                }
                 try {
                     HttpResponse response = HttpClientHelper.httpPost(url, request, null);
                     code = response.getResponseCode();
@@ -33,7 +37,11 @@ public class HttpRequest {
                 }
 
                 if (null != callback) {
-                    callback.onResponseSuccess(result);
+                    if (200 == code) {
+                        callback.onResponseSuccess(result);
+                    } else {
+                        callback.onResponedFail(null, code);
+                    }
                 }
             }
         }));

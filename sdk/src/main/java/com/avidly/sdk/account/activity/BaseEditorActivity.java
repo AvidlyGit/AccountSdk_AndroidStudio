@@ -61,9 +61,7 @@ public abstract class BaseEditorActivity extends AppCompatActivity {
         setSystemUIVisible(false);
     }
 
-    /**
-     * 设置全屏显示 * @param hasFocus
-     */
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);

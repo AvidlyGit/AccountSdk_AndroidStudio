@@ -10,6 +10,10 @@ public class LoginUserManager {
         cache.freshCache(context);
     }
 
+    public static String getCurrentGGID() {
+        return null;
+    }
+
     public static LoginUser getGuestLoginUser() {
         return cache.guestUser;
     }

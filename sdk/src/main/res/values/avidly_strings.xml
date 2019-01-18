@@ -55,5 +55,12 @@
     <string name="avidly_string_user_bind_account_twitter">Twitter</string>
     <string name="avidly_string_user_bind_account_googleplay">Google Play</string>
 
+    <string name="avidly_string_user_alter_pwd_empty_oldpwd">请输入原密码</string>
+    <string name="avidly_string_user_alter_pwd_empty_newpwd">请输入新密码</string>
+    <string name="avidly_string_user_alter_pwd_empty_newpwd2">请再次输入新密码</string>
+    <string name="avidly_string_user_alter_pwd_wrong_newpwd2">二次输入的新密码不一致</string>
+    <string name="avidly_string_user_alter_pwd_short_length">密码太短，请输入6~16位的密码</string>
+    <string name="avidly_string_user_alter_pwd_long_lenght">密码太长，请输入6~16位的密码</string>
+
 
 </resources>

@@ -17,8 +17,11 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 public class Utils {
@@ -33,12 +36,22 @@ public class Utils {
      * @return
      * @throws Exception
      */
-    public static String textOfMd5(String value) throws Exception {
-        byte[] data = (value).getBytes(ENCODE_UTF8);
-        MessageDigest messageDigest = MessageDigest.getInstance(MD5);
-        messageDigest.reset();
-        messageDigest.update(data);
-        byte[] digest = messageDigest.digest();
+    public static String textOfMd5(String value) {
+        byte[] data = new byte[0];
+        try {
+            data = (value).getBytes(ENCODE_UTF8);
+        } catch (UnsupportedEncodingException e) {
+            data = (value).getBytes();
+        }
+        byte[] digest = new byte[0];
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance(MD5);
+            messageDigest.reset();
+            messageDigest.update(data);
+            digest = messageDigest.digest();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
         return Base64Utils.encode(digest);
     }
 
@@ -149,5 +162,19 @@ public class Utils {
         canvas.drawBitmap(bitmap, rect, rect, paint);
 
         return output;
+    }
+
+    public static void showToastTip(final Context context, final int textid, final boolean longtime) {
+        final String text = context.getString(textid);
+        showToastTip(context, text, longtime);
+    }
+
+    public static void showToastTip(final Context context, final String text, final boolean longtime) {
+        ThreadHelper.runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context, text, longtime ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
