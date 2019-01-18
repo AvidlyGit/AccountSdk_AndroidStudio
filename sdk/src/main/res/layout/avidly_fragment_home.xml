@@ -27,7 +27,7 @@
             android:elevation="@dimen/avidly_dimen_4dp"
             android:gravity="center"
             android:text="@string/avidly_string_guest_login"
-            android:textColor="@color/avildy_color_white"
+            android:textColor="@color/avidly_color_white"
             android:textSize="@dimen/avidly_dimen_text_size_14sp" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:elevation="@dimen/avidly_dimen_4dp"
             android:gravity="center"
             android:text="@string/avidly_string_avidly_login"
-            android:textColor="@color/avildy_color_white"
+            android:textColor="@color/avidly_color_white"
             android:textSize="@dimen/avidly_dimen_text_size_14sp" />
 
         <LinearLayout

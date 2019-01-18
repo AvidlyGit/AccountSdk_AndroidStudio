@@ -47,7 +47,7 @@
             android:clickable="true"
             android:gravity="center"
             android:text="@string/avidly_string_switch_user"
-            android:textColor="@color/avildy_color_white"
+            android:textColor="@color/avidly_color_white"
             android:textSize="@dimen/avidly_dimen_text_size_12sp" />
     </LinearLayout>
 </FrameLayout>

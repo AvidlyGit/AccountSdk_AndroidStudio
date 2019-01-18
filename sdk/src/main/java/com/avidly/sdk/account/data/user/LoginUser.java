@@ -39,6 +39,10 @@ public class LoginUser extends JsonData {
         return findAccountByMode(loginedMode);
     }
 
+    public Account findActivedAccount() {
+        return findAccountByMode(loginedMode);
+    }
+
     public Account findAccountByMode(int mode) {
         if (accounts.size() == 0) {
             return null;

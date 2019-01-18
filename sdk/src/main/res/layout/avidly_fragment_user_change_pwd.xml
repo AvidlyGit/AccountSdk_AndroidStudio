@@ -3,7 +3,7 @@
              xmlns:app="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="@color/avildy_color_white"
+             android:background="@color/avidly_color_white"
              android:orientation="vertical">
 
     <include
@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/avidly_user_manager_pwd_marginbottom"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <EditText
@@ -28,7 +29,7 @@
             android:digits="@string/avildy_editor_number_letter_digits"
             android:hint="@string/avidly_string_userpwd_alter_old_hit"
             android:imeOptions="actionNext"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:lines="1"
             android:maxLength="16"
             android:maxLines="1"
@@ -49,7 +50,7 @@
             android:digits="@string/avildy_editor_number_letter_digits"
             android:hint="@string/avidly_string_userpwd_alter_new_hit"
             android:imeOptions="actionNext"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:lines="1"
             android:maxLength="16"
             android:maxLines="1"
@@ -70,7 +71,7 @@
             android:digits="@string/avildy_editor_number_letter_digits"
             android:hint="@string/avidly_string_userpwd_alter_new_hit2"
             android:imeOptions="actionDone"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:lines="1"
             android:maxLength="16"
             android:maxLines="1"
@@ -82,18 +83,32 @@
             android:textSize="16sp"
             />
 
-        <Button
-            android:id="@+id/avidly_fragment_user_change_pwd_btn"
+
+        <android.support.v7.widget.CardView
             android:layout_width="@dimen/avidly_user_account_editor_width"
             android:layout_height="@dimen/avidly_user_account_editor_height"
+            android:layout_marginLeft="@dimen/avidly_dimen_20dp"
             android:layout_marginTop="@dimen/avidly_user_account_editor_between_distance"
-            android:background="@drawable/avidly_button_oval_red"
-            android:gravity="center_vertical"
-            android:text="@string/avidly_string_userpwd_alter_btn"
-            android:textAlignment="center"
-            android:textColor="@color/avildy_color_white"
-            android:textSize="@dimen/avidly_dimen_text_size_14sp"
-            />
+            android:layout_marginRight="@dimen/avidly_dimen_20dp"
+            android:layout_marginBottom="@dimen/avidly_dimen_40dp"
+            app:cardBackgroundColor="@color/avidly_color_card_background"
+            app:cardCornerRadius="19dp"
+            app:cardElevation="8dp"
+            >
+
+            <Button
+                android:id="@+id/avidly_fragment_user_change_pwd_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/avidly_button_oval_red"
+                android:gravity="center_vertical"
+                android:text="@string/avidly_string_userpwd_alter_btn"
+                android:textAlignment="center"
+                android:textColor="@color/avidly_color_white"
+                android:textSize="@dimen/avidly_dimen_text_size_14sp"
+                />
+
+        </android.support.v7.widget.CardView>
 
         <!--<android.support.v7.widget.CardView-->
         <!--android:id="@+id/card_title_banner"-->

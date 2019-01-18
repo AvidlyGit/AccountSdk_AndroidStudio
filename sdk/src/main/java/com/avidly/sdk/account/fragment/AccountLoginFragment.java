@@ -50,12 +50,10 @@ public class AccountLoginFragment extends DialogFragment implements View.OnClick
 
         View bindLayout = view.findViewById(R.id.avidly_login_layout_bind);
         View notBindLayout = view.findViewById(R.id.avidly_login_layout_not_bind);
-
-
+        
         if (mOperationType == Constants.LOGIN_TYPE_BIND) {
             bindLayout.setVisibility(View.VISIBLE);
             notBindLayout.setVisibility(View.GONE);
-
 
         } else {
             bindLayout.setVisibility(View.GONE);
@@ -64,8 +62,6 @@ public class AccountLoginFragment extends DialogFragment implements View.OnClick
             mTabLayout = view.findViewById(R.id.avidly_tab_layout);
             mViewPager = view.findViewById(R.id.avidly_tab_pager);
             mPagerAdapter = new AvidlyPagerAdapter(getChildFragmentManager());
-            mPagerAdapter.addFragment(new AccountLoginSubFragment());
-            mPagerAdapter.addTitle(getString(R.string.avidly_string_user_login));
             mPagerAdapter.addFragment(new AccountLoginSubFragment());
             mPagerAdapter.addTitle(getString(R.string.avidly_string_user_login));
             mPagerAdapter.addFragment(new AccountRegistSubFragment());

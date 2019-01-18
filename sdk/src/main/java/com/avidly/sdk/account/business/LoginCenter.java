@@ -12,9 +12,17 @@ import com.avidly.sdk.account.activity.AccountLoginActivity;
 import com.avidly.sdk.account.data.user.LoginUser;
 import com.avidly.sdk.account.data.user.LoginUserManager;
 
+import java.lang.ref.WeakReference;
+
 public class LoginCenter {
 
     private static int gameOrietation = 99999;
+
+    private static WeakReference<Context> sContext;
+
+    public static Context getContext() {
+        return sContext == null ? null : sContext.get();
+    }
 
     public static void checkScreenOrietation(Context context) {
         LoginCenter.gameOrietation = context.getResources().getConfiguration().orientation;
@@ -52,6 +60,17 @@ public class LoginCenter {
     }
 
     public static void loginNow(Context context) {
+
+        if (context == null) {
+            throw new RuntimeException("context is null, fail to login.");
+        }
+        if (sContext == null || sContext.get() == null) {
+            if (sContext != null) {
+                sContext.clear();
+            }
+            sContext = new WeakReference<>(context.getApplicationContext());
+        }
+
         // 从缓存中读取上次登陆的帐号数据
         LoginUserManager.freshUserCache(context);
 

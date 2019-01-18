@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="avildy_color_white">#FFFFFFFF</color>
+    <color name="avidly_color_white">#FFFFFFFF</color>
     <color name="avidly_color_translucent">#AB000000</color>
     <color name="avidly_color_transparent">#00000000</color>
 
@@ -17,5 +17,7 @@
 
     <color name="avidly_color_common_line_gray">#19000000</color>
     <color name="avidly_color_common_text_black">#030303</color>
+
+    <color name="avidly_color_card_background">#173143</color>
 
 </resources>
