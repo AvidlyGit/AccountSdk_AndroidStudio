@@ -50,7 +50,7 @@
                 android:digits="@string/avildy_editor_number_letter_digits"
                 android:hint="@string/avidly_string_userpwd_lookup_eidtor_hit"
                 android:imeOptions="actionDone"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:lines="1"
                 android:maxLength="120"
                 android:maxLines="1"
