@@ -2,9 +2,9 @@ package com.avidly.sdk.account.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -12,16 +12,15 @@ import android.widget.TextView;
 import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.business.LoginPresenter;
 import com.avidly.sdk.account.business.LoginPresenterImpl;
-import com.avidly.sdk.account.listener.AccountHomeListener;
-import com.avidly.sdk.account.listener.AccountLoadingListener;
-import com.avidly.sdk.account.listener.AccountLoginListener;
 import com.avidly.sdk.account.fragment.AccountHomeFragment;
 import com.avidly.sdk.account.fragment.AccountLoadingFragment;
 import com.avidly.sdk.account.fragment.AccountLoginFragment;
-
+import com.avidly.sdk.account.listener.AccountHomeListener;
+import com.avidly.sdk.account.listener.AccountLoadingListener;
+import com.avidly.sdk.account.listener.AccountLoginListener;
 import com.sdk.avidly.account.R;
 
-public class AccountLoginActivity extends FragmentActivity implements AccountLoginView,
+public class AccountLoginActivity extends AppCompatActivity implements AccountLoginView,
         AccountHomeListener, AccountLoadingListener, AccountLoginListener {
     private static final String TAG = "AccountLoginSdk";
 
@@ -86,7 +85,15 @@ public class AccountLoginActivity extends FragmentActivity implements AccountLog
     @Override
     public void onGuestLoginClicked() {
         Log.i(TAG, "onGuestLoginClicked: ");
-        mPresenter.accountLogin();
+
+        AccountLoginFragment loginFragment = AccountLoginFragment.newInstance(Constants.LOGIN_TYPE_BIND);
+        loginFragment.setCallback(this);
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.replace(R.id.avidly_fragment_login, loginFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+//        mPresenter.accountLogin();
     }
 
     @Override

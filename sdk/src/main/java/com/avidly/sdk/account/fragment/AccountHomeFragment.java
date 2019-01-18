@@ -37,12 +37,12 @@ public class AccountHomeFragment extends DialogFragment implements View.OnClickL
 
     @Override
     public void onClick(View view) {
+        int id = view.getId();
         if (mCallback == null) {
 
             return;
         }
 
-        int id = view.getId();
         if (id == R.id.guest_login) {
             mCallback.onGuestLoginClicked();
         }

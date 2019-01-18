@@ -1,18 +1,16 @@
 package com.avidly.sdk.account.fragment;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.listener.AccountLoginListener;
+import com.avidly.sdk.account.view.AvidlyPagerAdapter;
 import com.sdk.avidly.account.R;
 
 /**
@@ -22,27 +20,12 @@ import com.sdk.avidly.account.R;
  */
 public class AccountLoginFragment extends DialogFragment implements View.OnClickListener {
     private AccountLoginListener mCallback;
+    private TabLayout mTabLayout;
+    private ViewPager mViewPager;
+    private AvidlyPagerAdapter mPagerAdapter;
+
     private int mOperationType = Constants.LOGIN_TYPE_LOGIN;
     private static String OPERATION_KEY = "operation";
-    private boolean isOpenEye = false;
-    private boolean isAgreeProtocol = true;
-
-    private TextView mUserBindTitle;
-    private TextView mUserLoginTitle;
-    private TextView mUserRegistTitle;
-    private TextView mLine1;
-    private TextView mLine2;
-
-    private EditText mInputEmail;
-    private EditText mInputPassword;
-    private ImageView mIconClear;
-    private ImageView mIconEye;
-    private TextView mActionButton;
-
-    private View mForgotPassword;
-    private View mAgreeProtocol;
-    private View mReadProtocol;
-    private View mProtocolLayout;
 
     public static AccountLoginFragment newInstance(int operationType) {
         AccountLoginFragment loginFragment = new AccountLoginFragment();
@@ -63,153 +46,49 @@ public class AccountLoginFragment extends DialogFragment implements View.OnClick
         View iconBack = view.findViewById(R.id.avidly_login_back);
         iconBack.setOnClickListener(this);
 
-        mUserBindTitle = view.findViewById(R.id.avidly_user_bind_title);
-        mUserLoginTitle = view.findViewById(R.id.avidly_user_login_title);
-        mUserLoginTitle.setOnClickListener(this);
-        mUserRegistTitle = view.findViewById(R.id.avidly_user_register_title);
-        mUserRegistTitle.setOnClickListener(this);
+        mOperationType = getArguments().getInt(OPERATION_KEY);
 
-        mLine1 = view.findViewById(R.id.avidly_login_line_1);
-        mLine2 = view.findViewById(R.id.avidly_login_line_2);
+        View bindLayout = view.findViewById(R.id.avidly_login_layout_bind);
+        View notBindLayout = view.findViewById(R.id.avidly_login_layout_not_bind);
 
-        mInputEmail = view.findViewById(R.id.avidly_input_email);
-        mInputPassword = view.findViewById(R.id.avidly_input_password);
-        mIconClear = view.findViewById(R.id.avidly_icon_clear);
-        mIconClear.setOnClickListener(this);
-        mIconEye = view.findViewById(R.id.avidly_icon_eye);
-        mIconEye.setOnClickListener(this);
-        mActionButton = view.findViewById(R.id.avidly_account_action);
-        mActionButton.setOnClickListener(this);
 
-        mForgotPassword = view.findViewById(R.id.avidly_forgot_password);
-        mForgotPassword.setOnClickListener(this);
-        mAgreeProtocol = view.findViewById(R.id.avidly_agree_protocol);
-        mAgreeProtocol.setOnClickListener(this);
-        mAgreeProtocol.setSelected(isAgreeProtocol);
-        mReadProtocol = view.findViewById(R.id.avidly_read_protocol);
-        mReadProtocol.setOnClickListener(this);
-        mProtocolLayout = view.findViewById(R.id.avidly_protocol_layout);
-
-        if (getArguments() != null) {
-            mOperationType = getArguments().getInt(OPERATION_KEY);
-        }
-        switchUiFromType();
-        return view;
-    }
-
-    private void switchUiFromType() {
         if (mOperationType == Constants.LOGIN_TYPE_BIND) {
-            mUserBindTitle.setTextColor(getResources().getColor(R.color.avildy_color_text_4));
-            mUserBindTitle.setVisibility(View.VISIBLE);
+            bindLayout.setVisibility(View.VISIBLE);
+            notBindLayout.setVisibility(View.GONE);
 
-            mUserLoginTitle.setVisibility(View.GONE);
-            mUserRegistTitle.setVisibility(View.GONE);
 
-            mIconClear.setVisibility(View.GONE);
-            mIconEye.setVisibility(View.GONE);
-            mLine1.setVisibility(View.VISIBLE);
-            mLine2.setVisibility(View.VISIBLE);
+        } else {
+            bindLayout.setVisibility(View.GONE);
+            notBindLayout.setVisibility(View.VISIBLE);
 
-            mActionButton.setText(R.string.avidly_string_action_bind);
-            mForgotPassword.setVisibility(View.GONE);
-            mProtocolLayout.setVisibility(View.VISIBLE);
+            mTabLayout = view.findViewById(R.id.avidly_tab_layout);
+            mViewPager = view.findViewById(R.id.avidly_tab_pager);
+            mPagerAdapter = new AvidlyPagerAdapter(getChildFragmentManager());
+            mPagerAdapter.addFragment(new AccountLoginSubFragment());
+            mPagerAdapter.addTitle(getString(R.string.avidly_string_user_login));
+            mPagerAdapter.addFragment(new AccountLoginSubFragment());
+            mPagerAdapter.addTitle(getString(R.string.avidly_string_user_login));
+            mPagerAdapter.addFragment(new AccountRegistSubFragment());
+            mPagerAdapter.addTitle(getString(R.string.avidly_string_user_regist));
+            mViewPager.setAdapter(mPagerAdapter);
+            mTabLayout.setupWithViewPager(mViewPager, false);
         }
 
-        if (mOperationType == Constants.LOGIN_TYPE_LOGIN) {
-            mUserLoginTitle.setTextColor(getResources().getColor(R.color.avildy_color_text_4));
-            mUserLoginTitle.setVisibility(View.VISIBLE);
-
-            mUserRegistTitle.setTextColor(getResources().getColor(R.color.avildy_color_text_2));
-            mUserRegistTitle.setVisibility(View.VISIBLE);
-
-            mUserBindTitle.setVisibility(View.GONE);
-
-            mIconClear.setVisibility(View.VISIBLE);
-            mIconEye.setVisibility(View.VISIBLE);
-            mLine1.setVisibility(View.VISIBLE);
-            mLine2.setVisibility(View.INVISIBLE);
-
-            mActionButton.setText(R.string.avidly_string_action_login);
-            mForgotPassword.setVisibility(View.VISIBLE);
-            mProtocolLayout.setVisibility(View.GONE);
-        }
-
-        if (mOperationType == Constants.LOGIN_TYPE_REGIST) {
-            mUserLoginTitle.setTextColor(getResources().getColor(R.color.avildy_color_text_2));
-            mUserLoginTitle.setVisibility(View.VISIBLE);
-
-            mUserRegistTitle.setTextColor(getResources().getColor(R.color.avildy_color_text_4));
-            mUserRegistTitle.setVisibility(View.VISIBLE);
-
-            mUserBindTitle.setVisibility(View.GONE);
-
-            mIconClear.setVisibility(View.GONE);
-            mIconEye.setVisibility(View.GONE);
-            mLine1.setVisibility(View.INVISIBLE);
-            mLine2.setVisibility(View.VISIBLE);
-
-            mActionButton.setText(R.string.avidly_string_action_regist);
-            mForgotPassword.setVisibility(View.GONE);
-            mProtocolLayout.setVisibility(View.VISIBLE);
-        }
+        return view;
     }
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
-
-        if (id == R.id.avidly_user_login_title) {
-            mOperationType = Constants.LOGIN_TYPE_LOGIN;
-            switchUiFromType();
-        }
-        if (id == R.id.avidly_user_register_title) {
-            mOperationType = Constants.LOGIN_TYPE_REGIST;
-            switchUiFromType();
-        }
-        if (id == R.id.avidly_icon_clear) {
-            mInputEmail.setText("");
-        }
-        if (id == R.id.avidly_icon_eye) {
-            if (!isOpenEye) {
-                mIconEye.setSelected(true);
-                isOpenEye = true;
-                mInputPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            } else {
-                mIconEye.setSelected(false);
-                isOpenEye = false;
-                mInputPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-            }
-            mInputPassword.setSelection(mInputPassword.getText().length());
-        }
-        if (id == R.id.avidly_agree_protocol) {
-            if (isAgreeProtocol) {
-                isAgreeProtocol = false;
-                mAgreeProtocol.setSelected(false);
-            } else {
-                isAgreeProtocol = true;
-                mAgreeProtocol.setSelected(true);
-            }
-        }
-
         if (mCallback == null) {
+
             return;
         }
 
         if (id == R.id.avidly_login_back) {
             mCallback.onBackToHomePressed();
         }
-        if (id == R.id.avidly_forgot_password) {
-            mCallback.onForgotPasswordClicked();
-        }
-        if (id == R.id.avidly_read_protocol) {
-            mCallback.onReadProtocolClicked();
-        }
-        if (id == R.id.avidly_account_action) {
-            if (mOperationType == Constants.LOGIN_TYPE_LOGIN) {
-                mCallback.onAccountLogin();
-            } else {
-                mCallback.onAccountRegist();
-            }
-        }
     }
 }
+
+

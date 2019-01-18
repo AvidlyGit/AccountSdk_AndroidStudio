@@ -4,8 +4,7 @@
     <color name="avidly_color_translucent">#AB000000</color>
     <color name="avidly_color_transparent">#00000000</color>
 
-    <color name="avildy_color_view_start">#FFF56685</color>
-    <color name="avildy_color_view_end">#FFF98483</color>
+    <color name="avildy_color_error_bg">#FFF56685</color>
     <color name="avildy_color_line_gray">#FFC4D4E6</color>
     <color name="avildy_color_line_red">#FFF88383</color>
 

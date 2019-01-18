@@ -34,12 +34,12 @@ public class AccountLoadingFragment extends DialogFragment implements View.OnCli
 
     @Override
     public void onClick(View view) {
+        int id = view.getId();
         if (mCallback == null) {
 
             return;
         }
 
-        int id = view.getId();
         if (id == R.id.avidly_switch_user) {
             mCallback.onSwitchAccountClicked();
         }

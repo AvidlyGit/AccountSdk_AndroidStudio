@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/avidly_dimen_36dp"
-        android:background="@color/avildy_color_view_start">
+        android:background="@color/avildy_color_error_bg">
 
         <TextView
             android:id="@+id/avidly_error_message"

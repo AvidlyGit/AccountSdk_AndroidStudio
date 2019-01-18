@@ -1,20 +1,5 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-
-    <solid android:color="@color/avildy_color_white" />
-
-    <stroke
-        android:width="@dimen/avidly_dimen_2dp"
-        android:color="@color/avildy_color_view_start" />
-
-    <!-- 内填充颜色 -->
-    <padding
-        android:bottom="@dimen/avidly_dimen_8dp"
-        android:left="@dimen/avidly_dimen_8dp"
-        android:right="@dimen/avidly_dimen_8dp"
-        android:top="@dimen/avidly_dimen_8dp" />
-
-    <!-- 圆角 -->
-    <corners android:radius="@dimen/avidly_dimen_8dp" />
-
-</shape>
+<?xml version="1.0" encoding="UTF-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/avidly_edit_text_normal" android:state_focused="false" />
+    <item android:drawable="@drawable/avidly_edit_text_focused" android:state_focused="true" />
+</selector>
