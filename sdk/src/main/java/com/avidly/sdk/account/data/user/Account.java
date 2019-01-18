@@ -18,6 +18,8 @@ public class Account extends JsonData {
 
     public String nickname;
 
+    public boolean isBinded;
+
     @Override
     protected void parseJsonString(JSONObject jsonObject) {
         super.parseJsonString(jsonObject);
@@ -26,6 +28,7 @@ public class Account extends JsonData {
             this.nickname = jsonObject.optString("nickname");
             this.accountPwd = jsonObject.optString("accountPwd");
             this.mode = jsonObject.optInt("mode");
+            this.isBinded = jsonObject.optBoolean("isBinded");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -39,6 +42,7 @@ public class Account extends JsonData {
             object.put("nickname", nickname);
             object.put("accountPwd", accountPwd);
             object.put("mode", mode);
+            object.put("isBinded", isBinded);
         } catch (Exception e) {
             e.printStackTrace();
         }
