@@ -2,8 +2,6 @@ package com.avildy.account.app;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
-
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -22,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.login_id).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AvidlyAccountSdk.accountLogin(MainActivity.this);
+                AvidlyAccountSdk.accountLogin(MainActivity.this, "610322");
             }
         });
 

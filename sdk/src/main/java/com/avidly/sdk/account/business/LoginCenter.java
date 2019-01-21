@@ -16,12 +16,22 @@ import java.lang.ref.WeakReference;
 
 public class LoginCenter {
 
+    private static String productId;
+
     private static int gameOrietation = 99999;
 
     private static WeakReference<Context> sContext;
 
     public static Context getContext() {
         return sContext == null ? null : sContext.get();
+    }
+
+    public static String getProductId() {
+        return productId;
+    }
+
+    public static void setProductId(String productId) {
+        LoginCenter.productId = productId;
     }
 
     public static void checkScreenOrietation(Context context) {

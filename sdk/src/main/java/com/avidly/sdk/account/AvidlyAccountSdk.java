@@ -9,7 +9,8 @@ import com.avidly.sdk.account.business.LoginCenter;
 
 public class AvidlyAccountSdk {
 
-    public static void accountLogin(Context context) {
+    public static void accountLogin(Context context, String productid) {
+        LoginCenter.setProductId(productid);
         LoginCenter.loginNow(context);
     }
 
