@@ -1,5 +1,7 @@
 package com.avidly.sdk.account.business;
 
+import com.avidly.sdk.account.data.user.LoginUser;
+
 /**
  * Created by t.wang on 2019/1/17.
  * <p>
@@ -7,6 +9,12 @@ package com.avidly.sdk.account.business;
  */
 public interface LoginPresenter {
 
-    void accountLogin();
+    void guestLogin(LoginUser user);
+
+    void accountLogin(String email, String password);
+
+    void facebookLogin(LoginUser user);
+
+    void accountRegistOrBind(String gameGuestId, String email, String password);
 
 }

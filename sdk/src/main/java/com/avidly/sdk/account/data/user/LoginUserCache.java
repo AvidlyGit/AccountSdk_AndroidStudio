@@ -33,7 +33,7 @@ public class LoginUserCache {
             }
         }
 
-        if (guestUser == null) {
+        if (accountUser == null) {
             String account = spHelper.getString("account_user");
             if (!TextUtils.isEmpty(account)) {
                 accountUser = new LoginUser();

@@ -44,6 +44,7 @@ public class LoginUserManager {
 
     /**
      * 获取上次登陆成功的用户对象
+     *
      * @return
      */
     public static LoginUser getCurrentActiveLoginUser() {
@@ -60,9 +61,10 @@ public class LoginUserManager {
 
     /**
      * 游客登陆成功后调用此方法，记得调用saveAccountUsers()保存用户数据
+     *
      * @param ggid
      */
-    public static void onGuestLoginSuccess(String ggid) {
+    public static LoginUser onGuestLoginSuccess(String ggid) {
         // 创建游客帐号用户
         getOrCreateGuestLoginUser();
         // 游客帐号登入
@@ -70,10 +72,13 @@ public class LoginUserManager {
 
         // 帐号用户登出
         logoutAccountUser();
+
+        return cache.guestUser;
     }
 
     /**
      * 帐号用户登陆成功后调用此方法，记得调用saveAccountUsers()保存用户数据
+     *
      * @param mod
      * @param ggid
      * @return 返回LoginUser，用于更新更多其它的数据

@@ -10,7 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.base.utils.Utils;
+import com.avidly.sdk.account.data.user.Account;
+import com.avidly.sdk.account.data.user.LoginUser;
+import com.avidly.sdk.account.data.user.LoginUserManager;
 import com.avidly.sdk.account.request.HttpCallback;
 import com.avidly.sdk.account.request.HttpRequest;
 import com.avidly.sdk.account.request.URLConstant;
@@ -118,19 +122,20 @@ public class AccountUserPwdAlterFragment extends Fragment {
             return;
         }
 
+        String userName = LoginUserManager.getAccountLoginUser().findAccountByMode(Account.ACCOUNT_MODE_AVIDLY).accountName;
         odlpwd = Utils.textOfMd5(odlpwd);
         newpwd1 = Utils.textOfMd5(newpwd1);
-        String url = URLConstant.getAlterPwdAPI(odlpwd, newpwd1);
-        Log.i("xxxx", "alter pwd url:" + url);
+        String url = URLConstant.getAlterPwdAPI(userName, odlpwd, newpwd1);
+        LogUtils.i("alter pwd url:" + url);
         HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
             @Override
             public void onResponseSuccess(String result) {
-                Log.i("xxxx", "onResponseSuccess:" + result);
+                LogUtils.i("onResponseSuccess:" + result);
             }
 
             @Override
             public void onResponedFail(Throwable e, int code) {
-                Log.i("xxxx", "onResponedFail, exception:" + e + ", code:" + code);
+                LogUtils.i("onResponedFail, exception:" + e + ", code:" + code);
             }
         });
 

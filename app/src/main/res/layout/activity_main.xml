@@ -5,36 +5,39 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:padding="8dp"
     tools:context="com.avildy.account.app.MainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/main_linear_margintop"
-        android:gravity="center"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_orange_light"
+            android:gravity="center"
+            android:text="黄色是游戏背景..."
+            android:textSize="24dp" />
 
         <Button
             android:id="@+id/login_id"
-            android:layout_width="@dimen/main_button_width"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="login" />
+            android:layout_marginTop="32dp"
+            android:layout_marginLeft="16dp"
+            android:text="登录" />
 
         <Button
             android:id="@+id/usermanager_id"
-            android:layout_width="@dimen/main_button_width"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/main_button_margintop"
-            android:text="user manager" />
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="16dp"
+            android:text="用户中心" />
 
-        <Button
-            android:id="@+id/user_lookuppwd_id"
-            android:layout_width="@dimen/main_button_width"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/main_button_margintop"
-            android:text="lookup password" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

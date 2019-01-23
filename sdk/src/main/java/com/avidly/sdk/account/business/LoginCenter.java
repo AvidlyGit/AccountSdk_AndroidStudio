@@ -8,15 +8,19 @@ import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.avidly.sdk.account.AvidlyAccountLoginCallback;
 import com.avidly.sdk.account.activity.AccountLoginActivity;
+import com.avidly.sdk.account.base.Constants;
+import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.data.user.LoginUser;
 import com.avidly.sdk.account.data.user.LoginUserManager;
 
 import java.lang.ref.WeakReference;
 
 public class LoginCenter {
-
     private static String productId;
+
+    private static AvidlyAccountLoginCallback loginCallback;
 
     private static int gameOrietation = 99999;
 
@@ -34,11 +38,19 @@ public class LoginCenter {
         LoginCenter.productId = productId;
     }
 
+    public static AvidlyAccountLoginCallback getLoginCallback() {
+        return loginCallback;
+    }
+
+    public static void setLoginCallback(AvidlyAccountLoginCallback loginCallback) {
+        LoginCenter.loginCallback = loginCallback;
+    }
+
     public static void checkScreenOrietation(Context context) {
         LoginCenter.gameOrietation = context.getResources().getConfiguration().orientation;
-        Log.i("xxxxx", "orientation: " + LoginCenter.gameOrietation);
+        LogUtils.i("orientation: " + LoginCenter.gameOrietation);
         if (!LoginCenter.isScreenLandscape() && !LoginCenter.isScreenPortrait()) {
-            Log.i("xxxxx", "orientation is nukown ");
+            LogUtils.i("orientation is nukown ");
             if (context instanceof Activity) {
                 int screenWidth, screenHeight;
                 WindowManager windowManager = ((Activity) context).getWindowManager();
@@ -50,7 +62,7 @@ public class LoginCenter {
                 } else {
                     LoginCenter.gameOrietation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
                 }
-                Log.i("xxxxx", "check orientation: " + LoginCenter.gameOrietation);
+                LogUtils.i("check orientation: " + LoginCenter.gameOrietation);
             }
         }
     }
@@ -87,40 +99,48 @@ public class LoginCenter {
         LoginCenter.checkScreenOrietation(context);
 
         LoginUser accountUser = LoginUserManager.getAccountLoginUser();
-        if (accountUser != null) {
-            if (accountUser.isActived) {
-                // 上次登陆是帐号登陆（即非游客登陆）
-                if (accountUser.isNowLogined) {
-                    // 已经登陆，不需要重复登陆
-                    Log.i("xxxx", "已经帐号登陆，不需要重复登陆");
-                    return;
+        if (accountUser != null && accountUser.isActived) {
+            // 上次登陆是帐号登陆（即非游客登陆）
+            if (accountUser.isNowLogined) {
+                LogUtils.w("已经帐号登陆，不需要重复登陆");
+                if (loginCallback != null) {
+                    loginCallback.onLoginSuccess(accountUser.ggid);
                 }
-                continueLogin(context, accountUser);
                 return;
             }
+
+            continueLogin(context, accountUser);
+            return;
         }
 
         LoginUser guestUser = LoginUserManager.getGuestLoginUser();
         if (guestUser != null && guestUser.isActived) {
             if (guestUser.isNowLogined) {
-                Log.i("xxxx", "已经游客登陆，不需要重复登陆");
-                return;
-            } else {
-                // 重新登录
-                continueLogin(context, guestUser);
+                LogUtils.w("已经游客登陆，不需要重复登陆");
+                if (loginCallback != null) {
+                    loginCallback.onLoginSuccess(accountUser.ggid);
+                }
                 return;
             }
+
+            continueLogin(context, guestUser);
+            return;
         }
 
         newLogin(context);
     }
 
     private static void newLogin(Context context) {
-        context.startActivity(new Intent(context, AccountLoginActivity.class));
+        Intent intent = new Intent(context, AccountLoginActivity.class);
+        intent.setAction(Constants.INTENT_KEY_ACTION_LOGIN);
+        context.startActivity(intent);
     }
 
     private static void continueLogin(Context context, LoginUser user) {
-        context.startActivity(new Intent(context, AccountLoginActivity.class));
+        Intent intent = new Intent(context, AccountLoginActivity.class);
+        intent.setAction(Constants.INTENT_KEY_ACTION_LOGIN);
+        intent.putExtra(Constants.INTENT_KEY_LOGINED_USER, user);
+        context.startActivity(intent);
     }
 
 }

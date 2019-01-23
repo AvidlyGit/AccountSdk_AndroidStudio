@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -69,17 +70,24 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/avidly_account_action"
-        android:layout_width="@dimen/avidly_dimen_250dp"
-        android:layout_height="@dimen/avidly_dimen_36dp"
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/avidly_dimen_8dp"
-        android:background="@drawable/avidly_button_oval_red"
-        android:clickable="true"
-        android:elevation="@dimen/avidly_dimen_4dp"
-        android:gravity="center"
-        android:textColor="@color/avidly_color_white"
-        android:textSize="@dimen/avidly_dimen_text_size_14sp" />
+        app:cardBackgroundColor="@color/avidly_color_card_background"
+        app:cardCornerRadius="@dimen/avidly_dimen_18dp"
+        app:cardElevation="@dimen/avidly_dimen_4dp">
+
+        <TextView
+            android:id="@+id/avidly_account_action"
+            android:layout_width="@dimen/avidly_dimen_250dp"
+            android:layout_height="@dimen/avidly_dimen_36dp"
+            android:background="@drawable/avidly_button_oval_red"
+            android:clickable="true"
+            android:gravity="center"
+            android:textColor="@color/avidly_color_white"
+            android:textSize="@dimen/avidly_dimen_text_size_14sp" />
+    </android.support.v7.widget.CardView>
 
     <LinearLayout
         android:id="@+id/avidly_forgot_password"

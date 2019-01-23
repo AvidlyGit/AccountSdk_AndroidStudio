@@ -1,5 +1,6 @@
 package com.avidly.sdk.account.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -7,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.avidly.sdk.account.activity.AccountLoginActivity;
 import com.avidly.sdk.account.adapter.BaseAdapter;
+import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.data.adapter.UserOperationData;
 import com.sdk.avidly.account.R;
 
@@ -79,8 +82,10 @@ public class AccountUserRootFragment extends BaseFragment {
         public void onItemClick(Object data, int type) {
             switch (type) {
                 case UserOperationData.USER_OPERATION_TYPE_AVIDLY:
+                    toBindAvidlyAccount();
                     break;
                 case UserOperationData.USER_OPERATION_TYPE_SWITCH:
+                    toSwithAccount();
                     break;
                 case UserOperationData.USER_OPERATION_TYPE_BIND_OTHER:
                     showBindOtherAccountUI();
@@ -99,6 +104,18 @@ public class AccountUserRootFragment extends BaseFragment {
 
         }
     };
+
+    private void toBindAvidlyAccount() {
+        Intent intent = new Intent(getActivity(), AccountLoginActivity.class);
+        intent.setAction(Constants.INTENT_KEY_ACTION_BIND);
+        getActivity().startActivity(intent);
+    }
+
+    private void toSwithAccount() {
+        Intent intent = new Intent(getActivity(), AccountLoginActivity.class);
+        intent.setAction(Constants.INTENT_KEY_ACTION_SWITCH);
+        getActivity().startActivity(intent);
+    }
 
     private void showChangePasswordUI() {
         getView().findViewById(R.id.avidly_fragment_user_alter_pwd_root).setVisibility(View.VISIBLE);

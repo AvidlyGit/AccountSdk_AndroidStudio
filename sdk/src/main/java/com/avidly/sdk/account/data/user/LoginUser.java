@@ -4,10 +4,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoginUser extends JsonData {
+public class LoginUser extends JsonData implements Serializable {
 
     List<Account> accounts = new ArrayList<>(5);
 
@@ -33,6 +34,10 @@ public class LoginUser extends JsonData {
 
     public void setLoginedMode(int mode) {
         loginedMode = mode;
+    }
+
+    public int getLoginedMode() {
+        return loginedMode;
     }
 
     public Account findActivedAccount() {

@@ -62,5 +62,6 @@
     <string name="avidly_string_user_alter_pwd_short_length">密码太短，请输入6~16位的密码</string>
     <string name="avidly_string_user_alter_pwd_long_lenght">密码太长，请输入6~16位的密码</string>
 
+    <string name="avidly_string_protocol_url">http://www.baidu.com</string>
 
 </resources>

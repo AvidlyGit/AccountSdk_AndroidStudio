@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.avidly.sdk.account.base.Constants;
+import com.avidly.sdk.account.base.utils.Md5Utils;
 import com.sdk.avidly.account.R;
 
 /**
@@ -17,8 +19,9 @@ public class AccountLoginSubFragment extends AccountBaseSubFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.avidly_fragment_login_sub, container, false);
+        mSubFragmentType = Constants.SUB_FRAGMENT_TYPE_LOGIN;
 
+        View view = inflater.inflate(R.layout.avidly_fragment_login_sub, container, false);
         super.initView(view);
 
         mActionButton.setText(getString(R.string.avidly_string_action_login));
@@ -31,6 +34,18 @@ public class AccountLoginSubFragment extends AccountBaseSubFragment {
     @Override
     public void onClick(View view) {
         super.onClick(view);
+
+        int id = view.getId();
+        if (mLoginListener == null) {
+
+            return;
+        }
+
+        if (id == R.id.avidly_account_action) {
+            if (checkInputValid()) {
+                mLoginListener.onAccountLoginClicked(mInputEmail.getText().toString(), mPassword);
+            }
+        }
     }
 
 }
