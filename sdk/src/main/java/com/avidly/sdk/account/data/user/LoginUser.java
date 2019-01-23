@@ -35,10 +35,6 @@ public class LoginUser extends JsonData {
         loginedMode = mode;
     }
 
-    public Account getLoginedAccount() {
-        return findAccountByMode(loginedMode);
-    }
-
     public Account findActivedAccount() {
         return findAccountByMode(loginedMode);
     }
