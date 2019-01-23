@@ -40,10 +40,6 @@ public class LoginUser extends JsonData implements Serializable {
         return loginedMode;
     }
 
-    public Account getLoginedAccount() {
-        return findAccountByMode(loginedMode);
-    }
-
     public Account findActivedAccount() {
         return findAccountByMode(loginedMode);
     }

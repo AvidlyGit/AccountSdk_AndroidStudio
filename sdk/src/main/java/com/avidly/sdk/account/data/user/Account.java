@@ -16,9 +16,9 @@ public class Account extends JsonData {
 
     public String accountPwd; // 密码
 
-    public String nickname;
+    public String nickname; // 昵称
 
-    public boolean isBinded;
+    public boolean isBinded; // 是否绑定到ggid
 
     @Override
     protected void parseJsonString(JSONObject jsonObject) {
