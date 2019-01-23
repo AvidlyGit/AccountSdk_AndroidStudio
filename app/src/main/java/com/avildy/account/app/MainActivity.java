@@ -23,7 +23,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mLoginButton = findViewById(R.id.login_id);
+        mUserCenterButton = findViewById(R.id.usermanager_id);
+
         startLogin();
+
 //        mLoginButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -31,14 +34,12 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        mUserCenterButton = findViewById(R.id.usermanager_id);
         mUserCenterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AvidlyAccountSdk.showUserManagerUI(MainActivity.this);
             }
         });
-
     }
 
     private void startLogin() {
