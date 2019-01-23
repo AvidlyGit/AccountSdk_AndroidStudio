@@ -54,12 +54,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0.2dp"
-                android:alpha="0.6"
+                android:alpha="0.3"
                 android:background="@color/avildy_color_line_gray"
                 android:elevation="2dp" />
 
             <fragment
-                android:id="@+id/avidly_user_bind"
+                android:id="@+id/avidly_new_user_bind"
                 android:name="com.avidly.sdk.account.fragment.AccountBindSubFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -83,7 +83,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0.2dp"
-                android:alpha="0.6"
+                android:alpha="0.3"
                 android:background="@color/avildy_color_line_gray"
                 android:elevation="2dp" />
 

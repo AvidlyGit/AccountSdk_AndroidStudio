@@ -56,6 +56,6 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
         });
 
         TextView textView = view.findViewById(R.id.avidly_user_common_title_textview);
-        textView.setText(R.string.avidly_string_userpwd_lookup_title);
+        textView.setText(R.string.avidly_string_userpwd_lookup_btn);
     }
 }

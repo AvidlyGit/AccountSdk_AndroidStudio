@@ -1,17 +1,23 @@
 package com.avidly.sdk.account.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.avidly.sdk.account.AvidlyAccountSdk;
 import com.avidly.sdk.account.base.Constants;
+import com.avidly.sdk.account.base.utils.LogUtils;
+import com.avidly.sdk.account.business.LoginCenter;
 import com.avidly.sdk.account.business.LoginPresenter;
 import com.avidly.sdk.account.business.LoginPresenterImpl;
+import com.avidly.sdk.account.data.user.Account;
+import com.avidly.sdk.account.data.user.LoginUser;
+import com.avidly.sdk.account.data.user.LoginUserManager;
 import com.avidly.sdk.account.fragment.AccountHomeFragment;
 import com.avidly.sdk.account.fragment.AccountLoadingFragment;
 import com.avidly.sdk.account.fragment.AccountLoginFragment;
@@ -20,10 +26,8 @@ import com.avidly.sdk.account.listener.AccountLoadingListener;
 import com.avidly.sdk.account.listener.AccountLoginListener;
 import com.sdk.avidly.account.R;
 
-public class AccountLoginActivity extends AppCompatActivity implements AccountLoginView,
+public class AccountLoginActivity extends AppCompatActivity implements AccountLoginInterface,
         AccountHomeListener, AccountLoadingListener, AccountLoginListener {
-    private static final String TAG = "AccountLoginSdk";
-
     private FragmentManager mFragmentManager = getSupportFragmentManager();
     private LoginPresenter mPresenter;
 
@@ -47,129 +51,200 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
             }
         });
 
-        if (false) {
-            AccountLoadingFragment loadingFragment = (AccountLoadingFragment) mFragmentManager.findFragmentById(R.id.avidly_fragment_login);
-            loadingFragment.setCallback(this);
+        parseIntent();
+    }
 
-            mPresenter.accountLogin();
-        } else {
-            showAccountHomeFragment();
+    private void parseIntent() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            switch (intent.getAction()) {
+                case Constants.INTENT_KEY_ACTION_LOGIN:
+                    LoginUser loginUser = (LoginUser) intent.getSerializableExtra(Constants.INTENT_KEY_LOGINED_USER);
+                    if (loginUser == null) {
+                        // 没有现存账号，展示home_fragment
+                        showAccountHomeFragment();
+                    } else {
+                        // 有现存账号，展示loading_fragment
+                        AccountLoadingFragment loadingFragment = (AccountLoadingFragment) mFragmentManager.findFragmentById(R.id.avidly_fragment_login);
+                        loadingFragment.setLoadingListener(this);
+
+                        switch (loginUser.getLoginedMode()) {
+                            case Account.ACCOUNT_MODE_GUEST:
+                                // 现存账号是guest
+                                mPresenter.guestLogin(loginUser);
+                                break;
+                            case Account.ACCOUNT_MODE_AVIDLY:
+                                // 现存账号是avidly
+                                Account avidlyAccount = loginUser.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
+                                // TODO: 2019/1/23  这里accountName， accountPwd取不到
+//                                mPresenter.accountLogin(avidlyAccount.accountName, avidlyAccount.accountPwd);
+                                mPresenter.accountLogin("Tao.Wang", "password");
+                                break;
+                            case Account.ACCOUNT_MODE_FACEBOOK:
+                                //todo 现存账号是facebook
+                                Account facebookAccount = loginUser.findAccountByMode(Account.ACCOUNT_MODE_FACEBOOK);
+                                mPresenter.facebookLogin(loginUser);
+                        }
+                    }
+                    break;
+                case Constants.INTENT_KEY_ACTION_BIND:
+                    // 用户绑定账号，展示bind_fragment
+                    showAccountLoginFragment(Constants.SUB_FRAGMENT_TYPE_BIND);
+                    break;
+                case Constants.INTENT_KEY_ACTION_SWITCH:
+                    // 用户切换账号，展示home_fragment
+                    showAccountHomeFragment();
+                    break;
+            }
         }
     }
 
     // from view interface
     @Override
-    public void onUserLoginSuccessed() {
-        Log.i(TAG, "onUserLoginSuccessed: ");
+    public void onUserLoginSuccessed(final LoginUser loginUser) {
+        LogUtils.i("onUserLoginSuccessed: ");
+        // TODO: 2019/1/23 需要通知用户中心更新用户数据
 
         finish();
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LoginCenter.getLoginCallback().onLoginSuccess(loginUser.ggid);
+            }
+        });
     }
 
     @Override
-    public void onUserLoginFailed(String message) {
-        Log.i(TAG, "onUserLoginFailed: ");
+    public void onUserLoginFailed(final int errorCode) {
+        LogUtils.i("onUserLoginFailed: ");
 
-        showErrorMessage(message);
-//        showAccountHomeFragment();
+        showErrorMessage(errorCode + "");
+        showAccountHomeFragment();
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LoginCenter.getLoginCallback().onLoginFail(errorCode, "");
+            }
+        });
     }
 
     // from loading fragment
     @Override
     public void onSwitchAccountClicked() {
-        Log.i(TAG, "onSwitchAccountClicked: ");
+        LogUtils.i("onSwitchAccountClicked: ");
 
+        // TODO: 2019/1/21 因为点击了切换，需要忽略此次登录请求的回调
         showAccountHomeFragment();
     }
 
     // from home fragment
     @Override
     public void onGuestLoginClicked() {
-        Log.i(TAG, "onGuestLoginClicked: ");
+        LogUtils.i("onGuestLoginClicked: ");
 
-        AccountLoginFragment loginFragment = AccountLoginFragment.newInstance(Constants.LOGIN_TYPE_BIND);
-        loginFragment.setCallback(this);
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        transaction.replace(R.id.avidly_fragment_login, loginFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-
-//        mPresenter.accountLogin();
+        mPresenter.guestLogin(null);
     }
 
     @Override
     public void onAvidlyLoginClicked() {
-        Log.i(TAG, "onAvidlyLoginClicked: ");
+        LogUtils.i("onAvidlyLoginClicked: ");
 
-        AccountLoginFragment loginFragment = AccountLoginFragment.newInstance(Constants.LOGIN_TYPE_LOGIN);
-        loginFragment.setCallback(this);
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        transaction.replace(R.id.avidly_fragment_login, loginFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        showAccountLoginFragment(Constants.SUB_FRAGMENT_TYPE_LOGIN);
     }
 
     @Override
     public void onFacebookLoginClicked() {
-        Log.i(TAG, "onFacebookLoginClicked: ");
-
+        LogUtils.i("onFacebookLoginClicked: ");
 
     }
 
     @Override
     public void onTwitterLoginClicked() {
-        Log.i(TAG, "onTwitterLoginClicked: ");
+        LogUtils.i("onTwitterLoginClicked: ");
 
     }
 
     @Override
     public void onGoogleLoginClicked() {
-        Log.i(TAG, "onGoogleLoginClicked: ");
+        LogUtils.i("onGoogleLoginClicked: ");
 
     }
 
     // from login fragment
     @Override
     public void onBackToHomePressed() {
-        Log.i(TAG, "onBackToHomePressed: ");
+        LogUtils.i("onBackToHomePressed: ");
         super.onBackPressed();
     }
 
     @Override
-    public void onAccountLogin() {
-        Log.i(TAG, "onAccountLogin: ");
-
+    public void onLoginErrorOccured(String message) {
+        showErrorMessage(message);
     }
 
     @Override
-    public void onAccountRegist() {
-        Log.i(TAG, "onAccountRegist: ");
+    public void onAccountLoginClicked(String email, String password) {
+        LogUtils.i("onAccountLoginClicked: ");
 
+        mPresenter.accountLogin(email, password);
+    }
+
+    @Override
+    public void onAccountRegistClicked(String email, String password) {
+        LogUtils.i("onAccountRegistClicked: ");
+
+        mPresenter.accountRegistOrBind(null, email, password);
+    }
+
+    @Override
+    public void onAccountBindClicked(String email, String password) {
+        LogUtils.i("onAccountBindClicked: ");
+        String ggid = LoginUserManager.getCurrentGGID();
+        mPresenter.accountRegistOrBind(ggid, email, password);
     }
 
     @Override
     public void onForgotPasswordClicked() {
-        Log.i(TAG, "onForgotPasswordClicked: ");
+        LogUtils.i("onForgotPasswordClicked: ");
 
+        AvidlyAccountSdk.showUserLookupPasswordrUI(getApplicationContext());
     }
 
     @Override
     public void onReadProtocolClicked() {
-        Log.i(TAG, "onReadProtocolClicked: ");
+        LogUtils.i("onReadProtocolClicked: ");
 
+        Intent intent = new Intent(this, AvidlyProtocolActivity.class);
+        startActivity(intent);
     }
 
     private void showAccountHomeFragment() {
-        Log.i(TAG, "showAccountHomeFragment: ");
+        LogUtils.i("showAccountHomeFragment: ");
 
         AccountHomeFragment homeFragment = new AccountHomeFragment();
-        homeFragment.setCallback(this);
+        homeFragment.setHomeListener(this);
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.replace(R.id.avidly_fragment_login, homeFragment);
         transaction.commit();
     }
 
+    private void showAccountLoginFragment(int loginType) {
+        LogUtils.i("showAccountLoginFragment: ");
+
+        AccountLoginFragment loginFragment = AccountLoginFragment.newInstance(loginType);
+        loginFragment.setLoginListener(this);
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction.replace(R.id.avidly_fragment_login, loginFragment);
+        if (loginType == Constants.SUB_FRAGMENT_TYPE_LOGIN) {
+            transaction.addToBackStack(null);
+        }
+        transaction.commit();
+    }
+
     private void hideErrorMessage() {
-        Log.i(TAG, "hideErrorMessage: ");
+        LogUtils.i("hideErrorMessage: ");
 
         runOnUiThread(new Runnable() {
             @Override
@@ -180,7 +255,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     }
 
     private void showErrorMessage(final String message) {
-        Log.i(TAG, "showErrorMessage: ");
+        LogUtils.i("showErrorMessage: ");
 
         runOnUiThread(new Runnable() {
             @Override

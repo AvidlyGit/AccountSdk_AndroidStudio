@@ -16,10 +16,10 @@ import com.sdk.avidly.account.R;
  * Copyright © 2018 Adrealm. All rights reserved.
  */
 public class AccountHomeFragment extends DialogFragment implements View.OnClickListener {
-    private AccountHomeListener mCallback;
+    private AccountHomeListener mHomeListener;
 
-    public void setCallback(AccountHomeListener callback) {
-        mCallback = callback;
+    public void setHomeListener(AccountHomeListener listener) {
+        mHomeListener = listener;
     }
 
     @Override
@@ -38,25 +38,25 @@ public class AccountHomeFragment extends DialogFragment implements View.OnClickL
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (mCallback == null) {
+        if (mHomeListener == null) {
 
             return;
         }
 
         if (id == R.id.guest_login) {
-            mCallback.onGuestLoginClicked();
+            mHomeListener.onGuestLoginClicked();
         }
         if (id == R.id.avidly_login) {
-            mCallback.onAvidlyLoginClicked();
+            mHomeListener.onAvidlyLoginClicked();
         }
         if (id == R.id.facebook_login) {
-            mCallback.onFacebookLoginClicked();
+            mHomeListener.onFacebookLoginClicked();
         }
         if (id == R.id.twitter_login) {
-            mCallback.onTwitterLoginClicked();
+            mHomeListener.onTwitterLoginClicked();
         }
         if (id == R.id.google_login) {
-            mCallback.onGoogleLoginClicked();
+            mHomeListener.onGoogleLoginClicked();
         }
 
     }

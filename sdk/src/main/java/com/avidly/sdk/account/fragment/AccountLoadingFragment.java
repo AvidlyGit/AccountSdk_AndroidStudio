@@ -16,10 +16,10 @@ import com.sdk.avidly.account.R;
  * Copyright © 2018 Adrealm. All rights reserved.
  */
 public class AccountLoadingFragment extends DialogFragment implements View.OnClickListener {
-    private AccountLoadingListener mCallback;
+    private AccountLoadingListener mLoadingListener;
 
-    public void setCallback(AccountLoadingListener callback) {
-        mCallback = callback;
+    public void setLoadingListener(AccountLoadingListener listener) {
+        mLoadingListener = listener;
     }
 
     @Override
@@ -35,13 +35,13 @@ public class AccountLoadingFragment extends DialogFragment implements View.OnCli
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (mCallback == null) {
+        if (mLoadingListener == null) {
 
             return;
         }
 
         if (id == R.id.avidly_switch_user) {
-            mCallback.onSwitchAccountClicked();
+            mLoadingListener.onSwitchAccountClicked();
         }
     }
 }

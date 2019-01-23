@@ -18,25 +18,24 @@ import com.sdk.avidly.account.R;
  * <p>
  * Copyright © 2018 Adrealm. All rights reserved.
  */
-public class AccountLoginFragment extends DialogFragment implements View.OnClickListener {
-    private AccountLoginListener mCallback;
+public class AccountLoginFragment extends DialogFragment implements View.OnClickListener, AccountLoginListener {
+    private AccountLoginListener mLoginListener;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private AvidlyPagerAdapter mPagerAdapter;
 
-    private int mOperationType = Constants.LOGIN_TYPE_LOGIN;
-    private static String OPERATION_KEY = "operation";
+    private int mSubFragment = Constants.SUB_FRAGMENT_TYPE_LOGIN;
 
-    public static AccountLoginFragment newInstance(int operationType) {
+    public static AccountLoginFragment newInstance(int subFragment) {
         AccountLoginFragment loginFragment = new AccountLoginFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(OPERATION_KEY, operationType);
+        bundle.putInt(Constants.LOGIN_SUB_FRAGMENT_TYPE, subFragment);
         loginFragment.setArguments(bundle);
         return loginFragment;
     }
 
-    public void setCallback(AccountLoginListener callback) {
-        mCallback = callback;
+    public void setLoginListener(AccountLoginListener listener) {
+        mLoginListener = listener;
     }
 
     @Override
@@ -46,14 +45,17 @@ public class AccountLoginFragment extends DialogFragment implements View.OnClick
         View iconBack = view.findViewById(R.id.avidly_login_back);
         iconBack.setOnClickListener(this);
 
-        mOperationType = getArguments().getInt(OPERATION_KEY);
+        mSubFragment = getArguments().getInt(Constants.LOGIN_SUB_FRAGMENT_TYPE);
 
         View bindLayout = view.findViewById(R.id.avidly_login_layout_bind);
         View notBindLayout = view.findViewById(R.id.avidly_login_layout_not_bind);
-        
-        if (mOperationType == Constants.LOGIN_TYPE_BIND) {
+
+        if (mSubFragment == Constants.SUB_FRAGMENT_TYPE_BIND) {
             bindLayout.setVisibility(View.VISIBLE);
             notBindLayout.setVisibility(View.GONE);
+
+            AccountBindSubFragment bindSubFragment = (AccountBindSubFragment) getChildFragmentManager().findFragmentById(R.id.avidly_new_user_bind);
+            bindSubFragment.setLoginListener(this);
 
         } else {
             bindLayout.setVisibility(View.GONE);
@@ -62,9 +64,13 @@ public class AccountLoginFragment extends DialogFragment implements View.OnClick
             mTabLayout = view.findViewById(R.id.avidly_tab_layout);
             mViewPager = view.findViewById(R.id.avidly_tab_pager);
             mPagerAdapter = new AvidlyPagerAdapter(getChildFragmentManager());
-            mPagerAdapter.addFragment(new AccountLoginSubFragment());
+            AccountLoginSubFragment loginSubFragment = new AccountLoginSubFragment();
+            loginSubFragment.setLoginListener(this);
+            mPagerAdapter.addFragment(loginSubFragment);
             mPagerAdapter.addTitle(getString(R.string.avidly_string_user_login));
-            mPagerAdapter.addFragment(new AccountRegistSubFragment());
+            AccountRegistSubFragment registSubFragment = new AccountRegistSubFragment();
+            registSubFragment.setLoginListener(this);
+            mPagerAdapter.addFragment(registSubFragment);
             mPagerAdapter.addTitle(getString(R.string.avidly_string_user_regist));
             mViewPager.setAdapter(mPagerAdapter);
             mTabLayout.setupWithViewPager(mViewPager, false);
@@ -76,13 +82,58 @@ public class AccountLoginFragment extends DialogFragment implements View.OnClick
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (mCallback == null) {
-
-            return;
-        }
 
         if (id == R.id.avidly_login_back) {
-            mCallback.onBackToHomePressed();
+            onBackToHomePressed();
+        }
+    }
+
+    @Override
+    public void onBackToHomePressed() {
+        if (mLoginListener != null) {
+            mLoginListener.onBackToHomePressed();
+        }
+    }
+
+    @Override
+    public void onLoginErrorOccured(String message) {
+        if (mLoginListener != null) {
+            mLoginListener.onLoginErrorOccured(message);
+        }
+    }
+
+    @Override
+    public void onAccountLoginClicked(String email, String password) {
+        if (mLoginListener != null) {
+            mLoginListener.onAccountLoginClicked(email, password);
+        }
+    }
+
+    @Override
+    public void onAccountRegistClicked(String email, String password) {
+        if (mLoginListener != null) {
+            mLoginListener.onAccountRegistClicked(email, password);
+        }
+    }
+
+    @Override
+    public void onAccountBindClicked(String email, String password) {
+        if (mLoginListener != null) {
+            mLoginListener.onAccountBindClicked(email, password);
+        }
+    }
+
+    @Override
+    public void onForgotPasswordClicked() {
+        if (mLoginListener != null) {
+            mLoginListener.onForgotPasswordClicked();
+        }
+    }
+
+    @Override
+    public void onReadProtocolClicked() {
+        if (mLoginListener != null) {
+            mLoginListener.onReadProtocolClicked();
         }
     }
 }

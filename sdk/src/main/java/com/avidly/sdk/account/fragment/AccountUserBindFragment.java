@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.avidly.sdk.account.adapter.BaseAdapter;
 import com.avidly.sdk.account.adapter.UserAccountBindAdatper;
+import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.business.LoginCenter;
 import com.avidly.sdk.account.data.adapter.UserBindData;
 import com.avidly.sdk.account.data.user.Account;
@@ -96,7 +97,7 @@ public class AccountUserBindFragment extends Fragment {
         adatper.setOnRecyclerViewItemClickListener(new BaseAdapter.onRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(Object data, int position) {
-                Log.d("xxxx", "onItemClick type:" + position);
+                LogUtils.i("onItemClick type:" + position);
                 if (null != itemClickListener) {
                     itemClickListener.onItemClick(data, position);
                 }

@@ -9,11 +9,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.avidly.sdk.account.adapter.BaseAdapter;
 import com.avidly.sdk.account.adapter.UserManagerAdatper;
+import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.business.LoginCenter;
 import com.avidly.sdk.account.data.adapter.UserOperationData;
+import com.avidly.sdk.account.data.user.LoginUserManager;
 import com.sdk.avidly.account.R;
 
 import java.util.ArrayList;
@@ -81,6 +84,18 @@ public class AccountUserManagerFragment extends Fragment {
     }
 
     private void initView(View view) {
+        TextView nameTextView = view.findViewById(R.id.avidly_user_manager_username);
+        boolean isGuest = LoginUserManager.getGuestLoginUser() != null && LoginUserManager.getGuestLoginUser().isNowLogined;
+        if (isGuest) {
+            nameTextView.setText(getString(R.string.avidly_string_usermanger_guest));
+        } else {
+            // TODO: 2019/1/23 获取昵称
+            nameTextView.setText("昵称");
+        }
+
+        TextView idTextView = view.findViewById(R.id.avidly_user_manager_guest_id_textview);
+        idTextView.setText(getString(R.string.avidly_string_usermanger_id, LoginUserManager.getCurrentGGID()));
+
         RecyclerView recyclerView = view.findViewById(R.id.avidly_usermanger_listview);
         UserManagerAdatper adatper = new UserManagerAdatper(getContext());
         recyclerView.setAdapter(adatper);
@@ -90,12 +105,12 @@ public class AccountUserManagerFragment extends Fragment {
         final int gridnum = LoginCenter.isScreenLandscape() ? 2 : 1;
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), gridnum);
         recyclerView.setLayoutManager(layoutManager);
-        fillGuestAdatper(adatper, gridnum > 1, false);
+        fillGuestAdatper(adatper, gridnum > 1, isGuest);
 
         adatper.setOnRecyclerViewItemClickListener(new BaseAdapter.onRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(Object data, int position) {
-                Log.d("xxxx", "onItemClick type:" + position);
+                LogUtils.i("onItemClick type:" + position);
                 if (itemClickListener != null) {
                     itemClickListener.onItemClick(data, position);
                 }
