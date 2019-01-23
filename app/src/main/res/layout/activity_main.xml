@@ -18,16 +18,17 @@
             android:layout_height="match_parent"
             android:background="@android:color/holo_orange_light"
             android:gravity="center"
-            android:text="黄色是游戏背景..."
+            android:text="黄色背景是游戏中..."
             android:textSize="24dp" />
 
         <Button
             android:id="@+id/login_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:layout_marginLeft="16dp"
-            android:text="登录" />
+            android:layout_marginTop="32dp"
+            android:text="登录"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/usermanager_id"
@@ -36,7 +37,8 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="32dp"
             android:layout_marginRight="16dp"
-            android:text="用户中心" />
+            android:text="用户中心"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
