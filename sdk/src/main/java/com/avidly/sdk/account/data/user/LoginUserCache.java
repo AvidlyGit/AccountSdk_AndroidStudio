@@ -28,16 +28,18 @@ public class LoginUserCache {
         if (guestUser == null) {
             String guest = spHelper.getString("guest_user");
             if (!TextUtils.isEmpty(guest)) {
-                guestUser = new LoginUser();
-                guestUser.thisFromString(guest);
+                LoginUser user = new LoginUser();
+                user.thisFromString(guest);
+                guestUser = user;
             }
         }
 
         if (accountUser == null) {
             String account = spHelper.getString("account_user");
             if (!TextUtils.isEmpty(account)) {
-                accountUser = new LoginUser();
-                accountUser.thisFromString(account);
+                LoginUser user = new LoginUser();
+                user.thisFromString(account);
+                accountUser = user;
             }
         }
 
