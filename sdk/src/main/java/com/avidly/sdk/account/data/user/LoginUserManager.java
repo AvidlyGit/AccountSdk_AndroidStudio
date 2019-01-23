@@ -91,6 +91,14 @@ public class LoginUserManager {
             cache.guestUser = null;
         }
 
+        // 检查当前帐号是否添加到集合中去了
+        Account account = cache.accountUser.findAccountByMode(mod);
+        if (account == null) {
+            account = new Account();
+            cache.accountUser.addOrUpdateAccount(account);
+        }
+        account.mode = mod;
+
         // 游客帐号登出
         logoutGuestUser();
         // 帐号用户登入
