@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,8 @@ import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.business.LoginCenter;
 import com.avidly.sdk.account.data.adapter.UserBindData;
 import com.avidly.sdk.account.data.user.Account;
+import com.avidly.sdk.account.data.user.LoginUser;
+import com.avidly.sdk.account.data.user.LoginUserManager;
 import com.sdk.avidly.account.R;
 
 import java.util.ArrayList;
@@ -25,10 +26,8 @@ public class AccountUserBindFragment extends Fragment {
 
     private BaseAdapter.onRecyclerViewItemClickListener itemClickListener;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    private UserAccountBindAdatper adatper;
+
 
     @Nullable
     @Override
@@ -49,34 +48,10 @@ public class AccountUserBindFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 
     public void setItemClickListener(BaseAdapter.onRecyclerViewItemClickListener clickListener) {
         itemClickListener = clickListener;
@@ -84,15 +59,12 @@ public class AccountUserBindFragment extends Fragment {
 
     private void initView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.avidly_useraccount_bind_listview);
-        UserAccountBindAdatper adatper = new UserAccountBindAdatper(getContext());
+        adatper = new UserAccountBindAdatper(getContext());
         recyclerView.setAdapter(adatper);
         if (!LoginCenter.isScreenLandscape() && !LoginCenter.isScreenPortrait()) {
             LoginCenter.checkScreenOrietation(getActivity());
         }
-        final int gridnum = LoginCenter.isScreenLandscape() ? 2 : 1;
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), gridnum);
-        recyclerView.setLayoutManager(layoutManager);
-        fillGuestAdatper(adatper, gridnum > 1);
+        freshAdapter();
 
         adatper.setOnRecyclerViewItemClickListener(new BaseAdapter.onRecyclerViewItemClickListener() {
             @Override
@@ -105,27 +77,53 @@ public class AccountUserBindFragment extends Fragment {
         });
     }
 
+    public void freshAdapter() {
+        if (getView() != null) {
+            final int gridnum = LoginCenter.isScreenLandscape() ? 2 : 1;
+            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), gridnum);
+            RecyclerView recyclerView = getView().findViewById(R.id.avidly_useraccount_bind_listview);
+            recyclerView.setLayoutManager(layoutManager);
+            fillGuestAdatper(adatper, gridnum > 1);
+        }
+    }
+
+    private boolean isBindAccount(int mode) {
+        LoginUser user = LoginUserManager.getCurrentActiveLoginUser();
+        if (user == null) {
+            return false;
+        }
+
+        Account account = user.findAccountByMode(mode);
+        if (account == null) {
+            return false;
+        }
+
+        return account.isBinded;
+    }
+
     private void fillGuestAdatper(UserAccountBindAdatper adatper, boolean isgrid) {
         List<UserBindData> list = new ArrayList<>(3);
 
+        boolean isbind = isBindAccount(Account.ACCOUNT_MODE_FACEBOOK);
 
         list.add(createGuestBindData(getString(R.string.avidly_string_user_bind_account_facebook),
-                getString(R.string.avidly_string_user_unbind_status),
+                getString(isbind ? R.string.avidly_string_user_binded_status : R.string.avidly_string_user_unbind_status),
                 R.drawable.avidly_facebook_logo,
                 Account.ACCOUNT_MODE_FACEBOOK,
                 isgrid,
                 false));
 
-
+        isbind = isBindAccount(Account.ACCOUNT_MODE_TWITTER);
         list.add(createGuestBindData(getString(R.string.avidly_string_user_bind_account_twitter),
-                getString(R.string.avidly_string_user_unbind_status),
+                getString(isbind ? R.string.avidly_string_user_binded_status : R.string.avidly_string_user_unbind_status),
                 R.drawable.avidly_twitter_logo,
                 Account.ACCOUNT_MODE_TWITTER,
                 isgrid,
                 false));
 
+        isbind = isBindAccount(Account.ACCOUNT_MODE_GOOGLEPLAY);
         list.add(createGuestBindData(getString(R.string.avidly_string_user_bind_account_googleplay),
-                getString(R.string.avidly_string_user_unbind_status),
+                getString(isbind ? R.string.avidly_string_user_binded_status : R.string.avidly_string_user_unbind_status),
                 R.drawable.avidly_google_logo,
                 Account.ACCOUNT_MODE_GOOGLEPLAY,
                 isgrid,

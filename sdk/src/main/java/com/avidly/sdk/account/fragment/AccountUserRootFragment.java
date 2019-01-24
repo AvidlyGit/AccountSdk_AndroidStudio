@@ -143,5 +143,7 @@ public class AccountUserRootFragment extends BaseFragment {
         isShowBindAccountUI = false;
         TextView textView = getView().findViewById(R.id.avidly_user_common_title_textview);
         textView.setText(R.string.avidly_string_usermanger_title);
+        AccountUserBindFragment bindFragment = (AccountUserBindFragment) getChildFragmentManager().findFragmentById(R.id.avidly_fragment_user_account_bind_fragment);
+        bindFragment.freshAdapter();
     }
 }
