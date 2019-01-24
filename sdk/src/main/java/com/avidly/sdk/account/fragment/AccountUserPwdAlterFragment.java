@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,7 +89,7 @@ public class AccountUserPwdAlterFragment extends Fragment {
         });
     }
 
-    private void checkAndSubmit(String odlpwd, String newpwd1, String newpwd2) {
+    private void checkAndSubmit(String odlpwd, final String newpwd1, final String newpwd2) {
         if (TextUtils.isEmpty(odlpwd)) {
             Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_empty_oldpwd, true);
             return;
@@ -124,13 +123,22 @@ public class AccountUserPwdAlterFragment extends Fragment {
 
         String userName = LoginUserManager.getAccountLoginUser().findAccountByMode(Account.ACCOUNT_MODE_AVIDLY).accountName;
         odlpwd = Utils.textOfMd5(odlpwd);
-        newpwd1 = Utils.textOfMd5(newpwd1);
-        String url = URLConstant.getAlterPwdAPI(userName, odlpwd, newpwd1);
+        String newpwdmd5 = Utils.textOfMd5(newpwd1);
+        String url = URLConstant.getAlterPwdAPI(userName, odlpwd, newpwdmd5);
         LogUtils.i("alter pwd url:" + url);
         HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
             @Override
             public void onResponseSuccess(String result) {
                 LogUtils.i("onResponseSuccess:" + result);
+                LoginUser user = LoginUserManager.getCurrentActiveLoginUser();
+                if (user != null) {
+                   Account account =  user.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
+                   if (account != null) {
+                       account.accountPwd = newpwd1;
+                       LoginUserManager.saveAccountUsers();
+                   }
+                }
+                Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_send_success, true);
             }
 
             @Override
