@@ -89,8 +89,7 @@ public class AccountUserManagerFragment extends Fragment {
         if (isGuest) {
             nameTextView.setText(getString(R.string.avidly_string_usermanger_guest));
         } else {
-            // TODO: 2019/1/23 获取昵称
-            nameTextView.setText("昵称");
+            nameTextView.setText(LoginUserManager.getCurrentActiveLoginUser().findActivedAccount().nickname);
         }
 
         TextView idTextView = view.findViewById(R.id.avidly_user_manager_guest_id_textview);

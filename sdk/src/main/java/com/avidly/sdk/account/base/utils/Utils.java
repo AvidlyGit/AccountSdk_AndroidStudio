@@ -19,10 +19,15 @@ import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.avidly.sdk.account.base.Constants;
+
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Utils {
 
@@ -176,5 +181,34 @@ public class Utils {
                 Toast.makeText(context, text, longtime ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /**
+     * 验证邮箱
+     *
+     * @param email
+     * @return
+     */
+    public static boolean checkEmail(String email) {
+        boolean flag = false;
+        try {
+            String check = "^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+            Pattern regex = Pattern.compile(check);
+            Matcher matcher = regex.matcher(email);
+            flag = matcher.matches();
+        } catch (Exception e) {
+            flag = false;
+        }
+        return flag;
+    }
+
+    public static String textOfUrlEncode(String text) {
+        String result = "";
+        try {
+            result = URLEncoder.encode(text, Constants.URL_ENCODER_ENC);
+        } catch (Throwable e) {
+
+        }
+        return result;
     }
 }

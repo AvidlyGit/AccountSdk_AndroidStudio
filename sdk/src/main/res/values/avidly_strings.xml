@@ -40,8 +40,7 @@
     <string name="avidly_string_userpwd_lookup_eidtor_hit">Email</string>
     <string name="avidly_string_userpwd_lookup_btn">Send</string>
 
-    <string name="avidly_string_user_alter_pwd_short_length">Password must between 6-16characters</string>
-    <string name="avidly_string_user_alter_pwd_long_lenght">Password must between 6-16characters</string>
+    <string name="avidly_string_user_alter_pwd_length">Password must between 6-16characters</string>
     <string name="avidly_string_email_format_error">Wrong Email Format</string>
     <string name="avidly_string_email_account_error">Please enter Avid.ly account</string>
     <string name="avidly_string_email_pwd_input_error">Please enter Password</string>

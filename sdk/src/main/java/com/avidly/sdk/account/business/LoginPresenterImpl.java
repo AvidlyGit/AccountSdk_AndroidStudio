@@ -3,6 +3,7 @@ package com.avidly.sdk.account.business;
 import android.text.TextUtils;
 
 import com.avidly.sdk.account.activity.AccountLoginInterface;
+import com.avidly.sdk.account.base.utils.Utils;
 import com.avidly.sdk.account.data.user.Account;
 import com.avidly.sdk.account.data.user.LoginUser;
 import com.avidly.sdk.account.data.user.LoginUserManager;
@@ -50,7 +51,7 @@ public class LoginPresenterImpl implements LoginPresenter {
     @Override
     public void accountLogin(final String email, final String password) {
         // 账号密码登录
-        LoginRequest.accountLogin(email, password, new LoginRequestCallback<String>() {
+        LoginRequest.accountLogin(Utils.textOfUrlEncode(email), password, new LoginRequestCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 LoginUser loginUser = LoginUserManager.onAccountLoginSuccess(Account.ACCOUNT_MODE_AVIDLY, result);
@@ -79,11 +80,11 @@ public class LoginPresenterImpl implements LoginPresenter {
 
     @Override
     public void accountRegistOrBind(final String ggid, final String email, final String password) {
-
-
         // ggid为空，服务器注册用户后，生成新的ggid绑定返回
         // ggid不为空，服务器注册用户后，同现有的ggid绑定返回
-        LoginRequest.accountRegistOrBind(ggid == null ? "" : ggid, email, password, new LoginRequestCallback<String>() {
+        String account = "";
+
+        LoginRequest.accountRegistOrBind(ggid == null ? "" : ggid, Utils.textOfUrlEncode(email), password, new LoginRequestCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 LoginUser loginUser = LoginUserManager.onAccountLoginSuccess(Account.ACCOUNT_MODE_AVIDLY, result);

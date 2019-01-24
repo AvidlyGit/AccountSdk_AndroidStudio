@@ -6,6 +6,8 @@ package com.avidly.sdk.account.base;
  * Copyright © 2018 Adrealm. All rights reserved.
  */
 public class Constants {
+    public static long AUTO_LOGIN_TIME_OUT_MILLS = 3 * 1000;
+    public static String URL_ENCODER_ENC = "UTF-8";
     public static String PLATFORM_ANDROID = "android";
 
     public static final String INTENT_KEY_LOGINED_USER = "intent_key_login_user";

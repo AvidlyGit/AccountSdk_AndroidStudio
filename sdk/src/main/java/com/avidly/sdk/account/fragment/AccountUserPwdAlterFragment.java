@@ -102,13 +102,8 @@ public class AccountUserPwdAlterFragment extends Fragment {
             return;
         }
 
-        if (newpwd1.length() < 6) {
-            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_short_length, true);
-            return;
-        }
-
-        if (newpwd1.length() >= 16) {
-            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_long_lenght, true);
+        if (newpwd1.length() < 6 || newpwd1.length() >= 16) {
+            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_length, true);
             return;
         }
 

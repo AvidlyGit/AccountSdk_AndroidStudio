@@ -58,51 +58,6 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
         parseIntent();
     }
 
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (isShouldHideInput(v, ev)) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                    v.clearFocus();
-                    onWindowFocusChanged(true);
-                }
-            }
-            return super.dispatchTouchEvent(ev);
-        }
-        // 必不可少，否则所有的组件都不会有TouchEvent了
-        if (getWindow().superDispatchTouchEvent(ev)) {
-            return true;
-        }
-        return onTouchEvent(ev);
-    }
-
-    /**
-     * 点击输入框外 隐藏软键盘 * @param v * @param event * @return
-     */
-    public boolean isShouldHideInput(View v, MotionEvent event) {
-        if (v != null && (v instanceof EditText)) {
-            int[] leftTop = {0, 0};
-            //获取输入框当前的location位置
-            v.getLocationInWindow(leftTop);
-            int left = leftTop[0];
-            int top = leftTop[1];
-            int bottom = top + v.getHeight();
-            int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击的是输入框区域，保留点击EditText的事件
-                return false;
-            } else {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private void parseIntent() {
         Intent intent = getIntent();
         if (intent != null) {
@@ -117,23 +72,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
                         AccountLoadingFragment loadingFragment = (AccountLoadingFragment) mFragmentManager.findFragmentById(R.id.avidly_fragment_login);
                         loadingFragment.setLoadingListener(this);
 
-                        switch (activedUser.getLoginedMode()) {
-                            case Account.ACCOUNT_MODE_GUEST:
-                                // 现存账号是guest
-                                mPresenter.guestLogin(activedUser);
-                                break;
-                            case Account.ACCOUNT_MODE_AVIDLY:
-                                // 现存账号是avidly
-                                Account avidlyAccount = activedUser.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
-                                // TODO: 2019/1/23  这里accountName， accountPwd取不到
-                                mPresenter.accountLogin(avidlyAccount.accountName, avidlyAccount.accountPwd);
-//                                mPresenter.accountLogin("Tao.Wang", "password");
-                                break;
-                            case Account.ACCOUNT_MODE_FACEBOOK:
-                                //todo 现存账号是facebook
-                                Account facebookAccount = activedUser.findAccountByMode(Account.ACCOUNT_MODE_FACEBOOK);
-                                mPresenter.facebookLogin(activedUser);
-                        }
+
                     }
                     break;
                 case Constants.INTENT_KEY_ACTION_BIND:
@@ -152,9 +91,11 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     @Override
     public void onUserLoginSuccessed(final LoginUser loginUser) {
         LogUtils.i("onUserLoginSuccessed: ");
-        // TODO: 2019/1/23 需要通知用户中心更新用户数据
 
         finish();
+        if (!LoginUserManager.isLoginedNow()) {
+            showAccountHomeFragment();
+        }
 
         runOnUiThread(new Runnable() {
             @Override
@@ -182,8 +123,27 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     // from loading fragment
     @Override
     public void onSwitchAccountClicked() {
-        // TODO: 2019/1/21 因为点击了切换，需要忽略此次登录请求的回调
         showAccountHomeFragment();
+    }
+
+    @Override
+    public void onWaitingTimeOut() {
+        LoginUser activedUser = LoginUserManager.getCurrentActiveLoginUser();
+        switch (activedUser.getLoginedMode()) {
+            case Account.ACCOUNT_MODE_GUEST:
+                // 现存账号是guest
+                mPresenter.guestLogin(activedUser);
+                break;
+            case Account.ACCOUNT_MODE_AVIDLY:
+                // 现存账号是avidly
+                Account avidlyAccount = activedUser.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
+                mPresenter.accountLogin(avidlyAccount.accountName, avidlyAccount.accountPwd);
+                break;
+            case Account.ACCOUNT_MODE_FACEBOOK:
+                //todo 现存账号是facebook
+                Account facebookAccount = activedUser.findAccountByMode(Account.ACCOUNT_MODE_FACEBOOK);
+                mPresenter.facebookLogin(activedUser);
+        }
     }
 
     // from home fragment
@@ -290,4 +250,49 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
             }
         });
     }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev)) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    v.clearFocus();
+                    onWindowFocusChanged(true);
+                }
+            }
+            return super.dispatchTouchEvent(ev);
+        }
+        // 必不可少，否则所有的组件都不会有TouchEvent了
+        if (getWindow().superDispatchTouchEvent(ev)) {
+            return true;
+        }
+        return onTouchEvent(ev);
+    }
+
+    /**
+     * 点击输入框外 隐藏软键盘 * @param v * @param event * @return
+     */
+    public boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] leftTop = {0, 0};
+            //获取输入框当前的location位置
+            v.getLocationInWindow(leftTop);
+            int left = leftTop[0];
+            int top = leftTop[1];
+            int bottom = top + v.getHeight();
+            int right = left + v.getWidth();
+            if (event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom) {
+                // 点击的是输入框区域，保留点击EditText的事件
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
