@@ -133,22 +133,6 @@ public class LoginRequest {
                     }
                 } catch (Exception e) {
                 }
-//                {
-//                    "avidlyUser":{
-//                        "avidlyUserId":24535545885455,
-//                        "gameGuestId":98764236489,
-//                        "pid":610322,
-//                        "platform":"ios"
-//                    }
-//                }
-//                String gameGusetId = "24535545885455";
-//                String pid = "610322";
-//                String platform = "android";
-//                if (pid.equals(LoginCenter.getProductId()) && platform.equals(Constants.PLATFORM_ANDROID)) {
-//                    callback.onSuccess(gameGusetId);
-//                } else {
-//                    callback.onFail(00, "");
-//                }
             }
 
             @Override

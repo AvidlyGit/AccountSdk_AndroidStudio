@@ -182,8 +182,6 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     // from loading fragment
     @Override
     public void onSwitchAccountClicked() {
-        LogUtils.i("onSwitchAccountClicked: ");
-
         // TODO: 2019/1/21 因为点击了切换，需要忽略此次登录请求的回调
         showAccountHomeFragment();
     }
@@ -191,15 +189,11 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     // from home fragment
     @Override
     public void onGuestLoginClicked() {
-        LogUtils.i("onGuestLoginClicked: ");
-
         mPresenter.guestLogin(null);
     }
 
     @Override
     public void onAvidlyLoginClicked() {
-        LogUtils.i("onAvidlyLoginClicked: ");
-
         showAccountLoginFragment(Constants.SUB_FRAGMENT_TYPE_LOGIN);
     }
 
@@ -224,7 +218,6 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     // from login fragment
     @Override
     public void onBackToHomePressed() {
-        LogUtils.i("onBackToHomePressed: ");
         super.onBackPressed();
     }
 
@@ -235,43 +228,32 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
 
     @Override
     public void onAccountLoginClicked(String email, String password) {
-        LogUtils.i("onAccountLoginClicked: ");
-
         mPresenter.accountLogin(email, password);
     }
 
     @Override
     public void onAccountRegistClicked(String email, String password) {
-        LogUtils.i("onAccountRegistClicked: ");
-
         mPresenter.accountRegistOrBind(null, email, password);
     }
 
     @Override
     public void onAccountBindClicked(String email, String password) {
-        LogUtils.i("onAccountBindClicked: ");
         String ggid = LoginUserManager.getCurrentGGID();
         mPresenter.accountRegistOrBind(ggid, email, password);
     }
 
     @Override
     public void onForgotPasswordClicked() {
-        LogUtils.i("onForgotPasswordClicked: ");
-
         AvidlyAccountSdk.showUserLookupPasswordrUI(getApplicationContext());
     }
 
     @Override
     public void onReadProtocolClicked() {
-        LogUtils.i("onReadProtocolClicked: ");
-
         Intent intent = new Intent(this, AvidlyProtocolActivity.class);
         startActivity(intent);
     }
 
     private void showAccountHomeFragment() {
-        LogUtils.i("showAccountHomeFragment: ");
-
         AccountHomeFragment homeFragment = new AccountHomeFragment();
         homeFragment.setHomeListener(this);
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
@@ -280,8 +262,6 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     }
 
     private void showAccountLoginFragment(int loginType) {
-        LogUtils.i("showAccountLoginFragment: ");
-
         AccountLoginFragment loginFragment = AccountLoginFragment.newInstance(loginType);
         loginFragment.setLoginListener(this);
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
@@ -293,8 +273,6 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     }
 
     private void hideErrorMessage() {
-        LogUtils.i("hideErrorMessage: ");
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -304,8 +282,6 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     }
 
     private void showErrorMessage(final String message) {
-        LogUtils.i("showErrorMessage: ");
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
