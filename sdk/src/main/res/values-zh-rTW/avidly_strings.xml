@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="avildy_editor_number_letter_digits">&#034;&#039;&#060;&#160;&#038;{}[]\|>/;:,.?`~!@#$%^*()_+-=1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM </string>
+
+    <string name="avidly_string_account">賬戶</string>
+    <string name="avidly_string_guest_login">遊客登錄</string>
+    <string name="avidly_string_avidly_login">Avid.ly賬戶登錄</string>
+    <string name="avidly_string_thrid_login">第三方登錄</string>
+    <string name="avidly_string_account_name">用戶名</string>
+    <string name="avidly_string_loading">登錄中</string>
+    <string name="avidly_string_switch_user">切換賬戶</string>
+    <string name="avidly_string_user_login">用戶登錄</string>
+    <string name="avidly_string_user_regist">用戶註冊</string>
+    <string name="avidly_string_hint_email">郵箱</string>
+    <string name="avidly_string_hint_password">密碼（6-16位)</string>
+    <string name="avidly_string_action_login">登錄</string>
+    <string name="avidly_string_forgot_password">忘記密碼？</string>
+    <string name="avidly_string_agree_protocol">同意Avid.ly用戶服務協議</string>
+    <string name="avidly_string_action_regist">註冊</string>
+    <string name="avidly_string_user_bind">新用戶綁定</string>
+    <string name="avidly_string_action_bind">註冊並綁定</string>
+    <string name="avidly_string_usermanger_title">用戶中心</string>
+    <string name="avidly_string_usermanger_guest">遊客</string>
+    <string name="avidly_string_usermanger_id">ID: %1$s</string>
+    <string name="avidly_string_usermanger_bind_switch">切換賬戶</string>
+    <string name="avidly_string_usermanger_bind_other">綁定第三方賬戶</string>
+    <string name="avidly_string_usermanger_bind_avidly">綁定Avid.ly賬戶</string>
+    <string name="avidly_string_usermanger_bind_other_title">綁定第三方賬戶</string>
+    <string name="avidly_string_usermanger_bind_tip">請盡快綁定賬戶，以免遊戲數據丟失</string>
+    <string name="avidly_string_usermanger_bind_alter_pwd">修改密碼</string>
+    <string name="avidly_string_user_unbind_status">去綁定</string>
+    <string name="avidly_string_user_binded_status">解綁</string>
+    <string name="avidly_string_userpwd_alter_title">修改密碼</string>
+    <string name="avidly_string_userpwd_alter_old_hit">當前密碼</string>
+    <string name="avidly_string_userpwd_alter_new_hit">新密碼（6-16位)</string>
+    <string name="avidly_string_userpwd_alter_new_hit2">再次輸入新密碼</string>
+    <string name="avidly_string_userpwd_alter_btn">確定修改</string>
+    <string name="avidly_string_userpwd_lookup_title">找回密碼</string>
+    <string name="avidly_string_userpwd_lookup_tip">請輸入妳的註冊郵箱，系統會發送壹個隨機新密碼到妳的郵箱</string>
+    <string name="avidly_string_userpwd_lookup_eidtor_hit">郵箱</string>
+    <string name="avidly_string_userpwd_lookup_btn">發送</string>
+
+    <string name="avidly_string_user_alter_pwd_short_length">密碼必需是在6~16位之間</string>
+    <string name="avidly_string_user_alter_pwd_long_lenght">密碼必需是在6~16位之間</string>
+    <string name="avidly_string_email_format_error">輸入郵箱格式錯誤</string>
+    <string name="avidly_string_email_account_error">請輸入Avid.ly賬號</string>
+    <string name="avidly_string_email_pwd_input_error">請輸入密碼</string>
+    <string name="avidly_string_email_pwd_error">密碼錯誤</string>
+    <string name="avidly_string_email_exist_error">該用戶名已存在</string>
+    <string name="avidly_string_agree_protocol_error">請同意服務條款</string>
+    <string name="avidly_string_account_pwd_error">賬號或密碼不正確</string>
+    <string name="avidly_string_bind_success">綁定成功</string>
+    <string name="avidly_string_user_alter_pwd_wrong_newpwd2">兩次密碼填寫不壹致</string>
+    <string name="avidly_string_user_alter_pwd_wrong_pwd">當前密碼錯誤，修改密碼失敗</string>
+    <string name="avidly_string_user_alter_pwd_success">修改密碼成功</string>
+
+    <string name="avidly_string_facebook">Facebook</string>
+    <string name="avidly_string_twitter">Twitter</string>
+    <string name="avidly_string_google">Google Play</string>
+    <string name="avidly_string_user_bind_account_facebook">Facebook</string>
+    <string name="avidly_string_user_bind_account_twitter">Twitter</string>
+    <string name="avidly_string_user_bind_account_googleplay">Google Play</string>
+    <string name="avidly_string_protocol_url">http://www.baidu.com</string>
+
+    <!-- 以下需要增加翻译 -->
+    <string name="avidly_string_user_alter_pwd_empty_oldpwd">请输入原密码</string>
+    <string name="avidly_string_user_alter_pwd_empty_newpwd">请输入新密码</string>
+    <string name="avidly_string_user_alter_pwd_empty_newpwd2">请再次输入新密码</string>
+
+</resources>

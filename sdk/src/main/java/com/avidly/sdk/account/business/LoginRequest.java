@@ -26,7 +26,7 @@ public class LoginRequest {
 //                        "platform":"ios"
 //                    }
 //                }
-                String gameGusetId = "2135545885455";
+                String gameGusetId = "24535545885455";
                 String pid = "610322";
                 String platform = "android";
                 if (pid.equals(LoginCenter.getProductId()) && platform.equals(Constants.PLATFORM_ANDROID)) {
@@ -68,6 +68,7 @@ public class LoginRequest {
 //                }
                 String gameGusetId = "24535545885455";
                 String pid = "610322";
+                String platform = "android";
                 if (pid.equals(LoginCenter.getProductId())) {
                     callback.onSuccess(gameGusetId);
                 } else {

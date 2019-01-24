@@ -1,67 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="avildy_editor_number_letter_digits">&#034;&#039;&#060;&#160;&#038;{}[]\|>/;:,.?`~!@#$%^*()_+-=1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM </string>
 
-    <string name="avidly_string_email_error">输入邮件格式错误！</string>
+    <string name="avidly_string_account">Account</string>
+    <string name="avidly_string_guest_login">Quick Login</string>
+    <string name="avidly_string_avidly_login">Avid.ly Account Login</string>
+    <string name="avidly_string_thrid_login">Other Login</string>
+    <string name="avidly_string_account_name">User Name</string>
+    <string name="avidly_string_loading">Logging in...</string>
+    <string name="avidly_string_switch_user">Switch Account</string>
+    <string name="avidly_string_user_login">Login</string>
+    <string name="avidly_string_user_regist">Register</string>
+    <string name="avidly_string_hint_email">Email</string>
+    <string name="avidly_string_hint_password">Password(6~16 Characters)</string>
+    <string name="avidly_string_action_login">Login</string>
+    <string name="avidly_string_forgot_password">Forget Password?</string>
+    <string name="avidly_string_agree_protocol">Accept Avid.ly Service Policy</string>
+    <string name="avidly_string_action_regist">Register</string>
+    <string name="avidly_string_user_bind">Account Bind</string>
+    <string name="avidly_string_action_bind">Register &amp; Bind</string>
+    <string name="avidly_string_usermanger_title">User Center</string>
+    <string name="avidly_string_usermanger_guest">Guest</string>
+    <string name="avidly_string_usermanger_id">ID: %1$s</string>
+    <string name="avidly_string_usermanger_bind_switch">Switch Account</string>
+    <string name="avidly_string_usermanger_bind_other">Bind Other Account</string>
+    <string name="avidly_string_usermanger_bind_avidly">Bind Avid.ly Account</string>
+    <string name="avidly_string_usermanger_bind_other_title">Bind Other Account</string>
+    <string name="avidly_string_usermanger_bind_tip">Please bind account to avoid account loss</string>
+    <string name="avidly_string_usermanger_bind_alter_pwd">Change Password</string>
+    <string name="avidly_string_user_unbind_status">Bind</string>
+    <string name="avidly_string_user_binded_status">Unbind</string>
+    <string name="avidly_string_userpwd_alter_title">Change Password</string>
+    <string name="avidly_string_userpwd_alter_old_hit">Current Password</string>
+    <string name="avidly_string_userpwd_alter_new_hit">New Password (6~16 Characters)</string>
+    <string name="avidly_string_userpwd_alter_new_hit2">Enter new password again</string>
+    <string name="avidly_string_userpwd_alter_btn">Confirm</string>
+    <string name="avidly_string_userpwd_lookup_title">Password Retrieve</string>
+    <string name="avidly_string_userpwd_lookup_tip">Please enter your registered email, New password will be sent to your email box</string>
+    <string name="avidly_string_userpwd_lookup_eidtor_hit">Email</string>
+    <string name="avidly_string_userpwd_lookup_btn">Send</string>
 
-    <string name="avidly_string_loading">登录中</string>
-    <string name="avidly_string_switch_user">切换账户</string>
+    <string name="avidly_string_user_alter_pwd_short_length">Password must between 6-16characters</string>
+    <string name="avidly_string_user_alter_pwd_long_lenght">Password must between 6-16characters</string>
+    <string name="avidly_string_email_format_error">Wrong Email Format</string>
+    <string name="avidly_string_email_account_error">Please enter Avid.ly account</string>
+    <string name="avidly_string_email_pwd_input_error">Please enter Password</string>
+    <string name="avidly_string_email_pwd_error">Wrong Password</string>
+    <string name="avidly_string_email_exist_error">Account name is already exist</string>
+    <string name="avidly_string_agree_protocol_error">Please accept Avid.ly Service Policy</string>
+    <string name="avidly_string_account_pwd_error">Wrong account name or password</string>
+    <string name="avidly_string_bind_success">Account Bound</string>
+    <string name="avidly_string_user_alter_pwd_wrong_newpwd2">Two new passwords do not match</string>
+    <string name="avidly_string_user_alter_pwd_wrong_pwd">Wrong Current Passwore, failed to change password</string>
+    <string name="avidly_string_user_alter_pwd_success">Password changed successfully</string>
 
-    <string name="avidly_string_guest_login">游客登录</string>
-    <string name="avidly_string_avidly_login">Avid.ly账户登录</string>
-    <string name="avidly_string_thrid_login">第三方登录</string>
     <string name="avidly_string_facebook">Facebook</string>
     <string name="avidly_string_twitter">Twitter</string>
     <string name="avidly_string_google">Google Play</string>
-
-    <string name="avidly_string_user_bind">新用户绑定</string>
-    <string name="avidly_string_action_bind">注册并绑定</string>
-    <string name="avidly_string_user_login">用户登录</string>
-    <string name="avidly_string_action_login">登录</string>
-    <string name="avidly_string_user_regist">用户注册</string>
-    <string name="avidly_string_action_regist">注册</string>
-
-    <string name="avidly_string_hint_account">账号</string>
-    <string name="avidly_string_hint_password">密码(6~16位)</string>
-    <string name="avidly_string_forgot_password">忘记密码？</string>
-    <string name="avidly_string_agree_protocol">同意Avid.ly用户服务协议</string>
-
-    <string name="avidly_string_userpwd_lookup_title">找回密码</string>
-    <string name="avidly_string_userpwd_lookup_tip">请输入你的注册邮箱，系统会发送一个随机新密码到你的邮箱里。</string>
-    <string name="avidly_string_userpwd_lookup_eidtor_hit">邮箱</string>
-    <string name="avidly_string_userpwd_lookup_btn">发送</string>
-
-    <string name="avidly_string_userpwd_alter_title">修改密码</string>
-    <string name="avidly_string_userpwd_alter_old_hit">旧密码</string>
-    <string name="avidly_string_userpwd_alter_new_hit">新密码(6~16位)</string>
-    <string name="avidly_string_userpwd_alter_new_hit2">再次输入新密码</string>
-    <string name="avidly_string_userpwd_alter_btn">确认修改</string>
-
-
-    <string name="avidly_string_usermanger_title">用户中心</string>
-    <string name="avidly_string_usermanger_bind_other_title">绑定第三方账户</string>
-    <string name="avidly_string_usermanger_guest">游客</string>
-    <string name="avidly_string_usermanger_id">ID: %1$s</string>
-    <string name="avidly_string_usermanger_bind_alter_pwd">修改密码</string>
-    <string name="avidly_string_usermanger_bind_avidly">绑定Avid.ly账户</string>
-    <string name="avidly_string_usermanger_bind_switch">切换账户</string>
-    <string name="avidly_string_usermanger_bind_other">绑定第三方账户</string>
-    <string name="avidly_string_usermanger_bind_tip">请尽快绑定账户，以免游戏数据丢失。</string>
-
-
-    <string name="avidly_string_user_unbind_status">去绑定</string>
-    <string name="avidly_string_user_binded_status">解绑</string>
     <string name="avidly_string_user_bind_account_facebook">Facebook</string>
     <string name="avidly_string_user_bind_account_twitter">Twitter</string>
     <string name="avidly_string_user_bind_account_googleplay">Google Play</string>
+    <string name="avidly_string_protocol_url">http://www.baidu.com</string>
 
+    <!-- 以下需要增加翻译 -->
     <string name="avidly_string_user_alter_pwd_empty_oldpwd">请输入原密码</string>
     <string name="avidly_string_user_alter_pwd_empty_newpwd">请输入新密码</string>
     <string name="avidly_string_user_alter_pwd_empty_newpwd2">请再次输入新密码</string>
-    <string name="avidly_string_user_alter_pwd_wrong_newpwd2">二次输入的新密码不一致</string>
-    <string name="avidly_string_user_alter_pwd_short_length">密码太短，请输入6~16位的密码</string>
-    <string name="avidly_string_user_alter_pwd_long_lenght">密码太长，请输入6~16位的密码</string>
-
-    <string name="avidly_string_protocol_url">http://www.baidu.com</string>
 
 </resources>
