@@ -3,6 +3,8 @@ package com.avidly.sdk.account.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -71,8 +73,6 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
                         // 有现存账号，展示loading_fragment
                         AccountLoadingFragment loadingFragment = (AccountLoadingFragment) mFragmentManager.findFragmentById(R.id.avidly_fragment_login);
                         loadingFragment.setLoadingListener(this);
-
-
                     }
                     break;
                 case Constants.INTENT_KEY_ACTION_BIND:
@@ -241,6 +241,14 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
         });
     }
 
+    private Handler mHandler = new Handler(Looper.getMainLooper());
+    private Runnable mHideErrorMessageRunnable = new Runnable() {
+        @Override
+        public void run() {
+            hideErrorMessage();
+        }
+    };
+
     private void showErrorMessage(final String message) {
         runOnUiThread(new Runnable() {
             @Override
@@ -249,6 +257,9 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
                 mErrorLayout.setVisibility(View.VISIBLE);
             }
         });
+
+        mHandler.removeCallbacks(mHideErrorMessageRunnable);
+        mHandler.postDelayed(mHideErrorMessageRunnable, Constants.AUTO_CLOSE_ERROR_LAYOUT_MILLS);
     }
 
     @Override

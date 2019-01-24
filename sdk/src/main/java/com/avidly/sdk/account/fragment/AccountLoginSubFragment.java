@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 
 import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.Md5Utils;
+import com.avidly.sdk.account.data.user.Account;
+import com.avidly.sdk.account.data.user.LoginUser;
+import com.avidly.sdk.account.data.user.LoginUserManager;
 import com.sdk.avidly.account.R;
 
 /**
@@ -23,6 +26,14 @@ public class AccountLoginSubFragment extends AccountBaseSubFragment {
 
         View view = inflater.inflate(R.layout.avidly_fragment_login_sub, container, false);
         super.initView(view);
+
+        LoginUser activedUser = LoginUserManager.getCurrentActiveLoginUser();
+        if (activedUser != null) {
+            boolean isGuest = activedUser.getLoginedMode() == Account.ACCOUNT_MODE_GUEST;
+            if (!isGuest) {
+                mInputEmail.setText(activedUser.findActivedAccount().accountName);
+            }
+        }
 
         mActionButton.setText(getString(R.string.avidly_string_action_login));
         mForgotPassword.setVisibility(View.VISIBLE);

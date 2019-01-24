@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.avidly.sdk.account.base.Constants;
-import com.avidly.sdk.account.base.utils.Md5Utils;
 import com.avidly.sdk.account.base.utils.Utils;
 import com.avidly.sdk.account.listener.AccountLoginListener;
 import com.sdk.avidly.account.R;
@@ -77,9 +76,14 @@ public class AccountBaseSubFragment extends Fragment implements View.OnClickList
             return false;
         }
 
-        if (!Utils.checkEmail(email)) {
+        if (!Utils.checkEmailValid(email)) {
             mLoginListener.onLoginErrorOccured(getString(R.string.avidly_string_email_format_error));
+            mIconClear.setVisibility(View.VISIBLE);
+            mInputEmail.setBackgroundResource(R.drawable.avidly_edit_text_invalid);
             return false;
+        } else {
+            mIconClear.setVisibility(View.GONE);
+            mInputEmail.setBackgroundResource(R.drawable.avidly_edit_text_normal);
         }
 
         if (password.length() < 6 || password.length() > 16) {
@@ -104,6 +108,8 @@ public class AccountBaseSubFragment extends Fragment implements View.OnClickList
 
         if (id == R.id.avidly_icon_clear) {
             mInputEmail.setText("");
+            mInputEmail.setBackgroundResource(R.drawable.avidly_edit_text_normal);
+            mIconClear.setVisibility(View.GONE);
         }
 
         if (id == R.id.avidly_icon_eye) {

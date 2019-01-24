@@ -7,10 +7,10 @@ package com.avidly.sdk.account.base;
  */
 public class Constants {
     public static long AUTO_LOGIN_TIME_OUT_MILLS = 3 * 1000;
+    public static long AUTO_CLOSE_ERROR_LAYOUT_MILLS = 1 * 1000;
     public static String URL_ENCODER_ENC = "UTF-8";
     public static String PLATFORM_ANDROID = "android";
 
-    public static final String INTENT_KEY_LOGINED_USER = "intent_key_login_user";
     public static final String INTENT_KEY_ACTION_LOGIN = "intent_key_action_login";
     public static final String INTENT_KEY_ACTION_SWITCH = "intent_key_action_switch";
     public static final String INTENT_KEY_ACTION_BIND = "intent_key_action_bind";
