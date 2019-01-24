@@ -85,14 +85,16 @@ public class LoginUserManager {
      */
     public static LoginUser onAccountLoginSuccess(int mod, String ggid) {
 
-        // 创建帐号用户
-        if (cache.accountUser == null) {
-            cache.accountUser = getOrCreateGuestLoginUser();
+
+        // guestUser的ggid被绑定，guestUser置换为accountUser帐号，并置空guestUser
+        if (cache.guestUser != null && ggid.equals(cache.guestUser.ggid)) {
+            cache.accountUser = cache.guestUser;
+            cache.guestUser = null;
         }
 
-        // guest的ggid被绑定，重置
-        if (cache.guestUser != null && ggid.equals(cache.guestUser.ggid)) {
-            cache.guestUser = null;
+        // 若accountUser为空，创建帐号用户
+        if (cache.accountUser == null) {
+            cache.accountUser = new LoginUser();
         }
 
         // 检查当前帐号是否添加到集合中去了
