@@ -74,13 +74,11 @@ public class LoginPresenterImpl implements LoginPresenter {
 
     @Override
     public void accountRegistOrBind(final String ggid, final String email, final String password) {
-        if (ggid == null) {
-            ggid = "";
-        }
+
 
         // ggid为空，服务器注册用户后，生成新的ggid绑定返回
         // ggid不为空，服务器注册用户后，同现有的ggid绑定返回
-        LoginRequest.accountRegistOrBind(ggid, email, password, new LoginRequestCallback<String>() {
+        LoginRequest.accountRegistOrBind(ggid == null ? "" : ggid, email, password, new LoginRequestCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 LoginUser loginUser = LoginUserManager.onAccountLoginSuccess(Account.ACCOUNT_MODE_AVIDLY, result);
