@@ -42,7 +42,7 @@
                 android:textSize="@dimen/avildy_user_lookup_tip_textszie"/>
 
             <EditText
-                android:id="@+id/avidly_editor_chagne_new_pwd2"
+                android:id="@+id/avidly_editor_email_address"
                 android:layout_width="@dimen/avidly_user_account_editor_width"
                 android:layout_height="@dimen/avidly_user_account_editor_height"
                 android:layout_marginTop="@dimen/avildy_user_lookup_mail_margintop"

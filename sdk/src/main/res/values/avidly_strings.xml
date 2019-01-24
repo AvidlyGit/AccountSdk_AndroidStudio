@@ -65,5 +65,10 @@
     <string name="avidly_string_user_alter_pwd_empty_oldpwd">请输入原密码</string>
     <string name="avidly_string_user_alter_pwd_empty_newpwd">请输入新密码</string>
     <string name="avidly_string_user_alter_pwd_empty_newpwd2">请再次输入新密码</string>
+    <string name="avidly_string_user_alter_pwd_send_success">密码设置成功</string>
+
+    <string name="avidly_string_user_lookup_email_tip">请输入一个接收新密码的邮箱</string>
+    <string name="avidly_string_user_lookup_eamil_wrong_tip">邮箱格式不对</string>
+    <string name="avidly_string_user_lookup_eamil_send_success">新密码请求成功提交</string>
 
 </resources>

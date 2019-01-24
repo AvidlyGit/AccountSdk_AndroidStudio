@@ -29,9 +29,9 @@ public class AccountLoginSubFragment extends AccountBaseSubFragment {
 
         LoginUser activedUser = LoginUserManager.getCurrentActiveLoginUser();
         if (activedUser != null) {
-            boolean isGuest = activedUser.getLoginedMode() == Account.ACCOUNT_MODE_GUEST;
-            if (!isGuest) {
-                mInputEmail.setText(activedUser.findActivedAccount().accountName);
+            Account account = activedUser.findActivedAccount();
+            if (account != null) {
+                mInputEmail.setText(account.accountName);
             }
         }
 

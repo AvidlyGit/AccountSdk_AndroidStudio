@@ -183,11 +183,18 @@ public class Utils {
         });
     }
 
+    public static String textOfUrlEncode(String text) {
+        String result = "";
+        try {
+            result = URLEncoder.encode(text, Constants.URL_ENCODER_ENC);
+        } catch (Throwable e) {
+
+        }
+        return result;
+    }
+
     /**
      * 验证邮箱
-     *
-     * @param email
-     * @return
      */
     public static boolean checkEmailValid(String email) {
         boolean flag = false;
@@ -202,13 +209,34 @@ public class Utils {
         return flag;
     }
 
-    public static String textOfUrlEncode(String text) {
-        String result = "";
-        try {
-            result = URLEncoder.encode(text, Constants.URL_ENCODER_ENC);
-        } catch (Throwable e) {
+    public static boolean validEmail1(String email) {
+        boolean isValid = false;
 
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.matches()) {
+            isValid = true;
         }
-        return result;
+
+        return isValid;
+    }
+
+    public static boolean validEmail2(String email) {
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        String emailPatternnew = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+\\.+[a-z]+";
+        String domain = email.substring(email.indexOf('@'), email.length());
+        String last = domain.substring(domain.indexOf('.'), domain.length());
+        if (email.matches(emailPattern) && (last.length() == 3 || last.length() == 4)) // check @domain.nl or @domain.com or @domain.org
+        {
+            return true;
+        } else if (email.matches(emailPatternnew) && last.length() == 6 && email.charAt(email.length() - 3) == '.') //check for @domain.co.in or @domain.co.uk
+        {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -7,7 +7,7 @@ package com.avidly.sdk.account.base;
  */
 public class Constants {
     public static long AUTO_LOGIN_TIME_OUT_MILLS = 3 * 1000;
-    public static long AUTO_CLOSE_ERROR_LAYOUT_MILLS = 1 * 1000;
+    public static long AUTO_CLOSE_ERROR_LAYOUT_MILLS = 2 * 1000;
     public static String URL_ENCODER_ENC = "UTF-8";
     public static String PLATFORM_ANDROID = "android";
 

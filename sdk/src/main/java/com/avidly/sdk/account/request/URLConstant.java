@@ -40,7 +40,9 @@ public class URLConstant {
         return ACCOUNT_API + "/user/reg?" + path;
     }
 
-
-
-
+    public static String retrievePwd(String address) {
+        String path = "email=" + address
+                + "&pid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;
+        return ACCOUNT_API + "/user/resetPwd?" + path;
+    }
 }

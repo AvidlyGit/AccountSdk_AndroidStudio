@@ -101,6 +101,7 @@ public class LoginRequest {
                         LoginUser user = LoginUserManager.getAccountLoginUser();
                         if (user != null) {
                             bindOther(guest, user);
+                            LoginUserManager.saveAccountUsers();
                         }
                     }
                 } catch (Exception e) {
@@ -141,7 +142,6 @@ public class LoginRequest {
                 callback.onFail(code, "" + e);
             }
         });
-
     }
 
 

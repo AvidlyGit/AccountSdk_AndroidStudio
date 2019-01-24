@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.avidly.sdk.account.base.Constants;
+import com.avidly.sdk.account.base.utils.ThreadHelper;
 import com.avidly.sdk.account.data.user.Account;
 import com.avidly.sdk.account.data.user.LoginUser;
 import com.avidly.sdk.account.data.user.LoginUserManager;
@@ -51,7 +52,7 @@ public class AccountLoadingFragment extends DialogFragment implements View.OnCli
             }
         }
 
-        new Handler().postDelayed(new Runnable() {
+        ThreadHelper.runOnMainThread(new Runnable() {
             @Override
             public void run() {
                 startAutoLogin();

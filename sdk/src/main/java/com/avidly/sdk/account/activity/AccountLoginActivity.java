@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.avidly.sdk.account.AvidlyAccountSdk;
 import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.LogUtils;
+import com.avidly.sdk.account.base.utils.ThreadHelper;
 import com.avidly.sdk.account.business.LoginCenter;
 import com.avidly.sdk.account.business.LoginPresenter;
 import com.avidly.sdk.account.business.LoginPresenterImpl;
@@ -232,6 +233,13 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
         transaction.commit();
     }
 
+    private Runnable mHideErrorMessageRunnable = new Runnable() {
+        @Override
+        public void run() {
+            hideErrorMessage();
+        }
+    };
+
     private void hideErrorMessage() {
         runOnUiThread(new Runnable() {
             @Override
@@ -240,15 +248,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
             }
         });
     }
-
-    private Handler mHandler = new Handler(Looper.getMainLooper());
-    private Runnable mHideErrorMessageRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hideErrorMessage();
-        }
-    };
-
+    
     private void showErrorMessage(final String message) {
         runOnUiThread(new Runnable() {
             @Override
@@ -258,8 +258,8 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
             }
         });
 
-        mHandler.removeCallbacks(mHideErrorMessageRunnable);
-        mHandler.postDelayed(mHideErrorMessageRunnable, Constants.AUTO_CLOSE_ERROR_LAYOUT_MILLS);
+        ThreadHelper.removeOnWorkThread(mHideErrorMessageRunnable);
+        ThreadHelper.runOnWorkThread(mHideErrorMessageRunnable, Constants.AUTO_CLOSE_ERROR_LAYOUT_MILLS);
     }
 
     @Override

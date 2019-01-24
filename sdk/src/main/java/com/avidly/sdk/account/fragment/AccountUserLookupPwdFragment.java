@@ -2,11 +2,18 @@ package com.avidly.sdk.account.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.avidly.sdk.account.base.utils.LogUtils;
+import com.avidly.sdk.account.base.utils.Utils;
+import com.avidly.sdk.account.request.HttpCallback;
+import com.avidly.sdk.account.request.HttpRequest;
+import com.avidly.sdk.account.request.URLConstant;
 import com.sdk.avidly.account.R;
 
 public class AccountUserLookupPwdFragment extends BaseFragment {
@@ -44,7 +51,7 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
         return false;
     }
 
-    private void initView(View view) {
+    private void initView(final View view) {
 
         view.findViewById(R.id.avidly_user_manager_title_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,5 +64,43 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
 
         TextView textView = view.findViewById(R.id.avidly_user_common_title_textview);
         textView.setText(R.string.avidly_string_userpwd_lookup_btn);
+
+        view.findViewById(R.id.avidly_fragment_user_lookup_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText editText = view.findViewById(R.id.avidly_editor_email_address);
+                String address = editText.getText().toString();
+                checkAndSubmit(address);
+            }
+        });
+    }
+
+    private void checkAndSubmit(String address) {
+        if (TextUtils.isEmpty(address)) {
+            Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_email_tip, true);
+            return;
+        }
+
+
+        if (!Utils.validEmail1(address)) {
+            Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_wrong_tip, true);
+            return;
+        }
+
+        String url = URLConstant.retrievePwd(address);
+        LogUtils.i("retrievePwd url:" + url);
+        HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
+            @Override
+            public void onResponseSuccess(String result) {
+                LogUtils.i("onResponseSuccess:" + result);
+                Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_success, true);
+            }
+
+            @Override
+            public void onResponedFail(Throwable e, int code) {
+                LogUtils.i("onResponedFail, exception:" + e + ", code:" + code);
+            }
+        });
+
     }
 }
