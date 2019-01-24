@@ -59,8 +59,8 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
         if (intent != null) {
             switch (intent.getAction()) {
                 case Constants.INTENT_KEY_ACTION_LOGIN:
-                    LoginUser loginUser = (LoginUser) intent.getSerializableExtra(Constants.INTENT_KEY_LOGINED_USER);
-                    if (loginUser == null) {
+                    LoginUser activedUser = LoginUserManager.getCurrentActiveLoginUser();
+                    if (activedUser == null) {
                         // 没有现存账号，展示home_fragment
                         showAccountHomeFragment();
                     } else {
@@ -68,22 +68,22 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
                         AccountLoadingFragment loadingFragment = (AccountLoadingFragment) mFragmentManager.findFragmentById(R.id.avidly_fragment_login);
                         loadingFragment.setLoadingListener(this);
 
-                        switch (loginUser.getLoginedMode()) {
+                        switch (activedUser.getLoginedMode()) {
                             case Account.ACCOUNT_MODE_GUEST:
                                 // 现存账号是guest
-                                mPresenter.guestLogin(loginUser);
+                                mPresenter.guestLogin(activedUser);
                                 break;
                             case Account.ACCOUNT_MODE_AVIDLY:
                                 // 现存账号是avidly
-                                Account avidlyAccount = loginUser.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
+                                Account avidlyAccount = activedUser.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
                                 // TODO: 2019/1/23  这里accountName， accountPwd取不到
-//                                mPresenter.accountLogin(avidlyAccount.accountName, avidlyAccount.accountPwd);
-                                mPresenter.accountLogin("Tao.Wang", "password");
+                                mPresenter.accountLogin(avidlyAccount.accountName, avidlyAccount.accountPwd);
+//                                mPresenter.accountLogin("Tao.Wang", "password");
                                 break;
                             case Account.ACCOUNT_MODE_FACEBOOK:
                                 //todo 现存账号是facebook
-                                Account facebookAccount = loginUser.findAccountByMode(Account.ACCOUNT_MODE_FACEBOOK);
-                                mPresenter.facebookLogin(loginUser);
+                                Account facebookAccount = activedUser.findAccountByMode(Account.ACCOUNT_MODE_FACEBOOK);
+                                mPresenter.facebookLogin(activedUser);
                         }
                     }
                     break;
