@@ -56,6 +56,16 @@ public class LoginUser extends JsonData implements Serializable {
         return null;
     }
 
+    public void bindAccount(int mode, boolean isbind) {
+        Account account = findAccountByMode(mode);
+        if (account == null) {
+            account = new Account();
+            account.mode = mode;
+            addOrUpdateAccount(account);
+        }
+        account.isBinded = isbind;
+    }
+
     @Override
     protected void parseJsonString(JSONObject jsonObject) {
         super.parseJsonString(jsonObject);

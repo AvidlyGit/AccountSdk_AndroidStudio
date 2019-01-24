@@ -85,6 +85,10 @@ public class LoginUserManager {
      */
     public static LoginUser onAccountLoginSuccess(int mod, String ggid) {
 
+        if (cache.accountUser != null && !cache.accountUser.ggid.equals(ggid)) {
+            // 有新的accountUser，抛弃当前accountUser
+            cache.accountUser = null;
+        }
 
         // guestUser的ggid被绑定，guestUser置换为accountUser帐号，并置空guestUser
         if (cache.guestUser != null && ggid.equals(cache.guestUser.ggid)) {

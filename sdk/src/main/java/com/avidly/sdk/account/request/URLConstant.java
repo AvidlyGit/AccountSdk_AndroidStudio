@@ -23,7 +23,7 @@ public class URLConstant {
     }
 
     public static String getAccountRegistOrBindApi(String gameGuestId, String userName, String password) {
-        String path = "gameGuestId=" + gameGuestId + "username=" + userName + "&pwd=" + password
+        String path = "gameGuestId=" + gameGuestId + "&username=" + userName + "&pwd=" + password
                 + "&pid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;
         return ACCOUNT_API + "/user/reg?" + path;
     }

@@ -1,10 +1,17 @@
 package com.avidly.sdk.account.business;
 
-import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.LogUtils;
+import com.avidly.sdk.account.data.user.Account;
+import com.avidly.sdk.account.data.user.LoginUser;
+import com.avidly.sdk.account.data.user.LoginUserManager;
 import com.avidly.sdk.account.request.HttpCallback;
 import com.avidly.sdk.account.request.HttpRequest;
 import com.avidly.sdk.account.request.URLConstant;
+
+import org.json.JSONObject;
+
+import static com.avidly.sdk.account.Errors.AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION;
+import static com.avidly.sdk.account.Errors.AVIDLY_LOGIN_ERROR_RESPONSE_MISMATCH_PRODUCT_ID;
 
 /**
  * Created by t.wang on 2019/1/22.
@@ -12,6 +19,43 @@ import com.avidly.sdk.account.request.URLConstant;
  * Copyright © 2018 Adrealm. All rights reserved.
  */
 public class LoginRequest {
+
+
+    private static JSONObject requestToDataJsonObject(String result, LoginRequestCallback<String> callback) {
+        try {
+            JSONObject o = new JSONObject(result);
+            int code = o.optInt("statusCode");
+            if (200 == code) {
+                JSONObject data = o.getJSONObject("data");
+                JSONObject guest = data.getJSONObject("gameGuest");
+                String productId = guest.getString("productId");
+                if (productId.equals(LoginCenter.getProductId())) {
+                    return guest;
+                } else {
+                    callback.onFail(AVIDLY_LOGIN_ERROR_RESPONSE_MISMATCH_PRODUCT_ID, "mismatch product id");
+                }
+            } else {
+                callback.onFail(code, "" + o.optString("message"));
+            }
+        } catch (Exception e) {
+            callback.onFail(AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION, "" + e);
+        }
+        return null;
+    }
+
+    private static void bindOther(JSONObject guest, LoginUser user) {
+        if (guest != null && user != null) {
+            try {
+                user.bindAccount(Account.ACCOUNT_MODE_AVIDLY, guest.getBoolean("bindAvidly"));
+                user.bindAccount(Account.ACCOUNT_MODE_FACEBOOK, guest.getBoolean("bindFb"));
+                user.bindAccount(Account.ACCOUNT_MODE_GOOGLEPLAY, guest.getBoolean("bindGoogle"));
+                user.bindAccount(Account.ACCOUNT_MODE_TWITTER, guest.getBoolean("bindTwitter"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void guestLogin(final LoginRequestCallback<String> callback) {
         String url = URLConstant.getGuestLoginApi();
         LogUtils.i("HttpBusiness guestLogin url is " + url);
@@ -19,27 +63,24 @@ public class LoginRequest {
             @Override
             public void onResponseSuccess(String result) {
                 LogUtils.i("HttpBusiness guestLogin result is " + result);
-//                {
-//                    "gameGuest":{
-//                        "gameGusetId":2135545885455,
-//                        "pid":610322,
-//                        "platform":"ios"
-//                    }
-//                }
-                String gameGusetId = "2135545885455";
-                String pid = "610322";
-                String platform = "android";
-                if (pid.equals(LoginCenter.getProductId()) && platform.equals(Constants.PLATFORM_ANDROID)) {
-                    callback.onSuccess(gameGusetId);
-                } else {
-                    callback.onFail(00, "");
+                try {
+                    JSONObject guest = requestToDataJsonObject(result, callback);
+                    if (guest != null) {
+                        String gameGuestId = guest.getString("gameGuestId");
+                        callback.onSuccess(gameGuestId);
+                        LoginUser user = LoginUserManager.getAccountLoginUser();
+                        if (user != null) {
+                            bindOther(guest, user);
+                        }
+                    }
+                } catch (Exception e) {
                 }
             }
 
             @Override
             public void onResponedFail(Throwable e, int code) {
 
-                callback.onFail(00, "");
+                callback.onFail(code, "" + e);
             }
         });
     }
@@ -52,33 +93,24 @@ public class LoginRequest {
             @Override
             public void onResponseSuccess(String result) {
                 LogUtils.i("HttpBusiness accountLogin result is " + result);
-//                {
-//                    "success":true,
-//                    "statusCode":200,
-//                    "message":"SUCCESS",
-//                    "gameGuest":{
-//                        "gameGuestId":24535545885455,
-//                        "productId":610322,
-//                        "bindGoogle":false,
-//                        "bindFb":"false",
-//                        "bindAvidly":"true",
-//                        "bindTwitter":"false",
-//                        "bindInstagram":"false",
-//                    }
-//                }
-                String gameGusetId = "24535545885455";
-                String pid = "610322";
-                if (pid.equals(LoginCenter.getProductId())) {
-                    callback.onSuccess(gameGusetId);
-                } else {
-                    callback.onFail(00, "");
+                try {
+                    JSONObject guest = requestToDataJsonObject(result, callback);
+                    if (guest != null) {
+                        String gameGuestId = guest.getString("gameGuestId");
+                        callback.onSuccess(gameGuestId);
+                        LoginUser user = LoginUserManager.getAccountLoginUser();
+                        if (user != null) {
+                            bindOther(guest, user);
+                        }
+                    }
+                } catch (Exception e) {
                 }
             }
 
             @Override
             public void onResponedFail(Throwable e, int code) {
 
-                callback.onFail(00, "");
+                callback.onFail(code, "" + e);
             }
         });
     }
@@ -91,6 +123,16 @@ public class LoginRequest {
             @Override
             public void onResponseSuccess(String result) {
                 LogUtils.i("HttpBusiness accountRegistOrBind result is " + result);
+                try {
+                    JSONObject guest = requestToDataJsonObject(result, callback);
+                    if (guest != null) {
+                        String gameGuestId = guest.getString("gameGuestId");
+                        callback.onSuccess(gameGuestId);
+                        bindOther(guest, LoginUserManager.getAccountLoginUser());
+                        LoginUserManager.saveAccountUsers();
+                    }
+                } catch (Exception e) {
+                }
 //                {
 //                    "avidlyUser":{
 //                        "avidlyUserId":24535545885455,
@@ -99,20 +141,20 @@ public class LoginRequest {
 //                        "platform":"ios"
 //                    }
 //                }
-                String gameGusetId = "24535545885455";
-                String pid = "610322";
-                String platform = "android";
-                if (pid.equals(LoginCenter.getProductId()) && platform.equals(Constants.PLATFORM_ANDROID)) {
-                    callback.onSuccess(gameGusetId);
-                } else {
-                    callback.onFail(00, "");
-                }
+//                String gameGusetId = "24535545885455";
+//                String pid = "610322";
+//                String platform = "android";
+//                if (pid.equals(LoginCenter.getProductId()) && platform.equals(Constants.PLATFORM_ANDROID)) {
+//                    callback.onSuccess(gameGusetId);
+//                } else {
+//                    callback.onFail(00, "");
+//                }
             }
 
             @Override
             public void onResponedFail(Throwable e, int code) {
 
-                callback.onFail(00, "");
+                callback.onFail(code, "" + e);
             }
         });
 

@@ -48,13 +48,18 @@ public class LoginPresenterImpl implements LoginPresenter {
     }
 
     @Override
-    public void accountLogin(String email, String password) {
+    public void accountLogin(final String email, final String password) {
         // 账号密码登录
         LoginRequest.accountLogin(email, password, new LoginRequestCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 LoginUser loginUser = LoginUserManager.onAccountLoginSuccess(Account.ACCOUNT_MODE_AVIDLY, result);
-                LoginUserManager.saveAccountUsers();
+                Account account = loginUser.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
+                account.accountName = email;
+                account.nickname = email;
+                account.accountPwd = password;
+                // 回调之后会保存
+                //LoginUserManager.saveAccountUsers();
 
                 mView.onUserLoginSuccessed(loginUser);
             }
@@ -86,7 +91,8 @@ public class LoginPresenterImpl implements LoginPresenter {
                 account.accountName = email;
                 account.nickname = email;
                 account.accountPwd = password;
-                LoginUserManager.saveAccountUsers();
+                // 回调之后会保存
+                //LoginUserManager.saveAccountUsers();
 
                 mView.onUserLoginSuccessed(loginUser);
             }
