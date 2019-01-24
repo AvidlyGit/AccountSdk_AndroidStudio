@@ -73,7 +73,7 @@ public class LoginPresenterImpl implements LoginPresenter {
     }
 
     @Override
-    public void accountRegistOrBind(String ggid, String email, String password) {
+    public void accountRegistOrBind(final String ggid, final String email, final String password) {
         if (ggid == null) {
             ggid = "";
         }
@@ -84,6 +84,10 @@ public class LoginPresenterImpl implements LoginPresenter {
             @Override
             public void onSuccess(String result) {
                 LoginUser loginUser = LoginUserManager.onAccountLoginSuccess(Account.ACCOUNT_MODE_AVIDLY, result);
+                Account account = loginUser.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
+                account.accountName = email;
+                account.nickname = email;
+                account.accountPwd = password;
                 LoginUserManager.saveAccountUsers();
 
                 mView.onUserLoginSuccessed(loginUser);

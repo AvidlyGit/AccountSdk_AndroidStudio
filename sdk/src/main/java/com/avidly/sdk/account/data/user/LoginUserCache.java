@@ -2,6 +2,7 @@ package com.avidly.sdk.account.data.user;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.avidly.sdk.account.base.utils.SpHelper;
 
@@ -53,13 +54,17 @@ public class LoginUserCache {
         initSpShare(context);
 
         if (guestUser != null) {
-            spHelper.putString("guest_user", guestUser.thisToString());
+            String json = guestUser.thisToString();
+            Log.i("xxxx", "save guest user:" + json);
+            spHelper.putString("guest_user", json);
         } else {
             spHelper.putString("guest_user", "");
         }
 
         if (accountUser != null) {
-            spHelper.putString("account_user", accountUser.thisToString());
+            String json = accountUser.thisToString();
+            Log.i("xxxx", "save account user:" + json);
+            spHelper.putString("account_user", json);
         } else {
             spHelper.putString("account_user", "");
         }

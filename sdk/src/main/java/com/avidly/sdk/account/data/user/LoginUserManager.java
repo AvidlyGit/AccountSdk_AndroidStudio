@@ -88,6 +88,10 @@ public class LoginUserManager {
         // 创建帐号用户
         if (cache.accountUser == null) {
             cache.accountUser = getOrCreateGuestLoginUser();
+        }
+
+        // guest的ggid被绑定，重置
+        if (cache.guestUser != null && ggid.equals(cache.guestUser.ggid)) {
             cache.guestUser = null;
         }
 
