@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -98,36 +97,49 @@ public class LoginCenter {
 
         LoginCenter.checkScreenOrietation(context);
 
-        LoginUser accountUser = LoginUserManager.getAccountLoginUser();
-        if (accountUser != null && accountUser.isActived) {
-            // 上次登陆是帐号登陆（即非游客登陆）
-            if (accountUser.isNowLogined) {
-                LogUtils.w("已经帐号登陆，不需要重复登陆");
+//        LoginUser accountUser = LoginUserManager.getAccountLoginUser();
+//        if (accountUser != null && accountUser.isActived) {
+//            // 上次登陆是帐号登陆（即非游客登陆）
+//            if (accountUser.isNowLogined) {
+//                LogUtils.w("已经帐号登陆，不需要重复登陆");
+//                if (loginCallback != null) {
+//                    loginCallback.onLoginSuccess(accountUser.ggid);
+//                }
+//                return;
+//            }
+//
+//            continueLogin(context, accountUser);
+//            return;
+//        }
+//
+//        LoginUser guestUser = LoginUserManager.getGuestLoginUser();
+//        if (guestUser != null && guestUser.isActived) {
+//            if (guestUser.isNowLogined) {
+//                LogUtils.w("已经游客登陆，不需要重复登陆");
+//                if (loginCallback != null) {
+//                    loginCallback.onLoginSuccess(accountUser.ggid);
+//                }
+//                return;
+//            }
+//
+//            continueLogin(context, guestUser);
+//            return;
+//        }
+
+        LoginUser activedUser = LoginUserManager.getCurrentActiveLoginUser();
+
+        if (activedUser != null) {
+            if (activedUser.isNowLogined) {
+                LogUtils.w("已经登陆，不需要重复登陆, account mode:" + activedUser.getLoginedMode() + ", ggid:" + activedUser.ggid);
                 if (loginCallback != null) {
-                    loginCallback.onLoginSuccess(accountUser.ggid);
+                    loginCallback.onLoginSuccess(activedUser.ggid);
                 }
-                return;
+            } else {
+                continueLogin(context, activedUser);
             }
-
-            continueLogin(context, accountUser);
-            return;
+        } else {
+            newLogin(context);
         }
-
-        LoginUser guestUser = LoginUserManager.getGuestLoginUser();
-        if (guestUser != null && guestUser.isActived) {
-            if (guestUser.isNowLogined) {
-                LogUtils.w("已经游客登陆，不需要重复登陆");
-                if (loginCallback != null) {
-                    loginCallback.onLoginSuccess(accountUser.ggid);
-                }
-                return;
-            }
-
-            continueLogin(context, guestUser);
-            return;
-        }
-
-        newLogin(context);
     }
 
     private static void newLogin(Context context) {
