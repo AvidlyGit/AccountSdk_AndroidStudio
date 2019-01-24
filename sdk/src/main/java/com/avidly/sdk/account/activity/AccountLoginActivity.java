@@ -233,7 +233,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
 
     @Override
     public void onAccountRegistClicked(String email, String password) {
-        mPresenter.accountRegistOrBind(null, email, password);
+        mPresenter.accountRegistOrBind(LoginUserManager.getCurrentGGID(), email, password);
     }
 
     @Override

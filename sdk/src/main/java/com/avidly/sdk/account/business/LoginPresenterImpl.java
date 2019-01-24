@@ -99,7 +99,6 @@ public class LoginPresenterImpl implements LoginPresenter {
 
             @Override
             public void onFail(int code, String message) {
-
                 mView.onUserLoginFailed(102);
             }
         });
