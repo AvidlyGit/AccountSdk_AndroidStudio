@@ -135,7 +135,7 @@ public class LoginCenter {
                     loginCallback.onLoginSuccess(activedUser.ggid);
                 }
             } else {
-                continueLogin(context, activedUser);
+                continueLogin(context);
             }
         } else {
             newLogin(context);
@@ -148,10 +148,9 @@ public class LoginCenter {
         context.startActivity(intent);
     }
 
-    private static void continueLogin(Context context, LoginUser user) {
+    private static void continueLogin(Context context) {
         Intent intent = new Intent(context, AccountLoginActivity.class);
         intent.setAction(Constants.INTENT_KEY_ACTION_LOGIN);
-        intent.putExtra(Constants.INTENT_KEY_LOGINED_USER, user);
         context.startActivity(intent);
     }
 
