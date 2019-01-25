@@ -40,8 +40,7 @@
     <string name="avidly_string_userpwd_lookup_eidtor_hit">邮箱</string>
     <string name="avidly_string_userpwd_lookup_btn">发送</string>
 
-    <string name="avidly_string_user_alter_pwd_short_length">密码必需是在6~16位之间</string>
-    <string name="avidly_string_user_alter_pwd_long_lenght">密码必需是在6~16位之间</string>
+    <string name="avidly_string_user_alter_pwd_length">密码必需是在6~16位之间</string>
     <string name="avidly_string_email_format_error">输入邮件格式错误</string>
     <string name="avidly_string_email_account_error">请输入Avid.ly账号</string>
     <string name="avidly_string_email_pwd_input_error">请输入密码</string>

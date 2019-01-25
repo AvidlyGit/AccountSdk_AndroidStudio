@@ -3,6 +3,8 @@ package com.avidly.sdk.account.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import com.avidly.sdk.account.AvidlyAccountSdk;
 import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.LogUtils;
+import com.avidly.sdk.account.base.utils.ThreadHelper;
 import com.avidly.sdk.account.business.LoginCenter;
 import com.avidly.sdk.account.business.LoginPresenter;
 import com.avidly.sdk.account.business.LoginPresenterImpl;
@@ -127,24 +130,6 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
                         // 有现存账号，展示loading_fragment
                         AccountLoadingFragment loadingFragment = (AccountLoadingFragment) mFragmentManager.findFragmentById(R.id.avidly_fragment_login);
                         loadingFragment.setLoadingListener(this);
-
-                        switch (activedUser.getLoginedMode()) {
-                            case Account.ACCOUNT_MODE_GUEST:
-                                // 现存账号是guest
-                                mPresenter.guestLogin(activedUser);
-                                break;
-                            case Account.ACCOUNT_MODE_AVIDLY:
-                                // 现存账号是avidly
-                                Account avidlyAccount = activedUser.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
-                                // TODO: 2019/1/23  这里accountName， accountPwd取不到
-                                mPresenter.accountLogin(avidlyAccount.accountName, avidlyAccount.accountPwd);
-//                                mPresenter.accountLogin("Tao.Wang", "password");
-                                break;
-                            case Account.ACCOUNT_MODE_FACEBOOK:
-                                //todo 现存账号是facebook
-                                Account facebookAccount = activedUser.findAccountByMode(Account.ACCOUNT_MODE_FACEBOOK);
-                                mPresenter.facebookLogin(activedUser);
-                        }
                     }
                     break;
                 case Constants.INTENT_KEY_ACTION_BIND:
@@ -163,9 +148,11 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     @Override
     public void onUserLoginSuccessed(final LoginUser loginUser) {
         LogUtils.i("onUserLoginSuccessed: ");
-        // TODO: 2019/1/23 需要通知用户中心更新用户数据
 
         finish();
+        if (!LoginUserManager.isLoginedNow()) {
+            showAccountHomeFragment();
+        }
 
         runOnUiThread(new Runnable() {
             @Override
@@ -193,8 +180,27 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     // from loading fragment
     @Override
     public void onSwitchAccountClicked() {
-        // TODO: 2019/1/21 因为点击了切换，需要忽略此次登录请求的回调
         showAccountHomeFragment();
+    }
+
+    @Override
+    public void onWaitingTimeOut() {
+        LoginUser activedUser = LoginUserManager.getCurrentActiveLoginUser();
+        switch (activedUser.getLoginedMode()) {
+            case Account.ACCOUNT_MODE_GUEST:
+                // 现存账号是guest
+                mPresenter.guestLogin(activedUser);
+                break;
+            case Account.ACCOUNT_MODE_AVIDLY:
+                // 现存账号是avidly
+                Account avidlyAccount = activedUser.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
+                mPresenter.accountLogin(avidlyAccount.accountName, avidlyAccount.accountPwd);
+                break;
+            case Account.ACCOUNT_MODE_FACEBOOK:
+                //todo 现存账号是facebook
+                Account facebookAccount = activedUser.findAccountByMode(Account.ACCOUNT_MODE_FACEBOOK);
+                mPresenter.facebookLogin(activedUser);
+        }
     }
 
     // from home fragment
@@ -316,6 +322,13 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
         transaction.commit();
     }
 
+    private Runnable mHideErrorMessageRunnable = new Runnable() {
+        @Override
+        public void run() {
+            hideErrorMessage();
+        }
+    };
+
     private void hideErrorMessage() {
         runOnUiThread(new Runnable() {
             @Override
@@ -324,7 +337,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
             }
         });
     }
-
+    
     private void showErrorMessage(final String message) {
         runOnUiThread(new Runnable() {
             @Override
@@ -333,5 +346,8 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
                 mErrorLayout.setVisibility(View.VISIBLE);
             }
         });
+
+        ThreadHelper.removeOnWorkThread(mHideErrorMessageRunnable);
+        ThreadHelper.runOnWorkThread(mHideErrorMessageRunnable, Constants.AUTO_CLOSE_ERROR_LAYOUT_MILLS);
     }
 }

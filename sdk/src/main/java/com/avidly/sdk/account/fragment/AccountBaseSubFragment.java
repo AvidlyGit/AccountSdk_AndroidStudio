@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.avidly.sdk.account.base.Constants;
-import com.avidly.sdk.account.base.utils.Md5Utils;
+import com.avidly.sdk.account.base.utils.Utils;
 import com.avidly.sdk.account.listener.AccountLoginListener;
 import com.sdk.avidly.account.R;
 
@@ -64,31 +64,41 @@ public class AccountBaseSubFragment extends Fragment implements View.OnClickList
     }
 
     protected boolean checkInputValid() {
-        // TODO: 2019/1/22 检查输入、用户协议
-        if (TextUtils.isEmpty(mInputEmail.getText())) {
-            mLoginListener.onLoginErrorOccured("error 1111111111111111");
-            return false;
-        }
-        if (TextUtils.isEmpty(mInputPassword.getText())) {
-            mLoginListener.onLoginErrorOccured("error 2222222222222222");
+        String email = mInputEmail.getText().toString();
+        String password = mInputPassword.getText().toString();
+        if (TextUtils.isEmpty(email)) {
+            mLoginListener.onLoginErrorOccured(getString(R.string.avidly_string_email_account_error));
             return false;
         }
 
-        try {
-            mPassword = Md5Utils.textOfMd5(mInputPassword.getText().toString());
-        } catch (Exception e) {
-            mLoginListener.onLoginErrorOccured("error 3333333333333333");
+        if (TextUtils.isEmpty(password)) {
+            mLoginListener.onLoginErrorOccured(getString(R.string.avidly_string_email_pwd_input_error));
+            return false;
+        }
+
+        if (!Utils.checkEmailValid(email)) {
+            mLoginListener.onLoginErrorOccured(getString(R.string.avidly_string_email_format_error));
+            mIconClear.setVisibility(View.VISIBLE);
+            mInputEmail.setBackgroundResource(R.drawable.avidly_edit_text_invalid);
+            return false;
+        } else {
+            mIconClear.setVisibility(View.GONE);
+            mInputEmail.setBackgroundResource(R.drawable.avidly_edit_text_normal);
+        }
+
+        if (password.length() < 6 || password.length() > 16) {
+            mLoginListener.onLoginErrorOccured(getString(R.string.avidly_string_user_alter_pwd_length));
             return false;
         }
 
         if (mSubFragmentType == Constants.SUB_FRAGMENT_TYPE_BIND || mSubFragmentType == Constants.SUB_FRAGMENT_TYPE_REGIST) {
-
             if (!isAgreeProtocol) {
-                mLoginListener.onLoginErrorOccured("error 44444444444444");
+                mLoginListener.onLoginErrorOccured(getString(R.string.avidly_string_agree_protocol_error));
                 return false;
             }
         }
 
+        mPassword = Utils.textOfMd5(password);
         return true;
     }
 
@@ -98,6 +108,8 @@ public class AccountBaseSubFragment extends Fragment implements View.OnClickList
 
         if (id == R.id.avidly_icon_clear) {
             mInputEmail.setText("");
+            mInputEmail.setBackgroundResource(R.drawable.avidly_edit_text_normal);
+            mIconClear.setVisibility(View.GONE);
         }
 
         if (id == R.id.avidly_icon_eye) {
