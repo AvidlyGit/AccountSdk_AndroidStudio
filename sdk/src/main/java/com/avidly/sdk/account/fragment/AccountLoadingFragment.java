@@ -6,6 +6,10 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.TextView;
 
 import com.avidly.sdk.account.base.Constants;
@@ -24,6 +28,7 @@ import com.sdk.avidly.account.R;
 public class AccountLoadingFragment extends DialogFragment implements View.OnClickListener {
     private AccountLoadingListener mLoadingListener;
     private View mLoginLayout;
+    private View mLoadingIcon;
     private View mSwitchUser;
 
     public void setLoadingListener(AccountLoadingListener listener) {
@@ -35,6 +40,7 @@ public class AccountLoadingFragment extends DialogFragment implements View.OnCli
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.avidly_fragment_loading, container, false);
         mLoginLayout = view.findViewById(R.id.avidly_logining_layout);
+        mLoadingIcon = view.findViewById(R.id.avidly_icon_loading);
         mSwitchUser = view.findViewById(R.id.avidly_switch_user);
         mSwitchUser.setOnClickListener(this);
 
@@ -63,6 +69,14 @@ public class AccountLoadingFragment extends DialogFragment implements View.OnCli
     }
 
     private void startAutoLogin() {
+        RotateAnimation rotateAnim = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        LinearInterpolator lin = new LinearInterpolator();
+        rotateAnim.setInterpolator(lin);
+        rotateAnim.setDuration(500);//设置动画持续周期
+        rotateAnim.setRepeatCount(-1);//设置重复次数
+        rotateAnim.setFillAfter(true);//动画执行完后是否停留在执行完的状态
+        mLoadingIcon.setAnimation(rotateAnim);
+
         mLoginLayout.setVisibility(View.VISIBLE);
         mSwitchUser.setVisibility(View.GONE);
 

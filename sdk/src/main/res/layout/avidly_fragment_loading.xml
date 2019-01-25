@@ -36,6 +36,7 @@
                 android:textSize="@dimen/avidly_dimen_text_size_12sp" />
 
             <ImageView
+                android:id="@+id/avidly_icon_loading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/avidly_icon_loading" />
