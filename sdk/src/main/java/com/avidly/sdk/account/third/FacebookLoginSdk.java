@@ -58,6 +58,7 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
         if (user != null && user.getLoginedMode() == Account.ACCOUNT_MODE_FACEBOOK && user.isNowLogined) {
             // 已经facebook绑定登陆
             if (callback != null) {
+                LogUtils.i("facebook is logined now.");
                 callback.onLoginSuccess();
             }
             return;
@@ -69,6 +70,7 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
         if (isLoggedIn) {
+            LogUtils.i("facebook is valid, so success soon.");
             onLoginFinish(accessToken);
             return;
         }
@@ -80,6 +82,7 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
                         if (exitnow) {
                             return;
                         }
+                        LogUtils.i("facebook login successfully.");
                         // App code
                         AccessToken accessToken = loginResult.getAccessToken();
                         onLoginFinish(accessToken);
@@ -89,6 +92,7 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
                     @Override
                     public void onCancel() {
                         // App code
+                        LogUtils.i("facebook login cancel.");
                         if (callback != null) {
                             callback.onLoginFailed();
                         }
@@ -97,6 +101,7 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
                     @Override
                     public void onError(FacebookException exception) {
                         // App code
+                        LogUtils.i("facebook login exception:" + exception);
                         if (callback != null) {
                             callback.onLoginFailed();
                         }
