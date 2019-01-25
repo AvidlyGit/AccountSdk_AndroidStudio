@@ -21,6 +21,8 @@ import com.sdk.avidly.account.R;
 
 public class AccountUserPwdAlterFragment extends Fragment {
 
+    private AccountUserRootFragment.LoadingUICallback loadingUICallback;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +76,10 @@ public class AccountUserPwdAlterFragment extends Fragment {
         super.onDestroy();
     }
 
+    public void setLoadingUICallback(AccountUserRootFragment.LoadingUICallback loadingUICallback) {
+        this.loadingUICallback = loadingUICallback;
+    }
+
     private void initView(final View rootview) {
         rootview.findViewById(R.id.avidly_fragment_user_change_pwd_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +100,6 @@ public class AccountUserPwdAlterFragment extends Fragment {
             Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_empty_oldpwd, true);
             return;
         }
-
 
         if (TextUtils.isEmpty(newpwd1)) {
             Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_empty_newpwd, true);
@@ -133,14 +138,25 @@ public class AccountUserPwdAlterFragment extends Fragment {
                        LoginUserManager.saveAccountUsers();
                    }
                 }
+                if (loadingUICallback != null) {
+                    loadingUICallback.notifyShowLoadingUI(false);
+                }
                 Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_send_success, true);
             }
 
             @Override
             public void onResponedFail(Throwable e, int code) {
                 LogUtils.i("onResponedFail, exception:" + e + ", code:" + code);
+                if (loadingUICallback != null) {
+                    loadingUICallback.notifyShowLoadingUI(false);
+                }
+                Utils.showToastTip(getActivity(), R.string.avidly_string_user_alter_pwd_send_fail, true);
             }
         });
+
+        if (loadingUICallback != null) {
+            loadingUICallback.notifyShowLoadingUI(true);
+        }
 
     }
 

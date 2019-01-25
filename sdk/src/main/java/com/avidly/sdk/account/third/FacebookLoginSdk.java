@@ -30,21 +30,20 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
 
     boolean exitnow;
 
+    public static String getToken() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+        if (isLoggedIn) {
+            return accessToken.getToken();
+        }
+        return null;
+    }
+
     @Override
     public void exit() {
         exitnow = true;
         callback = null;
         callbackManager = null;
-    }
-
-    @Override
-    public boolean isExistSdkLib() {
-        try {
-            Class.forName("com.facebook.FacebookActivity");
-            return true;
-        } catch (Exception e) {
-        }
-        return false;
     }
 
     @Override
@@ -63,6 +62,8 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
             }
             return;
         }
+
+        this.callback = callback;
 
 
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
@@ -112,6 +113,11 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
     }
 
     private void onLoginFinish(AccessToken accessToken) {
+
+        if (callback != null) {
+            callback.onLoginStart();
+        }
+
         String token = accessToken.getToken();
         String userid = accessToken.getUserId();
         LogUtils.i("facebook token:" + token);
@@ -125,7 +131,7 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
         } catch (Exception e) {
         }
 
-        LoginRequest.thirdFacebookLogin("faceBook", object.toString(), new LoginRequestCallback<String>() {
+        LoginRequest.thirdSdkBind("facebook", object.toString(), new LoginRequestCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 if (callback != null) {

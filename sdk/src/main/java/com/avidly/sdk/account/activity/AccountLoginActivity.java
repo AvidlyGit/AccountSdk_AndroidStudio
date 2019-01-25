@@ -3,8 +3,6 @@ package com.avidly.sdk.account.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -19,6 +17,7 @@ import com.avidly.sdk.account.AvidlyAccountSdk;
 import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.base.utils.ThreadHelper;
+import com.avidly.sdk.account.base.utils.Utils;
 import com.avidly.sdk.account.business.LoginCenter;
 import com.avidly.sdk.account.business.LoginPresenter;
 import com.avidly.sdk.account.business.LoginPresenterImpl;
@@ -148,7 +147,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     @Override
     public void onUserLoginSuccessed(final LoginUser loginUser) {
         LogUtils.i("onUserLoginSuccessed: ");
-
+        LoginCenter.setIsAutoLogin(false);
         finish();
         if (!LoginUserManager.isLoginedNow()) {
             showAccountHomeFragment();
@@ -167,7 +166,11 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
         LogUtils.i("onUserLoginFailed: ");
 
         showErrorMessage(errorCode + "");
-        showAccountHomeFragment();
+
+        if (LoginCenter.isIsAutoLogin()) {
+            showAccountHomeFragment();
+            LoginCenter.setIsAutoLogin(false);
+        }
 
         runOnUiThread(new Runnable() {
             @Override
@@ -235,6 +238,12 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
 
     private void doThirdSdkLogin(int mode) {
         LogUtils.i("doThirdSdkLogin, mode: " + mode);
+        if (!ThirdSdkFactory.isExistSdkLib(mode)) {
+            thirdLoginSdkDelegate = null;
+            LogUtils.i("doThirdSdkLogin, the third login sdk is not exist. ");
+            return;
+        }
+
         if (thirdLoginSdkDelegate != null && !thirdLoginSdkDelegate.isThis(mode)) {
             thirdLoginSdkDelegate.exit();
             thirdLoginSdkDelegate = null;
@@ -246,19 +255,21 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
                 LogUtils.i("doThirdSdkLogin, fail to create third sdk delegate object.");
                 return;
             }
-            if (!thirdLoginSdkDelegate.isExistSdkLib()) {
-                thirdLoginSdkDelegate = null;
-                LogUtils.i("doThirdSdkLogin, the third login sdk is not exist. ");
-                return;
-            }
             thirdLoginSdkDelegate.login(this, new ThirdSdkLoginCallback() {
+
                 @Override
-                public void onLoginSuccess() {
+                public void onLoginStart() {
 
                 }
 
                 @Override
+                public void onLoginSuccess() {
+                    thirdLoginSdkDelegate = null;
+                }
+
+                @Override
                 public void onLoginFailed() {
+                    Utils.showToastTip(AccountLoginActivity.this, R.string.avidly_string_user_login_send_fail, true);
                     thirdLoginSdkDelegate = null;
                 }
             });
@@ -283,7 +294,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
 
     @Override
     public void onAccountRegistClicked(String email, String password) {
-        mPresenter.accountRegistOrBind(LoginUserManager.getCurrentGGID(), email, password);
+        mPresenter.accountRegistOrBind(null, email, password);
     }
 
     @Override

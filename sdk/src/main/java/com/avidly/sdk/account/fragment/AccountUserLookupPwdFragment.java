@@ -93,14 +93,38 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
             @Override
             public void onResponseSuccess(String result) {
                 LogUtils.i("onResponseSuccess:" + result);
-                Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_success, true);
+                Utils.showToastTip(getActivity(), R.string.avidly_string_user_lookup_eamil_send_success, true);
+                hideLoadingUI();
             }
 
             @Override
             public void onResponedFail(Throwable e, int code) {
                 LogUtils.i("onResponedFail, exception:" + e + ", code:" + code);
+                Utils.showToastTip(getActivity(), R.string.avidly_string_user_lookup_eamil_send_fail, true);
+                hideLoadingUI();
             }
         });
 
+        showLoadingUI();
+
+    }
+
+    private void showLoadingUI() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getView().findViewById(R.id.avidly_loading_layout).setVisibility(View.VISIBLE);
+            }
+        });
+
+    }
+
+    private void hideLoadingUI() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getView().findViewById(R.id.avidly_loading_layout).setVisibility(View.GONE);
+            }
+        });
     }
 }

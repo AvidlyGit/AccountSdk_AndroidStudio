@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 
 public interface ThirdLoginSdkDelegate {
-    boolean isExistSdkLib();
 
     boolean isThis(int type);
 

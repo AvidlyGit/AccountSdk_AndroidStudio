@@ -118,6 +118,28 @@ public class LoginUserManager {
     }
 
     /**
+     * 第三方帐号解绑
+     *
+     * @param mod
+     */
+    public static void onThirdSdkUnbind(int mod) {
+        if (cache.accountUser == null) {
+            return;
+        }
+
+        if (cache.accountUser.getLoginedMode() == mod) {
+            // 当前登陆的帐号解绑，设置为未登陆状态
+            logoutAccountUser();
+        }
+
+        // 设置mod对应的accout为非绑定状态
+        Account account = cache.accountUser.findAccountByMode(mod);
+        if (account != null) {
+            account.isBinded = false;
+        }
+    }
+
+    /**
      * 保存帐号数据
      */
     public static void saveAccountUsers() {

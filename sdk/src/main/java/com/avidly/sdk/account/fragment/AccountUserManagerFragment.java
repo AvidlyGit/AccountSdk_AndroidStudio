@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,8 @@ import com.avidly.sdk.account.adapter.UserManagerAdatper;
 import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.business.LoginCenter;
 import com.avidly.sdk.account.data.adapter.UserOperationData;
+import com.avidly.sdk.account.data.user.Account;
+import com.avidly.sdk.account.data.user.LoginUser;
 import com.avidly.sdk.account.data.user.LoginUserManager;
 import com.sdk.avidly.account.R;
 
@@ -25,6 +26,8 @@ import java.util.List;
 public class AccountUserManagerFragment extends Fragment {
 
     private BaseAdapter.onRecyclerViewItemClickListener itemClickListener;
+    private boolean lastUserStatusIsGuest;
+    private UserManagerAdatper adatper;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +60,17 @@ public class AccountUserManagerFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        if (adatper != null) {
+            boolean isGuest = isGuestUser();
+            if (lastUserStatusIsGuest != isGuest) {
+                lastUserStatusIsGuest = isGuest;
+                freshView();
+                final int gridnum = LoginCenter.isScreenLandscape() ? 2 : 1;
+                fillGuestAdatper(adatper, gridnum > 1, isGuest);
+            }
+        }
+
     }
 
     @Override
@@ -83,20 +97,37 @@ public class AccountUserManagerFragment extends Fragment {
         itemClickListener = clickListener;
     }
 
-    private void initView(View view) {
-        TextView nameTextView = view.findViewById(R.id.avidly_user_manager_username);
-        boolean isGuest = LoginUserManager.getGuestLoginUser() != null && LoginUserManager.getGuestLoginUser().isNowLogined;
+    private boolean isGuestUser() {
+        LoginUser user = LoginUserManager.getCurrentActiveLoginUser();
+        if (user == null) {
+            // 无法判断用户状态，当游客处理
+            return true;
+        }
+        return user != null && user.getLoginedMode() == Account.ACCOUNT_MODE_GUEST;
+    }
+
+    private void freshView() {
+        boolean isGuest = isGuestUser();
+        TextView nameTextView = getView().findViewById(R.id.avidly_user_manager_username);
         if (isGuest) {
             nameTextView.setText(getString(R.string.avidly_string_usermanger_guest));
         } else {
             nameTextView.setText(LoginUserManager.getCurrentActiveLoginUser().findActivedAccount().nickname);
         }
+    }
+
+    private void initView(View view) {
+
+        //boolean isGuest = LoginUserManager.getGuestLoginUser() != null && LoginUserManager.getGuestLoginUser().isNowLogined;
+        boolean isGuest = isGuestUser();
+        lastUserStatusIsGuest = isGuest;
+        freshView();
 
         TextView idTextView = view.findViewById(R.id.avidly_user_manager_guest_id_textview);
         idTextView.setText(getString(R.string.avidly_string_usermanger_id, LoginUserManager.getCurrentGGID()));
 
         RecyclerView recyclerView = view.findViewById(R.id.avidly_usermanger_listview);
-        UserManagerAdatper adatper = new UserManagerAdatper(getContext());
+        adatper = new UserManagerAdatper(getContext());
         recyclerView.setAdapter(adatper);
         if (!LoginCenter.isScreenLandscape() && !LoginCenter.isScreenPortrait()) {
             LoginCenter.checkScreenOrietation(getActivity());

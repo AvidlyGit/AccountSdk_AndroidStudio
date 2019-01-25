@@ -79,7 +79,7 @@ public class LoginRequest {
 
             @Override
             public void onResponedFail(Throwable e, int code) {
-
+                LogUtils.i("HttpBusiness guestLogin fail is " + e);
                 callback.onFail(code, "" + e);
             }
         });
@@ -110,7 +110,7 @@ public class LoginRequest {
 
             @Override
             public void onResponedFail(Throwable e, int code) {
-
+                LogUtils.i("HttpBusiness accountLogin fail is " + e);
                 callback.onFail(code, "" + e);
             }
         });
@@ -138,19 +138,19 @@ public class LoginRequest {
 
             @Override
             public void onResponedFail(Throwable e, int code) {
-
+                LogUtils.i("HttpBusiness accountRegistOrBind fail is " + e);
                 callback.onFail(code, "" + e);
             }
         });
     }
 
-    public static void thirdFacebookLogin(String type, String jsondata, final LoginRequestCallback<String> callback) {
-        String url = URLConstant.getThirdFacebookLoginUrl(type, jsondata);
-        LogUtils.i("HttpBusiness thirdFacebookLogin url is " + url);
+    public static void thirdSdkBind(String type, String jsondata, final LoginRequestCallback<String> callback) {
+        String url = URLConstant.getThirdSdkBindUrl(type, jsondata);
+        LogUtils.i("HttpBusiness thirdSdkBind url is " + url);
         HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
             @Override
             public void onResponseSuccess(String result) {
-                LogUtils.i("HttpBusiness thirdFacebookLogin result is " + result);
+                LogUtils.i("HttpBusiness thirdSdkBind result is " + result);
                 try {
                     JSONObject guest = requestToDataJsonObject(result, callback);
                     if (guest != null) {
@@ -165,7 +165,34 @@ public class LoginRequest {
 
             @Override
             public void onResponedFail(Throwable e, int code) {
+                LogUtils.i("HttpBusiness thirdSdkBind fail is " + e);
+                callback.onFail(code, "" + e);
+            }
+        });
+    }
 
+    public static void thirdSdkUnbind(String type, String jsondata, final LoginRequestCallback<String> callback) {
+        String url = URLConstant.getThirdSdkUnbindUrl(type, jsondata);
+        LogUtils.i("HttpBusiness thirdSdkUnbind url is " + url);
+        HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
+            @Override
+            public void onResponseSuccess(String result) {
+                LogUtils.i("HttpBusiness thirdSdkUnbind result is " + result);
+                try {
+                    JSONObject guest = requestToDataJsonObject(result, callback);
+                    if (guest != null) {
+                        String gameGuestId = guest.getString("gameGuestId");
+                        callback.onSuccess(gameGuestId);
+                        bindOther(guest, LoginUserManager.getAccountLoginUser());
+                        LoginUserManager.saveAccountUsers();
+                    }
+                } catch (Exception e) {
+                }
+            }
+
+            @Override
+            public void onResponedFail(Throwable e, int code) {
+                LogUtils.i("HttpBusiness thirdSdkUnbind fail is " + e);
                 callback.onFail(code, "" + e);
             }
         });

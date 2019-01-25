@@ -64,6 +64,7 @@ public class AccountUserBindFragment extends Fragment {
         if (!LoginCenter.isScreenLandscape() && !LoginCenter.isScreenPortrait()) {
             LoginCenter.checkScreenOrietation(getActivity());
         }
+
         freshAdapter();
 
         adatper.setOnRecyclerViewItemClickListener(new BaseAdapter.onRecyclerViewItemClickListener() {
@@ -115,21 +116,21 @@ public class AccountUserBindFragment extends Fragment {
                 isgrid,
                 false));
 
-        isbind = isBindAccount(Account.ACCOUNT_MODE_TWITTER);
-        list.add(createGuestBindData(getString(R.string.avidly_string_user_bind_account_twitter),
-                getString(isbind ? R.string.avidly_string_user_binded_status : R.string.avidly_string_user_unbind_status),
-                R.drawable.avidly_twitter_logo,
-                Account.ACCOUNT_MODE_TWITTER,
-                isgrid,
-                false));
-
-        isbind = isBindAccount(Account.ACCOUNT_MODE_GOOGLEPLAY);
-        list.add(createGuestBindData(getString(R.string.avidly_string_user_bind_account_googleplay),
-                getString(isbind ? R.string.avidly_string_user_binded_status : R.string.avidly_string_user_unbind_status),
-                R.drawable.avidly_google_logo,
-                Account.ACCOUNT_MODE_GOOGLEPLAY,
-                isgrid,
-                false));
+//        isbind = isBindAccount(Account.ACCOUNT_MODE_TWITTER);
+//        list.add(createGuestBindData(getString(R.string.avidly_string_user_bind_account_twitter),
+//                getString(isbind ? R.string.avidly_string_user_binded_status : R.string.avidly_string_user_unbind_status),
+//                R.drawable.avidly_twitter_logo,
+//                Account.ACCOUNT_MODE_TWITTER,
+//                isgrid,
+//                false));
+//
+//        isbind = isBindAccount(Account.ACCOUNT_MODE_GOOGLEPLAY);
+//        list.add(createGuestBindData(getString(R.string.avidly_string_user_bind_account_googleplay),
+//                getString(isbind ? R.string.avidly_string_user_binded_status : R.string.avidly_string_user_unbind_status),
+//                R.drawable.avidly_google_logo,
+//                Account.ACCOUNT_MODE_GOOGLEPLAY,
+//                isgrid,
+//                false));
 
         adatper.setDataList(list);
     }

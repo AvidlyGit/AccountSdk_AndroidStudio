@@ -4,4 +4,6 @@ public interface ThirdSdkLoginCallback {
     void onLoginSuccess();
 
     void onLoginFailed();
+
+    void onLoginStart();
 }

@@ -23,6 +23,8 @@ public class LoginCenter {
 
     private static int gameOrietation = 99999;
 
+    private static boolean isAutoLogin = true;
+
     private static WeakReference<Context> sContext;
 
     public static Context getContext() {
@@ -78,6 +80,14 @@ public class LoginCenter {
                 || gameOrietation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
                 || gameOrietation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
                 || gameOrietation == ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT;
+    }
+
+    public static boolean isIsAutoLogin() {
+        return isAutoLogin;
+    }
+
+    public static void setIsAutoLogin(boolean isAutoLogin) {
+        LoginCenter.isAutoLogin = isAutoLogin;
     }
 
     public static void loginNow(Context context) {

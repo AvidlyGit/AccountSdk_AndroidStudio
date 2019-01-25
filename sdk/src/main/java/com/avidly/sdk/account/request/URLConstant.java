@@ -46,10 +46,16 @@ public class URLConstant {
         return ACCOUNT_API + "/account/user/resetPwd?" + path;
     }
 
-    public static String getThirdFacebookLoginUrl(String type, String jsondata) {
+    public static String getThirdSdkBindUrl(String type, String jsondata) {
         String path = "bindType=" + type + "&data=" + jsondata
                 + "&pid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;
         return ACCOUNT_API + "/third/bind?" + path;
+    }
+
+    public static String getThirdSdkUnbindUrl(String type, String jsondata) {
+        String path = "bindType=" + type + "&data=" + jsondata
+                + "&pid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;
+        return ACCOUNT_API + "/third/unbind?" + path;
     }
 
 }
