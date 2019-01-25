@@ -256,7 +256,7 @@ public class AccountUserRootFragment extends BaseFragment {
                 return;
             }
 
-            thirdLoginSdkDelegate.login(getActivity(), new ThirdSdkLoginCallback() {
+            thirdLoginSdkDelegate.login(this, new ThirdSdkLoginCallback() {
                 @Override
                 public void onLoginSuccess() {
                     freshBindAdapterInMainThread();

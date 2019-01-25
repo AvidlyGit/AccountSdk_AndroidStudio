@@ -2,6 +2,7 @@ package com.avidly.sdk.account.third;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 
 import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.business.LoginRequest;
@@ -19,6 +20,7 @@ import com.facebook.login.LoginResult;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
 
@@ -52,7 +54,7 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
     }
 
     @Override
-    public void login(Activity activity, final ThirdSdkLoginCallback callback) {
+    public void login(Object activity, final ThirdSdkLoginCallback callback) {
 
         LoginUser user = LoginUserManager.getCurrentActiveLoginUser();
         if (user != null && user.getLoginedMode() == Account.ACCOUNT_MODE_FACEBOOK && user.isNowLogined) {
@@ -107,7 +109,18 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
                         }
                     }
                 });
-        LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("public_profile"));
+
+        Collection<String> permissions = Arrays.asList("public_profile");
+        if (activity instanceof Activity) {
+            LoginManager.getInstance().logInWithReadPermissions((Activity) activity, permissions);
+        } else if (activity instanceof android.app.Fragment) {
+            LoginManager.getInstance().logInWithReadPermissions((android.app.Fragment) activity, permissions);
+        } else if (activity instanceof Fragment) {
+            LoginManager.getInstance().logInWithReadPermissions((Fragment) activity, permissions);
+        } else {
+            LogUtils.i("facebook login failed, the object is invalid, " + activity);
+        }
+
     }
 
     @Override
