@@ -70,6 +70,7 @@ public class AccountUserBindFragment extends Fragment {
             @Override
             public void onItemClick(Object data, int position) {
                 LogUtils.i("onItemClick type:" + position);
+                //itemClick((UserBindData) data, position);
                 if (null != itemClickListener) {
                     itemClickListener.onItemClick(data, position);
                 }
@@ -86,6 +87,7 @@ public class AccountUserBindFragment extends Fragment {
             fillGuestAdatper(adatper, gridnum > 1);
         }
     }
+
 
     private boolean isBindAccount(int mode) {
         LoginUser user = LoginUserManager.getCurrentActiveLoginUser();

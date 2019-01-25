@@ -2,6 +2,8 @@ package com.avidly.sdk.account.base.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -209,5 +211,17 @@ public class Utils {
         } else {
             return false;
         }
+    }
+
+    public static String readMetaDataFromApplication(Context context, String name) {
+        try {
+            ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(),
+                            PackageManager.GET_META_DATA);
+            String mTag = appInfo.metaData.getString(name);
+            return mTag;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

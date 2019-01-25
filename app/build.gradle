@@ -4,8 +4,9 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId "account.avidly.com.accountsdk"
-        minSdkVersion 14
+        applicationId "com.thetokengame.freegames"
+//        applicationId "account.avidly.com.accountsdk"
+        minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"

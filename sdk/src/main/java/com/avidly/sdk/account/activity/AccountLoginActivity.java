@@ -28,6 +28,9 @@ import com.avidly.sdk.account.fragment.AccountLoginFragment;
 import com.avidly.sdk.account.listener.AccountHomeListener;
 import com.avidly.sdk.account.listener.AccountLoadingListener;
 import com.avidly.sdk.account.listener.AccountLoginListener;
+import com.avidly.sdk.account.third.ThirdLoginSdkDelegate;
+import com.avidly.sdk.account.third.ThirdSdkFactory;
+import com.avidly.sdk.account.third.ThirdSdkLoginCallback;
 import com.sdk.avidly.account.R;
 
 public class AccountLoginActivity extends AppCompatActivity implements AccountLoginInterface,
@@ -38,6 +41,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     private View mErrorLayout;
     private TextView mMessgeText;
     private View mMessgeClose;
+    private ThirdLoginSdkDelegate thirdLoginSdkDelegate;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +62,13 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
         parseIntent();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (thirdLoginSdkDelegate != null) {
+            thirdLoginSdkDelegate.onActivityResult(requestCode, resultCode, data);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -200,19 +211,52 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     @Override
     public void onFacebookLoginClicked() {
         LogUtils.i("onFacebookLoginClicked: ");
+        doThirdSdkLogin(Account.ACCOUNT_MODE_FACEBOOK);
 
     }
 
     @Override
     public void onTwitterLoginClicked() {
         LogUtils.i("onTwitterLoginClicked: ");
-
+        doThirdSdkLogin(Account.ACCOUNT_MODE_TWITTER);
     }
 
     @Override
     public void onGoogleLoginClicked() {
         LogUtils.i("onGoogleLoginClicked: ");
+        doThirdSdkLogin(Account.ACCOUNT_MODE_GOOGLEPLAY);
+    }
 
+    private void doThirdSdkLogin(int mode) {
+        LogUtils.i("doThirdSdkLogin, mode: " + mode);
+        if (thirdLoginSdkDelegate != null && !thirdLoginSdkDelegate.isThis(mode)) {
+            thirdLoginSdkDelegate.exit();
+            thirdLoginSdkDelegate = null;
+        }
+
+        if (thirdLoginSdkDelegate == null) {
+            thirdLoginSdkDelegate = ThirdSdkFactory.newThirdSdkLoginDeleage(mode);
+            if (thirdLoginSdkDelegate == null) {
+                LogUtils.i("doThirdSdkLogin, fail to create third sdk delegate object.");
+                return;
+            }
+            if (!thirdLoginSdkDelegate.isExistSdkLib()) {
+                thirdLoginSdkDelegate = null;
+                LogUtils.i("doThirdSdkLogin, the third login sdk is not exist. ");
+                return;
+            }
+            thirdLoginSdkDelegate.login(this, new ThirdSdkLoginCallback() {
+                @Override
+                public void onLoginSuccess() {
+
+                }
+
+                @Override
+                public void onLoginFailed() {
+                    thirdLoginSdkDelegate = null;
+                }
+            });
+        }
     }
 
     // from login fragment

@@ -144,5 +144,32 @@ public class LoginRequest {
         });
     }
 
+    public static void thirdFacebookLogin(String type, String jsondata, final LoginRequestCallback<String> callback) {
+        String url = URLConstant.getThirdFacebookLoginUrl(type, jsondata);
+        LogUtils.i("HttpBusiness thirdFacebookLogin url is " + url);
+        HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
+            @Override
+            public void onResponseSuccess(String result) {
+                LogUtils.i("HttpBusiness thirdFacebookLogin result is " + result);
+                try {
+                    JSONObject guest = requestToDataJsonObject(result, callback);
+                    if (guest != null) {
+                        String gameGuestId = guest.getString("gameGuestId");
+                        callback.onSuccess(gameGuestId);
+                        bindOther(guest, LoginUserManager.getAccountLoginUser());
+                        LoginUserManager.saveAccountUsers();
+                    }
+                } catch (Exception e) {
+                }
+            }
+
+            @Override
+            public void onResponedFail(Throwable e, int code) {
+
+                callback.onFail(code, "" + e);
+            }
+        });
+    }
+
 
 }

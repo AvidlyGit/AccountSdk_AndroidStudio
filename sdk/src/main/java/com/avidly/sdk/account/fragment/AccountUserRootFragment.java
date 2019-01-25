@@ -11,13 +11,21 @@ import android.widget.TextView;
 import com.avidly.sdk.account.activity.AccountLoginActivity;
 import com.avidly.sdk.account.adapter.BaseAdapter;
 import com.avidly.sdk.account.base.Constants;
+import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.data.adapter.UserOperationData;
+import com.avidly.sdk.account.data.user.Account;
+import com.avidly.sdk.account.data.user.LoginUser;
+import com.avidly.sdk.account.data.user.LoginUserManager;
+import com.avidly.sdk.account.third.ThirdLoginSdkDelegate;
+import com.avidly.sdk.account.third.ThirdSdkFactory;
+import com.avidly.sdk.account.third.ThirdSdkLoginCallback;
 import com.sdk.avidly.account.R;
 
 public class AccountUserRootFragment extends BaseFragment {
 
     private boolean isShowChangePwdUI;
     private boolean isShowBindAccountUI;
+    private ThirdLoginSdkDelegate thirdLoginSdkDelegate;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +52,14 @@ public class AccountUserRootFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (thirdLoginSdkDelegate != null) {
+            thirdLoginSdkDelegate.onActivityResult(requestCode, resultCode, data);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -101,9 +117,60 @@ public class AccountUserRootFragment extends BaseFragment {
     BaseAdapter.onRecyclerViewItemClickListener userBindAccountListener = new BaseAdapter.onRecyclerViewItemClickListener() {
         @Override
         public void onItemClick(Object data, int mode) {
+            LoginUser user = LoginUserManager.getCurrentActiveLoginUser();
+            if (user == null || user.getLoginedMode() != mode) {
+                LogUtils.w("mismatch right loginuser object, check value: " + data);
+                return;
+            }
 
+            Account account = user.findAccountByMode(mode);
+            boolean unbind = account == null || account.isBinded;
+            if (unbind) {
+                tryToBindThirdSdk(mode);
+            }
         }
     };
+
+    private void tryToBindThirdSdk(int mode) {
+        switch (mode) {
+            case  Account.ACCOUNT_MODE_FACEBOOK:
+                doThirdSdkBind(mode);
+                break;
+        }
+    }
+
+    private void doThirdSdkBind(int mode) {
+        LogUtils.i("doThirdSdkBind, mode: " + mode);
+        if (thirdLoginSdkDelegate != null && !thirdLoginSdkDelegate.isThis(mode)) {
+            thirdLoginSdkDelegate.exit();
+            thirdLoginSdkDelegate = null;
+        }
+
+        if (thirdLoginSdkDelegate == null) {
+            thirdLoginSdkDelegate = ThirdSdkFactory.newThirdSdkLoginDeleage(mode);
+            if (thirdLoginSdkDelegate == null) {
+                LogUtils.i("doThirdSdkBind, fail to create third sdk delegate object.");
+                return;
+            }
+            if (!thirdLoginSdkDelegate.isExistSdkLib()) {
+                thirdLoginSdkDelegate = null;
+                LogUtils.i("doThirdSdkBind, the third login sdk is not exist. ");
+                return;
+            }
+            thirdLoginSdkDelegate.login(getActivity(), new ThirdSdkLoginCallback() {
+                @Override
+                public void onLoginSuccess() {
+                    AccountUserBindFragment bindFragment = (AccountUserBindFragment) getChildFragmentManager().findFragmentById(R.id.avidly_fragment_user_account_bind_fragment);
+                    bindFragment.freshAdapter();
+                }
+
+                @Override
+                public void onLoginFailed() {
+                    thirdLoginSdkDelegate = null;
+                }
+            });
+        }
+    }
 
     private void toBindAvidlyAccount() {
         Intent intent = new Intent(getActivity(), AccountLoginActivity.class);

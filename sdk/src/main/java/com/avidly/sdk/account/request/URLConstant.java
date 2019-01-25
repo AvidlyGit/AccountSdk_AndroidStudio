@@ -8,7 +8,7 @@ import java.net.URLEncoder;
 
 public class URLConstant {
 
-    private static final String ACCOUNT_API = "http://172.20.30.86:8081/api/v1/account";
+    private static final String ACCOUNT_API = "http://172.20.30.86:8081/api/v1";
 
     public static String urlEncode(String v) {
         try {
@@ -21,28 +21,35 @@ public class URLConstant {
 
     public static String getAlterPwdAPI(String userName, String odlpwd, String newpwd) {
         String path = "username=" + userName + "&curPwd=" + urlEncode(odlpwd) + "&newPwd=" + urlEncode(newpwd);
-        return ACCOUNT_API + "/user/modifyPwd?" + path;
+        return ACCOUNT_API + "/account/user/modifyPwd?" + path;
     }
 
     public static String getGuestLoginApi() {
         String path = "pwd=" + "123" + "&pid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;
-        return ACCOUNT_API + "/guest/new?" + path;
+        return ACCOUNT_API + "/account/guest/new?" + path;
     }
 
     public static String getAccountLoginApi(String userName, String password) {
         String path = "username=" + userName + "&pwd=" + urlEncode(password) + "&pid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;
-        return ACCOUNT_API + "/user/login?" + path;
+        return ACCOUNT_API + "/account/user/login?" + path;
     }
 
     public static String getAccountRegistOrBindApi(String gameGuestId, String userName, String password) {
         String path = "gameGuestId=" + gameGuestId + "&username=" + userName + "&pwd=" + urlEncode(password)
                 + "&pid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;
-        return ACCOUNT_API + "/user/reg?" + path;
+        return ACCOUNT_API + "/account/user/reg?" + path;
     }
 
     public static String retrievePwd(String address) {
         String path = "email=" + address
                 + "&pid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;
-        return ACCOUNT_API + "/user/resetPwd?" + path;
+        return ACCOUNT_API + "/account/user/resetPwd?" + path;
     }
+
+    public static String getThirdFacebookLoginUrl(String type, String jsondata) {
+        String path = "bindType=" + type + "&data=" + jsondata
+                + "&pid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;
+        return ACCOUNT_API + "/third/bind?" + path;
+    }
+
 }
