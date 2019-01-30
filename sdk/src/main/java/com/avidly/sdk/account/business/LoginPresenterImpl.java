@@ -3,6 +3,7 @@ package com.avidly.sdk.account.business;
 import android.text.TextUtils;
 
 import com.avidly.sdk.account.activity.AccountLoginInterface;
+import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.data.user.Account;
 import com.avidly.sdk.account.data.user.LoginUser;
 import com.avidly.sdk.account.data.user.LoginUserManager;
@@ -23,24 +24,23 @@ public class LoginPresenterImpl implements LoginPresenter {
     @Override
     public void guestLogin(final LoginUser user) {
         if (user != null && !TextUtils.isEmpty(user.ggid)) {
-            // TODO: 2019/1/24 增加校验ggid的登录api
-            new Thread(new Runnable() {
+            LoginRequest.guestLogin(user.ggid, new LoginRequestCallback<String>() {
                 @Override
-                public void run() {
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-
-                    }
+                public void onSuccess(String result) {
                     LoginUser loginUser = LoginUserManager.onGuestLoginSuccess(user.ggid);
                     LoginUserManager.saveAccountUsers();
 
                     mView.onUserLoginSuccessed(loginUser);
                 }
-            }).start();
+
+                @Override
+                public void onFail(Throwable e, int code) {
+                    LogUtils.w("guestLogin has error occured with code " + code, e);
+                    mView.onUserLoginFailed(code);
+                }
+            });
         } else {
-            //  服务器请求账号登录
-            LoginRequest.guestLogin(new LoginRequestCallback<String>() {
+            LoginRequest.guestRegist(new LoginRequestCallback<String>() {
                 @Override
                 public void onSuccess(String result) {
                     LoginUser loginUser = LoginUserManager.onGuestLoginSuccess(result);
@@ -50,8 +50,9 @@ public class LoginPresenterImpl implements LoginPresenter {
                 }
 
                 @Override
-                public void onFail(int code, String message) {
-                    mView.onUserLoginFailed(100);
+                public void onFail(Throwable e, int code) {
+                    LogUtils.w("guestRegist has error occured with code " + code, e);
+                    mView.onUserLoginFailed(code);
                 }
             });
         }
@@ -75,16 +76,27 @@ public class LoginPresenterImpl implements LoginPresenter {
             }
 
             @Override
-            public void onFail(int code, String message) {
-
-                mView.onUserLoginFailed(101);
+            public void onFail(Throwable e, int code) {
+                LogUtils.w("accountLogin has error occured with code " + code, e);
+                mView.onUserLoginFailed(code);
             }
+
         });
     }
 
     @Override
     public void facebookLogin(LoginUser user) {
-        // todo facebook登录
+        // TODO: 2019/1/29 facebook登录
+    }
+
+    @Override
+    public void twitterLogin(LoginUser user) {
+        // TODO: 2019/1/29 twitter登录
+    }
+
+    @Override
+    public void googleLogin(LoginUser user) {
+        // TODO: 2019/1/29 google登录
     }
 
     @Override
@@ -106,8 +118,9 @@ public class LoginPresenterImpl implements LoginPresenter {
             }
 
             @Override
-            public void onFail(int code, String message) {
-                mView.onUserLoginFailed(102);
+            public void onFail(Throwable e, int code) {
+                LogUtils.w("accountRegistOrBind has error occured with code " + code, e);
+                mView.onUserLoginFailed(code);
             }
         });
     }

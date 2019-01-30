@@ -16,7 +16,7 @@ public class LogUtils {
         Log.i(TAG, message);
     }
 
-    public static void w(String message) {
-        Log.w(TAG, message);
+    public static void w(String message, Throwable throwable) {
+        Log.w(TAG, message, throwable);
     }
 }

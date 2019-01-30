@@ -114,6 +114,9 @@ public class AccountUserManagerFragment extends Fragment {
         } else {
             nameTextView.setText(LoginUserManager.getCurrentActiveLoginUser().findActivedAccount().nickname);
         }
+
+        TextView idTextView = getView().findViewById(R.id.avidly_user_manager_guest_id_textview);
+        idTextView.setText(getString(R.string.avidly_string_usermanger_id, LoginUserManager.getCurrentGGID()));
     }
 
     private void initView(View view) {
@@ -122,10 +125,7 @@ public class AccountUserManagerFragment extends Fragment {
         boolean isGuest = isGuestUser();
         lastUserStatusIsGuest = isGuest;
         freshView();
-
-        TextView idTextView = view.findViewById(R.id.avidly_user_manager_guest_id_textview);
-        idTextView.setText(getString(R.string.avidly_string_usermanger_id, LoginUserManager.getCurrentGGID()));
-
+        
         RecyclerView recyclerView = view.findViewById(R.id.avidly_usermanger_listview);
         adatper = new UserManagerAdatper(getContext());
         recyclerView.setAdapter(adatper);

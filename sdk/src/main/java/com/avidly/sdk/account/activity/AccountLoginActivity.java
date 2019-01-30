@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -14,10 +15,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.avidly.sdk.account.AvidlyAccountSdk;
+import com.avidly.sdk.account.AvidlyAccountSdkErrors;
 import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.base.utils.ThreadHelper;
-import com.avidly.sdk.account.base.utils.Utils;
 import com.avidly.sdk.account.business.LoginCenter;
 import com.avidly.sdk.account.business.LoginPresenter;
 import com.avidly.sdk.account.business.LoginPresenterImpl;
@@ -39,6 +40,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
         AccountHomeListener, AccountLoadingListener, AccountLoginListener {
     private FragmentManager mFragmentManager = getSupportFragmentManager();
     private LoginPresenter mPresenter;
+    private boolean mLoading;
 
     private View mErrorLayout;
     private TextView mMessgeText;
@@ -147,6 +149,8 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     @Override
     public void onUserLoginSuccessed(final LoginUser loginUser) {
         LogUtils.i("onUserLoginSuccessed: ");
+        hideLoadingUI();
+        // TODO: 2019/1/29 这里的作用，要跟sam确认一下功能
         LoginCenter.setIsAutoLogin(false);
         finish();
         if (!LoginUserManager.isLoginedNow()) {
@@ -164,8 +168,8 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     @Override
     public void onUserLoginFailed(final int errorCode) {
         LogUtils.i("onUserLoginFailed: ");
-
-        showErrorMessage(errorCode + "");
+        hideLoadingUI();
+        showErrorMessage(getResources().getString(AvidlyAccountSdkErrors.getMessgeResourceIdFromErrorCode(errorCode)));
 
         if (LoginCenter.isIsAutoLogin()) {
             showAccountHomeFragment();
@@ -187,7 +191,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     }
 
     @Override
-    public void onWaitingTimeOut() {
+    public void onAutoLoginWaitingTimeOut() {
         LoginUser activedUser = LoginUserManager.getCurrentActiveLoginUser();
         switch (activedUser.getLoginedMode()) {
             case Account.ACCOUNT_MODE_GUEST:
@@ -200,7 +204,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
                 mPresenter.accountLogin(avidlyAccount.accountName, avidlyAccount.accountPwd);
                 break;
             case Account.ACCOUNT_MODE_FACEBOOK:
-                //todo 现存账号是facebook
+                //TODO: 2019/1/29 现存账号是facebook
                 Account facebookAccount = activedUser.findAccountByMode(Account.ACCOUNT_MODE_FACEBOOK);
                 mPresenter.facebookLogin(activedUser);
         }
@@ -209,7 +213,13 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     // from home fragment
     @Override
     public void onGuestLoginClicked() {
-        mPresenter.guestLogin(null);
+        showLoadingUI();
+        LoginUser activedUser = LoginUserManager.getCurrentActiveLoginUser();
+        if (activedUser != null && activedUser.getLoginedMode() == Account.ACCOUNT_MODE_GUEST) {
+            mPresenter.guestLogin(activedUser);
+        } else {
+            mPresenter.guestLogin(null);
+        }
     }
 
     @Override
@@ -269,7 +279,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
 
                 @Override
                 public void onLoginFailed() {
-                    Utils.showToastTip(AccountLoginActivity.this, R.string.avidly_string_user_login_send_fail, true);
+                    showErrorMessage(getResources().getString(R.string.avidly_string_user_login_send_fail));
                     thirdLoginSdkDelegate = null;
                 }
             });
@@ -289,16 +299,19 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
 
     @Override
     public void onAccountLoginClicked(String email, String password) {
+        showLoadingUI();
         mPresenter.accountLogin(email, password);
     }
 
     @Override
     public void onAccountRegistClicked(String email, String password) {
+        showLoadingUI();
         mPresenter.accountRegistOrBind(null, email, password);
     }
 
     @Override
     public void onAccountBindClicked(String email, String password) {
+        showLoadingUI();
         String ggid = LoginUserManager.getCurrentGGID();
         mPresenter.accountRegistOrBind(ggid, email, password);
     }
@@ -348,7 +361,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
             }
         });
     }
-    
+
     private void showErrorMessage(final String message) {
         runOnUiThread(new Runnable() {
             @Override
@@ -360,5 +373,33 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
 
         ThreadHelper.removeOnWorkThread(mHideErrorMessageRunnable);
         ThreadHelper.runOnWorkThread(mHideErrorMessageRunnable, Constants.AUTO_CLOSE_ERROR_LAYOUT_MILLS);
+    }
+
+    private void showLoadingUI() {
+        mLoading = true;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                findViewById(R.id.avidly_loading_layout).setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void hideLoadingUI() {
+        mLoading = false;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                findViewById(R.id.avidly_loading_layout).setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (mLoading && keyCode == KeyEvent.KEYCODE_BACK) {
+            return true;//不执行父类点击事件
+        }
+        return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
     }
 }

@@ -140,7 +140,7 @@ public class LoginCenter {
 
         if (activedUser != null) {
             if (activedUser.isNowLogined) {
-                LogUtils.w("已经登陆，不需要重复登陆, account mode:" + activedUser.getLoginedMode() + ", ggid:" + activedUser.ggid);
+                LogUtils.w("已经登陆，不需要重复登陆, account mode:" + activedUser.getLoginedMode() + ", ggid:" + activedUser.ggid, null);
                 if (loginCallback != null) {
                     loginCallback.onLoginSuccess(activedUser.ggid);
                 }

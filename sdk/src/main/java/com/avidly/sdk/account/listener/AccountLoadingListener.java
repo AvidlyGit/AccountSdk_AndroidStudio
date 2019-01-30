@@ -8,5 +8,5 @@ package com.avidly.sdk.account.listener;
 public interface AccountLoadingListener {
     void onSwitchAccountClicked();
 
-    void onWaitingTimeOut();
+    void onAutoLoginWaitingTimeOut();
 }

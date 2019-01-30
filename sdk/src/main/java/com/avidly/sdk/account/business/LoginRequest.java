@@ -10,8 +10,8 @@ import com.avidly.sdk.account.request.URLConstant;
 
 import org.json.JSONObject;
 
-import static com.avidly.sdk.account.Errors.AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION;
-import static com.avidly.sdk.account.Errors.AVIDLY_LOGIN_ERROR_RESPONSE_MISMATCH_PRODUCT_ID;
+import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION;
+import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_RESPONSE_MISMATCH_PRODUCT_ID;
 
 /**
  * Created by t.wang on 2019/1/22.
@@ -19,12 +19,11 @@ import static com.avidly.sdk.account.Errors.AVIDLY_LOGIN_ERROR_RESPONSE_MISMATCH
  * Copyright © 2018 Adrealm. All rights reserved.
  */
 public class LoginRequest {
-
-
     private static JSONObject requestToDataJsonObject(String result, LoginRequestCallback<String> callback) {
         try {
             JSONObject o = new JSONObject(result);
-            int code = o.optInt("statusCode");
+            int code = o.optInt("code");
+            int errorCode = o.optInt("error_code");
             if (200 == code) {
                 JSONObject data = o.getJSONObject("data");
                 JSONObject guest = data.getJSONObject("gameGuest");
@@ -32,13 +31,13 @@ public class LoginRequest {
                 if (productId.equals(LoginCenter.getProductId())) {
                     return guest;
                 } else {
-                    callback.onFail(AVIDLY_LOGIN_ERROR_RESPONSE_MISMATCH_PRODUCT_ID, "mismatch product id");
+                    callback.onFail(new Throwable("mismatch product id"), AVIDLY_LOGIN_ERROR_RESPONSE_MISMATCH_PRODUCT_ID);
                 }
             } else {
-                callback.onFail(code, "" + o.optString("message"));
+                callback.onFail(new Throwable(o.optString("message")), errorCode);
             }
-        } catch (Exception e) {
-            callback.onFail(AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION, "" + e);
+        } catch (Throwable e) {
+            callback.onFail(e, AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION);
         }
         return null;
     }
@@ -50,14 +49,14 @@ public class LoginRequest {
                 user.bindAccount(Account.ACCOUNT_MODE_FACEBOOK, guest.getBoolean("bindFb"));
                 user.bindAccount(Account.ACCOUNT_MODE_GOOGLEPLAY, guest.getBoolean("bindGoogle"));
                 user.bindAccount(Account.ACCOUNT_MODE_TWITTER, guest.getBoolean("bindTwitter"));
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public static void guestLogin(final LoginRequestCallback<String> callback) {
-        String url = URLConstant.getGuestLoginApi();
+    public static void guestLogin(String gameGuestId, final LoginRequestCallback<String> callback) {
+        String url = URLConstant.getGuestLoginApi(gameGuestId);
         LogUtils.i("HttpBusiness guestLogin url is " + url);
         HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
             @Override
@@ -73,14 +72,43 @@ public class LoginRequest {
                             bindOther(guest, user);
                         }
                     }
-                } catch (Exception e) {
+                } catch (Throwable e) {
+                    callback.onFail(e, AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION);
                 }
             }
 
             @Override
             public void onResponedFail(Throwable e, int code) {
-                LogUtils.i("HttpBusiness guestLogin fail is " + e);
-                callback.onFail(code, "" + e);
+                callback.onFail(e, code);
+            }
+        });
+    }
+
+    public static void guestRegist(final LoginRequestCallback<String> callback) {
+        String url = URLConstant.getGuestRegistApi();
+        LogUtils.i("HttpBusiness guestRegist url is " + url);
+        HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
+            @Override
+            public void onResponseSuccess(String result) {
+                LogUtils.i("HttpBusiness guestRegist result is " + result);
+                try {
+                    JSONObject guest = requestToDataJsonObject(result, callback);
+                    if (guest != null) {
+                        String gameGuestId = guest.getString("gameGuestId");
+                        callback.onSuccess(gameGuestId);
+                        LoginUser user = LoginUserManager.getAccountLoginUser();
+                        if (user != null) {
+                            bindOther(guest, user);
+                        }
+                    }
+                } catch (Throwable e) {
+                    callback.onFail(e, AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION);
+                }
+            }
+
+            @Override
+            public void onResponedFail(Throwable e, int code) {
+                callback.onFail(e, code);
             }
         });
     }
@@ -104,14 +132,14 @@ public class LoginRequest {
                             LoginUserManager.saveAccountUsers();
                         }
                     }
-                } catch (Exception e) {
+                } catch (Throwable e) {
+                    callback.onFail(e, AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION);
                 }
             }
 
             @Override
             public void onResponedFail(Throwable e, int code) {
-                LogUtils.i("HttpBusiness accountLogin fail is " + e);
-                callback.onFail(code, "" + e);
+                callback.onFail(e, code);
             }
         });
     }
@@ -132,20 +160,20 @@ public class LoginRequest {
                         bindOther(guest, LoginUserManager.getAccountLoginUser());
                         LoginUserManager.saveAccountUsers();
                     }
-                } catch (Exception e) {
+                } catch (Throwable e) {
+                    callback.onFail(e, AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION);
                 }
             }
 
             @Override
             public void onResponedFail(Throwable e, int code) {
-                LogUtils.i("HttpBusiness accountRegistOrBind fail is " + e);
-                callback.onFail(code, "" + e);
+                callback.onFail(e, code);
             }
         });
     }
 
-    public static void thirdSdkBind(String type, String jsondata, final LoginRequestCallback<String> callback) {
-        String url = URLConstant.getThirdSdkBindUrl(type, jsondata);
+    public static void thirdSdkBind(String type, String jsondata, String ggid, final LoginRequestCallback<String> callback) {
+        String url = URLConstant.getThirdSdkBindUrl(type, ggid, jsondata);
         LogUtils.i("HttpBusiness thirdSdkBind url is " + url);
         HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
             @Override
@@ -159,20 +187,20 @@ public class LoginRequest {
                         bindOther(guest, LoginUserManager.getAccountLoginUser());
                         LoginUserManager.saveAccountUsers();
                     }
-                } catch (Exception e) {
+                } catch (Throwable e) {
+                    callback.onFail(e, AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION);
                 }
             }
 
             @Override
             public void onResponedFail(Throwable e, int code) {
-                LogUtils.i("HttpBusiness thirdSdkBind fail is " + e);
-                callback.onFail(code, "" + e);
+                callback.onFail(e, code);
             }
         });
     }
 
-    public static void thirdSdkUnbind(String type, String jsondata, final LoginRequestCallback<String> callback) {
-        String url = URLConstant.getThirdSdkUnbindUrl(type, jsondata);
+    public static void thirdSdkUnbind(String type, String jsondata, String ggid, final LoginRequestCallback<String> callback) {
+        String url = URLConstant.getThirdSdkUnbindUrl(type, ggid, jsondata);
         LogUtils.i("HttpBusiness thirdSdkUnbind url is " + url);
         HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
             @Override
@@ -186,17 +214,15 @@ public class LoginRequest {
                         bindOther(guest, LoginUserManager.getAccountLoginUser());
                         LoginUserManager.saveAccountUsers();
                     }
-                } catch (Exception e) {
+                } catch (Throwable e) {
+                    callback.onFail(e, AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION);
                 }
             }
 
             @Override
             public void onResponedFail(Throwable e, int code) {
-                LogUtils.i("HttpBusiness thirdSdkUnbind fail is " + e);
-                callback.onFail(code, "" + e);
+                callback.onFail(e, code);
             }
         });
     }
-
-
 }

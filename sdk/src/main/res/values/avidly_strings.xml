@@ -79,6 +79,7 @@
     <string name="avidly_string_user_unbind_send_success">解绑成功</string>
     <string name="avidly_string_user_unbind_send_fail">解绑失败</string>
 
-    <string name="avidly_string_user_login_send_fail">登录失败</string>
+    <string name="avidly_string_user_login_send_fail">登录失败，请稍后重试</string>
+    <string name="avidly_string_user_login_user_not_exist">用户名不存在</string>
 
 </resources>

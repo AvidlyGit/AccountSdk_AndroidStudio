@@ -83,7 +83,7 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
 
 
         if (!Utils.validEmail1(address)) {
-            Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_wrong_tip, true);
+            Utils.showToastTip(getContext(), R.string.avidly_string_email_format_error, true);
             return;
         }
 

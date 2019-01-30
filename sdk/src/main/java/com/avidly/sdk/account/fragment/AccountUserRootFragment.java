@@ -145,7 +145,7 @@ public class AccountUserRootFragment extends BaseFragment {
         public void onItemClick(Object data, int mode) {
             LoginUser user = LoginUserManager.getCurrentActiveLoginUser();
             if (user == null) {
-                LogUtils.w("not found logined user, check value: " + data);
+                LogUtils.w("not found logined user, check value: " + data, null);
                 return;
             }
 
@@ -173,24 +173,25 @@ public class AccountUserRootFragment extends BaseFragment {
     private void doThirdSdkUnBind(final int mode) {
 
         if (!ThirdSdkFactory.isExistSdkLib(mode)) {
-            LogUtils.w("this sdk lib is not exist, mode :" + mode);
+            LogUtils.w("this sdk lib is not exist, mode :" + mode, null);
             return;
         }
 
         LoginUser user = LoginUserManager.getCurrentActiveLoginUser();
         if (user == null) {
-            LogUtils.w("no user is logined.");
+            LogUtils.w("no user is logined.", null);
             return;
         }
 
         String type = null;
         String data = null;
 
+        String ggid = LoginUserManager.getCurrentGGID();
         if (mode == Account.ACCOUNT_MODE_FACEBOOK) {
 
             String token = FacebookLoginSdk.getToken();
             if (TextUtils.isEmpty(token)) {
-                LogUtils.w("this facebook sdk's token is null, need login again.");
+                LogUtils.w("this facebook sdk's token is null, need login again.", null);
                 return;
             }
             type = "facebook";
@@ -198,6 +199,7 @@ public class AccountUserRootFragment extends BaseFragment {
             try {
                 o.put("access_token", token);
                 o.put("gameGuestId", user.ggid);
+                o.put("gameGuestId", ggid == null ? "" : ggid);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -209,7 +211,8 @@ public class AccountUserRootFragment extends BaseFragment {
 //            return;
 //        }
 
-        LoginRequest.thirdSdkUnbind(type, data, new LoginRequestCallback<String>() {
+
+        LoginRequest.thirdSdkUnbind(type, data, ggid, new LoginRequestCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 LoginUserManager.onThirdSdkUnbind(mode);
@@ -219,10 +222,11 @@ public class AccountUserRootFragment extends BaseFragment {
             }
 
             @Override
-            public void onFail(int code, String message) {
+            public void onFail(Throwable e, int code) {
                 hideLoadingUI();
                 Utils.showToastTip(getActivity(), R.string.avidly_string_user_unbind_send_fail, true);
             }
+
         });
         showLoadingUI();
 

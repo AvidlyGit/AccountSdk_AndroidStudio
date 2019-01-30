@@ -138,18 +138,18 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
 
         String token = accessToken.getToken();
         String userid = accessToken.getUserId();
+        String ggid = LoginUserManager.getCurrentGGID();
         LogUtils.i("facebook token:" + token);
         LogUtils.i("facebook userid:" + userid);
         JSONObject object = new JSONObject();
         try {
             object.put("access_token", token);
             object.put("appid", accessToken.getApplicationId());
-            String ggid = LoginUserManager.getCurrentGGID();
             object.put("gameGuestId", ggid == null ? "" : ggid);
         } catch (Exception e) {
         }
 
-        LoginRequest.thirdSdkBind("facebook", object.toString(), new LoginRequestCallback<String>() {
+        LoginRequest.thirdSdkBind("facebook", ggid == null ? "" : ggid, object.toString(), new LoginRequestCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 if (callback != null) {
@@ -159,7 +159,7 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
             }
 
             @Override
-            public void onFail(int code, String message) {
+            public void onFail(Throwable e, int code) {
                 if (callback != null) {
                     callback.onLoginFailed();
                 }

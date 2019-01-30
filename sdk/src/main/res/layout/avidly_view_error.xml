@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout
+        android:alpha="0.8"
         android:layout_width="match_parent"
         android:layout_height="@dimen/avidly_dimen_36dp"
         android:background="@color/avildy_color_error_bg">
@@ -15,8 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="@color/avidly_color_white"
-            android:textSize="@dimen/avidly_dimen_text_size_14sp"
-            tools:text="@string/avidly_string_email_error" />
+            android:textSize="@dimen/avidly_dimen_text_size_14sp"/>
 
         <ImageView
             android:id="@+id/avidly_error_close"

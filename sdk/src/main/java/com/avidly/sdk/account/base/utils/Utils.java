@@ -185,16 +185,6 @@ public class Utils {
         });
     }
 
-    public static String textOfUrlEncode(String text) {
-        String result = "";
-        try {
-            result = URLEncoder.encode(text, Constants.URL_ENCODER_ENC);
-        } catch (Throwable e) {
-
-        }
-        return result;
-    }
-
     /**
      * 验证邮箱
      */
