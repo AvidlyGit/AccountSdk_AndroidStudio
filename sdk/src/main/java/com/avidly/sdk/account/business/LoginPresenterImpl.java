@@ -85,21 +85,6 @@ public class LoginPresenterImpl implements LoginPresenter {
     }
 
     @Override
-    public void facebookLogin(LoginUser user) {
-        // TODO: 2019/1/29 facebook登录
-    }
-
-    @Override
-    public void twitterLogin(LoginUser user) {
-        // TODO: 2019/1/29 twitter登录
-    }
-
-    @Override
-    public void googleLogin(LoginUser user) {
-        // TODO: 2019/1/29 google登录
-    }
-
-    @Override
     public void accountRegistOrBind(final String ggid, final String email, final String password) {
         // ggid为空，服务器注册用户后，生成新的ggid绑定返回
         // ggid不为空，服务器注册用户后，同现有的ggid绑定返回

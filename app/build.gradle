@@ -9,14 +9,19 @@ android {
             storeFile file('./../tokengame_sign.jks')
             storePassword '123456'
         }
+
         debug {
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-            storeFile file('./../debug.keystore')
-            storePassword 'android'
+//            keyAlias 'androiddebugkey'
+//            keyPassword 'android'
+//            storeFile file('./../debug.keystore')
+//            storePassword 'android'
+
+            storeFile file('signature')
+            keyAlias 'key'
+            keyPassword '123456'
+            storePassword '123456'
         }
     }
-
 
     compileSdkVersion 28
 

@@ -12,12 +12,6 @@ public interface LoginPresenter {
 
     void accountLogin(String email, String password);
 
-    void facebookLogin(LoginUser user);
-
-    void twitterLogin(LoginUser user);
-
-    void googleLogin(LoginUser user);
-
     void accountRegistOrBind(String gameGuestId, String email, String password);
 
 }

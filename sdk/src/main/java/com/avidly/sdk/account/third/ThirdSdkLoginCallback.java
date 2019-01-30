@@ -1,9 +1,11 @@
 package com.avidly.sdk.account.third;
 
-public interface ThirdSdkLoginCallback {
-    void onLoginSuccess();
+import com.avidly.sdk.account.data.user.LoginUser;
 
-    void onLoginFailed();
+public interface ThirdSdkLoginCallback {
+    void onLoginSuccess(LoginUser loginUser);
+
+    void onLoginFailed(int code);
 
     void onLoginStart();
 }

@@ -22,10 +22,10 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_CANCEL;
+import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_ERROR;
+
 public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
-
-    final static String FACEBOOK_APPID_NAME = "com.facebook.sdk.ApplicationId";
-
     ThirdSdkLoginCallback callback;
 
     CallbackManager callbackManager;
@@ -55,25 +55,39 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
 
     @Override
     public void login(Object activity, final ThirdSdkLoginCallback callback) {
+        sdkLogin(activity, false, callback);
+    }
 
+    @Override
+    public void bind(Object activity, final ThirdSdkLoginCallback callback) {
+        sdkLogin(activity, true, callback);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (callbackManager != null) {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void sdkLogin(Object activity, final boolean toBind, final ThirdSdkLoginCallback callback) {
         LoginUser user = LoginUserManager.getCurrentActiveLoginUser();
         if (user != null && user.getLoginedMode() == Account.ACCOUNT_MODE_FACEBOOK && user.isNowLogined) {
             // 已经facebook绑定登陆
             if (callback != null) {
                 LogUtils.i("facebook is logined now.");
-                callback.onLoginSuccess();
+                callback.onLoginSuccess(user);
             }
             return;
         }
 
         this.callback = callback;
 
-
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
         if (isLoggedIn) {
             LogUtils.i("facebook is valid, so success soon.");
-            onLoginFinish(accessToken);
+            onLoginFinish(toBind, accessToken);
             return;
         }
         callbackManager = CallbackManager.Factory.create();
@@ -87,7 +101,7 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
                         LogUtils.i("facebook login successfully.");
                         // App code
                         AccessToken accessToken = loginResult.getAccessToken();
-                        onLoginFinish(accessToken);
+                        onLoginFinish(toBind, accessToken);
                         callbackManager = null;
                     }
 
@@ -96,7 +110,7 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
                         // App code
                         LogUtils.i("facebook login cancel.");
                         if (callback != null) {
-                            callback.onLoginFailed();
+                            callback.onLoginFailed(AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_CANCEL);
                         }
                     }
 
@@ -105,7 +119,7 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
                         // App code
                         LogUtils.i("facebook login exception:" + exception);
                         if (callback != null) {
-                            callback.onLoginFailed();
+                            callback.onLoginFailed(AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_ERROR);
                         }
                     }
                 });
@@ -120,48 +134,37 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
         } else {
             LogUtils.i("facebook login failed, the object is invalid, " + activity);
         }
-
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (callbackManager != null) {
-            callbackManager.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
-    private void onLoginFinish(AccessToken accessToken) {
-
+    private void onLoginFinish(boolean toBind, AccessToken accessToken) {
         if (callback != null) {
             callback.onLoginStart();
         }
 
         String token = accessToken.getToken();
         String userid = accessToken.getUserId();
-        String ggid = LoginUserManager.getCurrentGGID();
         LogUtils.i("facebook token:" + token);
         LogUtils.i("facebook userid:" + userid);
-        JSONObject object = new JSONObject();
-        try {
-            object.put("access_token", token);
-            object.put("appid", accessToken.getApplicationId());
-            object.put("gameGuestId", ggid == null ? "" : ggid);
-        } catch (Exception e) {
+
+        String ggid = "";
+        if (toBind) {
+            ggid = LoginUserManager.getCurrentGGID();
         }
 
-        LoginRequest.thirdSdkBind("facebook", ggid == null ? "" : ggid, object.toString(), new LoginRequestCallback<String>() {
+        LoginRequest.facebookSdkBind(ggid == null ? "" : ggid, token, accessToken.getApplicationId(), new LoginRequestCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                LoginUser loginUser = LoginUserManager.onAccountLoginSuccess(Account.ACCOUNT_MODE_FACEBOOK, result);
+                
                 if (callback != null) {
-                    callback.onLoginSuccess();
+                    callback.onLoginSuccess(loginUser);
                 }
-                LoginUserManager.onAccountLoginSuccess(Account.ACCOUNT_MODE_FACEBOOK, result);
             }
 
             @Override
             public void onFail(Throwable e, int code) {
                 if (callback != null) {
-                    callback.onLoginFailed();
+                    callback.onLoginFailed(code);
                 }
             }
         });

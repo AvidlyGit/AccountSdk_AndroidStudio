@@ -131,6 +131,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
                         // 有现存账号，展示loading_fragment
                         AccountLoadingFragment loadingFragment = (AccountLoadingFragment) mFragmentManager.findFragmentById(R.id.avidly_fragment_login);
                         loadingFragment.setLoadingListener(this);
+                        LoginCenter.setIsAutoLogin(true);
                     }
                     break;
                 case Constants.INTENT_KEY_ACTION_BIND:
@@ -150,9 +151,9 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     public void onUserLoginSuccessed(final LoginUser loginUser) {
         LogUtils.i("onUserLoginSuccessed: ");
         hideLoadingUI();
-        // TODO: 2019/1/29 这里的作用，要跟sam确认一下功能
         LoginCenter.setIsAutoLogin(false);
         finish();
+
         if (!LoginUserManager.isLoginedNow()) {
             showAccountHomeFragment();
         }
@@ -204,9 +205,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
                 mPresenter.accountLogin(avidlyAccount.accountName, avidlyAccount.accountPwd);
                 break;
             case Account.ACCOUNT_MODE_FACEBOOK:
-                //TODO: 2019/1/29 现存账号是facebook
-                Account facebookAccount = activedUser.findAccountByMode(Account.ACCOUNT_MODE_FACEBOOK);
-                mPresenter.facebookLogin(activedUser);
+                doThirdSdkLogin(Account.ACCOUNT_MODE_FACEBOOK);
         }
     }
 
@@ -230,6 +229,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     @Override
     public void onFacebookLoginClicked() {
         LogUtils.i("onFacebookLoginClicked: ");
+        showLoadingUI();
         doThirdSdkLogin(Account.ACCOUNT_MODE_FACEBOOK);
 
     }
@@ -237,53 +237,15 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     @Override
     public void onTwitterLoginClicked() {
         LogUtils.i("onTwitterLoginClicked: ");
+        showLoadingUI();
         doThirdSdkLogin(Account.ACCOUNT_MODE_TWITTER);
     }
 
     @Override
     public void onGoogleLoginClicked() {
         LogUtils.i("onGoogleLoginClicked: ");
+        showLoadingUI();
         doThirdSdkLogin(Account.ACCOUNT_MODE_GOOGLEPLAY);
-    }
-
-    private void doThirdSdkLogin(int mode) {
-        LogUtils.i("doThirdSdkLogin, mode: " + mode);
-        if (!ThirdSdkFactory.isExistSdkLib(mode)) {
-            thirdLoginSdkDelegate = null;
-            LogUtils.i("doThirdSdkLogin, the third login sdk is not exist. ");
-            return;
-        }
-
-        if (thirdLoginSdkDelegate != null && !thirdLoginSdkDelegate.isThis(mode)) {
-            thirdLoginSdkDelegate.exit();
-            thirdLoginSdkDelegate = null;
-        }
-
-        if (thirdLoginSdkDelegate == null) {
-            thirdLoginSdkDelegate = ThirdSdkFactory.newThirdSdkLoginDeleage(mode);
-            if (thirdLoginSdkDelegate == null) {
-                LogUtils.i("doThirdSdkLogin, fail to create third sdk delegate object.");
-                return;
-            }
-            thirdLoginSdkDelegate.login(this, new ThirdSdkLoginCallback() {
-
-                @Override
-                public void onLoginStart() {
-
-                }
-
-                @Override
-                public void onLoginSuccess() {
-                    thirdLoginSdkDelegate = null;
-                }
-
-                @Override
-                public void onLoginFailed() {
-                    showErrorMessage(getResources().getString(R.string.avidly_string_user_login_send_fail));
-                    thirdLoginSdkDelegate = null;
-                }
-            });
-        }
     }
 
     // from login fragment
@@ -325,6 +287,48 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     public void onReadProtocolClicked() {
         Intent intent = new Intent(this, AvidlyProtocolActivity.class);
         startActivity(intent);
+    }
+
+    private void doThirdSdkLogin(int mode) {
+        LogUtils.i("doThirdSdkLogin, mode: " + mode);
+        if (!ThirdSdkFactory.isExistSdkLib(mode)) {
+            thirdLoginSdkDelegate = null;
+            LogUtils.i("doThirdSdkLogin, the third login sdk is not exist. ");
+            return;
+        }
+
+        if (thirdLoginSdkDelegate != null && !thirdLoginSdkDelegate.isThis(mode)) {
+            thirdLoginSdkDelegate.exit();
+            thirdLoginSdkDelegate = null;
+        }
+
+        if (thirdLoginSdkDelegate == null) {
+            thirdLoginSdkDelegate = ThirdSdkFactory.newThirdSdkLoginDeleage(mode);
+            if (thirdLoginSdkDelegate == null) {
+                LogUtils.i("doThirdSdkLogin, fail to create third sdk delegate object.");
+                return;
+            }
+            thirdLoginSdkDelegate.login(this, new ThirdSdkLoginCallback() {
+
+                @Override
+                public void onLoginStart() {
+
+                }
+
+                @Override
+                public void onLoginSuccess(LoginUser loginUser) {
+                    thirdLoginSdkDelegate = null;
+                    onUserLoginSuccessed(loginUser);
+                }
+
+                @Override
+                public void onLoginFailed(int code) {
+                    thirdLoginSdkDelegate = null;
+
+                    onUserLoginFailed(code);
+                }
+            });
+        }
     }
 
     private void showAccountHomeFragment() {

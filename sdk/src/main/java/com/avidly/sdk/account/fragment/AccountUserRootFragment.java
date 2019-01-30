@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.avidly.sdk.account.AvidlyAccountSdkErrors;
 import com.avidly.sdk.account.activity.AccountLoginActivity;
 import com.avidly.sdk.account.adapter.BaseAdapter;
 import com.avidly.sdk.account.base.Constants;
@@ -26,9 +27,6 @@ import com.avidly.sdk.account.third.ThirdLoginSdkDelegate;
 import com.avidly.sdk.account.third.ThirdSdkFactory;
 import com.avidly.sdk.account.third.ThirdSdkLoginCallback;
 import com.sdk.avidly.account.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class AccountUserRootFragment extends BaseFragment {
 
@@ -162,6 +160,7 @@ public class AccountUserRootFragment extends BaseFragment {
         }
     };
 
+    // TODO: 2019/1/30 解除绑定的操作是否需要一个提醒窗口
     private void tryToUnBindThirdSdk(int mode) {
         switch (mode) {
             case Account.ACCOUNT_MODE_FACEBOOK:
@@ -171,7 +170,6 @@ public class AccountUserRootFragment extends BaseFragment {
     }
 
     private void doThirdSdkUnBind(final int mode) {
-
         if (!ThirdSdkFactory.isExistSdkLib(mode)) {
             LogUtils.w("this sdk lib is not exist, mode :" + mode, null);
             return;
@@ -183,52 +181,30 @@ public class AccountUserRootFragment extends BaseFragment {
             return;
         }
 
-        String type = null;
-        String data = null;
-
-        String ggid = LoginUserManager.getCurrentGGID();
         if (mode == Account.ACCOUNT_MODE_FACEBOOK) {
-
             String token = FacebookLoginSdk.getToken();
             if (TextUtils.isEmpty(token)) {
                 LogUtils.w("this facebook sdk's token is null, need login again.", null);
                 return;
             }
-            type = "facebook";
-            JSONObject o = new JSONObject();
-            try {
-                o.put("access_token", token);
-                o.put("gameGuestId", user.ggid);
-                o.put("gameGuestId", ggid == null ? "" : ggid);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            data = o.toString();
+
+            LoginRequest.facebookSdkUnBind(user.ggid, token, new LoginRequestCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    LoginUserManager.onThirdSdkUnbind(mode);
+                    freshBindAdapterInMainThread();
+                    hideLoadingUI();
+                    Utils.showToastTip(getActivity(), R.string.avidly_string_user_unbind_send_success, true);
+                }
+
+                @Override
+                public void onFail(Throwable e, int code) {
+                    hideLoadingUI();
+                    Utils.showToastTip(getActivity(), R.string.avidly_string_user_unbind_send_fail, true);
+                }
+            });
+            showLoadingUI();
         }
-
-//        if (user.getLoginedMode() != mode) {
-//            LogUtils.w("this logined user not match mode :" + mode);
-//            return;
-//        }
-
-
-        LoginRequest.thirdSdkUnbind(type, data, ggid, new LoginRequestCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                LoginUserManager.onThirdSdkUnbind(mode);
-                freshBindAdapterInMainThread();
-                hideLoadingUI();
-                Utils.showToastTip(getActivity(), R.string.avidly_string_user_unbind_send_success, true);
-            }
-
-            @Override
-            public void onFail(Throwable e, int code) {
-                hideLoadingUI();
-                Utils.showToastTip(getActivity(), R.string.avidly_string_user_unbind_send_fail, true);
-            }
-
-        });
-        showLoadingUI();
 
     }
 
@@ -260,9 +236,9 @@ public class AccountUserRootFragment extends BaseFragment {
                 return;
             }
 
-            thirdLoginSdkDelegate.login(this, new ThirdSdkLoginCallback() {
+            thirdLoginSdkDelegate.bind(this, new ThirdSdkLoginCallback() {
                 @Override
-                public void onLoginSuccess() {
+                public void onLoginSuccess(LoginUser loginUser) {
                     freshBindAdapterInMainThread();
                     hideLoadingUI();
                     Utils.showToastTip(getActivity(), R.string.avidly_string_user_bind_send_success, true);
@@ -270,10 +246,10 @@ public class AccountUserRootFragment extends BaseFragment {
                 }
 
                 @Override
-                public void onLoginFailed() {
+                public void onLoginFailed(int code) {
                     thirdLoginSdkDelegate = null;
                     hideLoadingUI();
-                    Utils.showToastTip(getActivity(), R.string.avidly_string_user_bind_send_fail, true);
+                    Utils.showToastTip(getActivity(), getResources().getString(AvidlyAccountSdkErrors.getMessgeResourceIdFromErrorCode(code)), true);
                 }
 
                 @Override

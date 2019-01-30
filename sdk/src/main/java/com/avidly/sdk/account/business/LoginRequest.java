@@ -22,19 +22,19 @@ public class LoginRequest {
     private static JSONObject requestToDataJsonObject(String result, LoginRequestCallback<String> callback) {
         try {
             JSONObject o = new JSONObject(result);
+            boolean success = o.optBoolean("success");
             int code = o.optInt("code");
-            int errorCode = o.optInt("error_code");
-            if (200 == code) {
+            if (success) {
                 JSONObject data = o.getJSONObject("data");
                 JSONObject guest = data.getJSONObject("gameGuest");
-                String productId = guest.getString("productId");
+                String productId = guest.getString("pdtid");
                 if (productId.equals(LoginCenter.getProductId())) {
                     return guest;
                 } else {
                     callback.onFail(new Throwable("mismatch product id"), AVIDLY_LOGIN_ERROR_RESPONSE_MISMATCH_PRODUCT_ID);
                 }
             } else {
-                callback.onFail(new Throwable(o.optString("message")), errorCode);
+                callback.onFail(new Throwable(o.optString("message")), code);
             }
         } catch (Throwable e) {
             callback.onFail(e, AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION);
@@ -172,13 +172,42 @@ public class LoginRequest {
         });
     }
 
-    public static void thirdSdkBind(String type, String jsondata, String ggid, final LoginRequestCallback<String> callback) {
-        String url = URLConstant.getThirdSdkBindUrl(type, ggid, jsondata);
-        LogUtils.i("HttpBusiness thirdSdkBind url is " + url);
+    public static void facebookSdkBind(String ggid, String accessToken, String appid, final LoginRequestCallback<String> callback) {
+        String url = URLConstant.getFacebookBindUrl(ggid, accessToken, appid);
+        LogUtils.i("HttpBusiness facebookSdkBind url is " + url);
         HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
             @Override
             public void onResponseSuccess(String result) {
-                LogUtils.i("HttpBusiness thirdSdkBind result is " + result);
+                LogUtils.i("HttpBusiness facebookSdkBind result is " + result);
+                try {
+                    JSONObject guest = requestToDataJsonObject(result, callback);
+                    if (guest != null) {
+                        String gameGuestId = guest.getString("gameGuestId");
+                        callback.onSuccess(gameGuestId);
+
+                        // TODO: 2019/1/31 此处处理一下facebook的nickname
+                        bindOther(guest, LoginUserManager.getAccountLoginUser());
+                        LoginUserManager.saveAccountUsers();
+                    }
+                } catch (Throwable e) {
+                    callback.onFail(e, AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION);
+                }
+            }
+
+            @Override
+            public void onResponedFail(Throwable e, int code) {
+                callback.onFail(e, code);
+            }
+        });
+    }
+
+    public static void facebookSdkUnBind(String ggid, String accessToken, final LoginRequestCallback<String> callback) {
+        String url = URLConstant.getFacebookUnBindUrl(ggid, accessToken);
+        LogUtils.i("HttpBusiness facebookSdkUnBind url is " + url);
+        HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
+            @Override
+            public void onResponseSuccess(String result) {
+                LogUtils.i("HttpBusiness facebookSdkUnBind result is " + result);
                 try {
                     JSONObject guest = requestToDataJsonObject(result, callback);
                     if (guest != null) {
@@ -199,30 +228,4 @@ public class LoginRequest {
         });
     }
 
-    public static void thirdSdkUnbind(String type, String jsondata, String ggid, final LoginRequestCallback<String> callback) {
-        String url = URLConstant.getThirdSdkUnbindUrl(type, ggid, jsondata);
-        LogUtils.i("HttpBusiness thirdSdkUnbind url is " + url);
-        HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
-            @Override
-            public void onResponseSuccess(String result) {
-                LogUtils.i("HttpBusiness thirdSdkUnbind result is " + result);
-                try {
-                    JSONObject guest = requestToDataJsonObject(result, callback);
-                    if (guest != null) {
-                        String gameGuestId = guest.getString("gameGuestId");
-                        callback.onSuccess(gameGuestId);
-                        bindOther(guest, LoginUserManager.getAccountLoginUser());
-                        LoginUserManager.saveAccountUsers();
-                    }
-                } catch (Throwable e) {
-                    callback.onFail(e, AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION);
-                }
-            }
-
-            @Override
-            public void onResponedFail(Throwable e, int code) {
-                callback.onFail(e, code);
-            }
-        });
-    }
 }

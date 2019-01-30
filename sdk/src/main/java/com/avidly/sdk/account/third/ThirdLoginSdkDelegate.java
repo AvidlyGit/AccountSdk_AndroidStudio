@@ -8,6 +8,8 @@ public interface ThirdLoginSdkDelegate {
 
     void login(Object context, ThirdSdkLoginCallback callback);
 
+    void bind(Object context, ThirdSdkLoginCallback callback);
+
     void onActivityResult(int requestCode, int resultCode, Intent data);
 
     void exit();
