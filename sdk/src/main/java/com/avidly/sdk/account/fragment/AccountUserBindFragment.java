@@ -114,7 +114,7 @@ public class AccountUserBindFragment extends Fragment {
                 R.drawable.avidly_facebook_logo,
                 Account.ACCOUNT_MODE_FACEBOOK,
                 isgrid,
-                false));
+                isbind));
 
 //        isbind = isBindAccount(Account.ACCOUNT_MODE_TWITTER);
 //        list.add(createGuestBindData(getString(R.string.avidly_string_user_bind_account_twitter),
@@ -122,7 +122,7 @@ public class AccountUserBindFragment extends Fragment {
 //                R.drawable.avidly_twitter_logo,
 //                Account.ACCOUNT_MODE_TWITTER,
 //                isgrid,
-//                false));
+//                isbind));
 //
 //        isbind = isBindAccount(Account.ACCOUNT_MODE_GOOGLEPLAY);
 //        list.add(createGuestBindData(getString(R.string.avidly_string_user_bind_account_googleplay),
@@ -130,7 +130,7 @@ public class AccountUserBindFragment extends Fragment {
 //                R.drawable.avidly_google_logo,
 //                Account.ACCOUNT_MODE_GOOGLEPLAY,
 //                isgrid,
-//                false));
+//                isbind));
 
         adatper.setDataList(list);
     }

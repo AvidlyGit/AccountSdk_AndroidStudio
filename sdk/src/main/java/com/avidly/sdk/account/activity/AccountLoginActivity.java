@@ -336,7 +336,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
         homeFragment.setHomeListener(this);
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.replace(R.id.avidly_fragment_login, homeFragment);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
     }
 
     private void showAccountLoginFragment(int loginType) {
