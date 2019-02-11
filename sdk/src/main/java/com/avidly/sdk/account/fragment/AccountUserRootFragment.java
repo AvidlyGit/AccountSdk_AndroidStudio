@@ -106,12 +106,14 @@ public class AccountUserRootFragment extends BaseFragment {
         AccountUserPwdAlterFragment alterFragment = (AccountUserPwdAlterFragment) getChildFragmentManager().findFragmentById(R.id.avidly_fragment_user_alter_pwd_fragment);
         alterFragment.setLoadingUICallback(new LoadingUICallback() {
             @Override
-            public void notifyShowLoadingUI(boolean show) {
+            public void notifyShowLoadingUI(boolean show, boolean keep) {
                 if (show) {
                     showLoadingUI();
                 } else {
                     hideLoadingUI();
-                    hideChangePasswordUI();
+                    if (!keep) {
+                        hideChangePasswordUI();
+                    }
                 }
             }
         });
@@ -181,6 +183,18 @@ public class AccountUserRootFragment extends BaseFragment {
             return;
         }
 
+        // 经严曦讨论后，以下情况，不能解绑
+        // 1.游客账号【绑定第三方，非avid.ly账号】 无法解绑
+        // 2.直接facebook登录后 无法解绑
+        // 3.avidly帐号登陆后，绑定facebook，可以解绑
+        if (user.getLoginedMode() == Account.ACCOUNT_MODE_FACEBOOK) {
+            Account account = user.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
+            if (account == null || !account.isBinded) {
+                Utils.showToastTip(getContext(), R.string.avidly_string_user_unbind_disable, true);
+                return;
+            }
+        }
+
         if (mode == Account.ACCOUNT_MODE_FACEBOOK) {
             String token = FacebookLoginSdk.getToken();
             if (TextUtils.isEmpty(token)) {
@@ -191,16 +205,17 @@ public class AccountUserRootFragment extends BaseFragment {
             LoginRequest.facebookSdkUnBind(user.ggid, token, new LoginRequestCallback<String>() {
                 @Override
                 public void onSuccess(String result) {
+                    LogUtils.i("doThirdSdkUnBind, result: " + result);
                     LoginUserManager.onThirdSdkUnbind(mode);
                     freshBindAdapterInMainThread();
                     hideLoadingUI();
-                    Utils.showToastTip(getActivity(), R.string.avidly_string_user_unbind_send_success, true);
+                    Utils.showToastTip(getContext(), R.string.avidly_string_user_unbind_send_success, true);
                 }
 
                 @Override
                 public void onFail(Throwable e, int code) {
                     hideLoadingUI();
-                    Utils.showToastTip(getActivity(), R.string.avidly_string_user_unbind_send_fail, true);
+                    Utils.showToastTip(getContext(), R.string.avidly_string_user_unbind_send_fail, true);
                 }
             });
             showLoadingUI();
@@ -241,7 +256,7 @@ public class AccountUserRootFragment extends BaseFragment {
                 public void onLoginSuccess(LoginUser loginUser) {
                     freshBindAdapterInMainThread();
                     hideLoadingUI();
-                    Utils.showToastTip(getActivity(), R.string.avidly_string_user_bind_send_success, true);
+                    Utils.showToastTip(getContext(), R.string.avidly_string_user_bind_send_success, true);
                     thirdLoginSdkDelegate = null;
                 }
 
@@ -249,7 +264,7 @@ public class AccountUserRootFragment extends BaseFragment {
                 public void onLoginFailed(int code) {
                     thirdLoginSdkDelegate = null;
                     hideLoadingUI();
-                    Utils.showToastTip(getActivity(), getResources().getString(AvidlyAccountSdkErrors.getMessgeResourceIdFromErrorCode(code)), true);
+                    Utils.showToastTip(getContext(), getResources().getString(AvidlyAccountSdkErrors.getMessgeResourceIdFromErrorCode(code)), true);
                 }
 
                 @Override
@@ -277,6 +292,8 @@ public class AccountUserRootFragment extends BaseFragment {
         isShowChangePwdUI = true;
         TextView textView = getView().findViewById(R.id.avidly_user_common_title_textview);
         textView.setText(R.string.avidly_string_userpwd_alter_title);
+        AccountUserPwdAlterFragment alterFragment = (AccountUserPwdAlterFragment) getChildFragmentManager().findFragmentById(R.id.avidly_fragment_user_alter_pwd_fragment);
+        alterFragment.resetPwd();
     }
 
     private void hideChangePasswordUI() {
@@ -334,6 +351,6 @@ public class AccountUserRootFragment extends BaseFragment {
     }
 
     protected interface LoadingUICallback {
-        void notifyShowLoadingUI(boolean show);
+        void notifyShowLoadingUI(boolean show, boolean keep);
     }
 }

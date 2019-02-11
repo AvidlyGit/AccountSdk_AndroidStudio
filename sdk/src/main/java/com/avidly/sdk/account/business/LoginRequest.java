@@ -209,12 +209,14 @@ public class LoginRequest {
             public void onResponseSuccess(String result) {
                 LogUtils.i("HttpBusiness facebookSdkUnBind result is " + result);
                 try {
-                    JSONObject guest = requestToDataJsonObject(result, callback);
-                    if (guest != null) {
-                        String gameGuestId = guest.getString("gameGuestId");
-                        callback.onSuccess(gameGuestId);
-                        bindOther(guest, LoginUserManager.getAccountLoginUser());
+                    JSONObject guest = new JSONObject(result);
+                    if (guest.optBoolean("success")) {
+                        //String gameGuestId = guest.getString("gameGuestId");
+                        callback.onSuccess("");
+                        //bindOther(guest, LoginUserManager.getAccountLoginUser());
                         LoginUserManager.saveAccountUsers();
+                    } else {
+                        callback.onFail(null, guest.optInt("code"));
                     }
                 } catch (Throwable e) {
                     callback.onFail(e, AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION);

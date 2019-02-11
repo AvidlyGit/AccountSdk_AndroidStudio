@@ -93,14 +93,14 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
             @Override
             public void onResponseSuccess(String result) {
                 LogUtils.i("onResponseSuccess:" + result);
-                Utils.showToastTip(getActivity(), R.string.avidly_string_user_lookup_eamil_send_success, true);
+                Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_success, true);
                 hideLoadingUI();
             }
 
             @Override
             public void onResponedFail(Throwable e, int code) {
                 LogUtils.i("onResponedFail, exception:" + e + ", code:" + code);
-                Utils.showToastTip(getActivity(), R.string.avidly_string_user_lookup_eamil_send_fail, true);
+                Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_fail, true);
                 hideLoadingUI();
             }
         });

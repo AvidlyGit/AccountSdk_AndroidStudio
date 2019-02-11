@@ -20,6 +20,7 @@
             android:id="@+id/avidly_fragment_user_manager_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clickable="true"
             android:layout_gravity="top">
 
             <include
@@ -42,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="top"
+            android:clickable="true"
             android:visibility="gone">
 
             <fragment
@@ -57,6 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="top"
+            android:clickable="true"
             android:visibility="gone">
 
             <fragment

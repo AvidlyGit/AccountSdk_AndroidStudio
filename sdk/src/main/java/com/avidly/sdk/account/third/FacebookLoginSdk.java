@@ -17,8 +17,6 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
-import org.json.JSONObject;
-
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -136,7 +134,7 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
         }
     }
 
-    private void onLoginFinish(boolean toBind, AccessToken accessToken) {
+    private void onLoginFinish(final boolean toBind, AccessToken accessToken) {
         if (callback != null) {
             callback.onLoginStart();
         }
@@ -154,7 +152,19 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
         LoginRequest.facebookSdkBind(ggid == null ? "" : ggid, token, accessToken.getApplicationId(), new LoginRequestCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                LoginUser loginUser = LoginUserManager.onAccountLoginSuccess(Account.ACCOUNT_MODE_FACEBOOK, result);
+                LoginUser loginUser = null;
+                if (toBind) {
+                    /*loginUser = LoginUserManager.getCurrentActiveLoginUser();
+                    if (loginUser.findAccountByMode(Account.ACCOUNT_MODE_FACEBOOK) == null) {
+                        loginUser.bindAccount(Account.ACCOUNT_MODE_FACEBOOK, true);
+                    } else {
+                        loginUser.findAccountByMode(Account.ACCOUNT_MODE_FACEBOOK).isBinded = true;
+                    }*/
+                    // 绑定时，有可能是游客登录后绑定，也可能是avidly帐号登陆后绑定
+                    loginUser = LoginUserManager.onAccountLoginSuccess(Account.ACCOUNT_MODE_FACEBOOK, result);
+                } else {
+                    loginUser = LoginUserManager.onAccountLoginSuccess(Account.ACCOUNT_MODE_FACEBOOK, result);
+                }
                 
                 if (callback != null) {
                     callback.onLoginSuccess(loginUser);

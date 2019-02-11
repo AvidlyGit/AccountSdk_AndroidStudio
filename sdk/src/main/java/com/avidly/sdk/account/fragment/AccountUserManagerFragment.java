@@ -125,7 +125,7 @@ public class AccountUserManagerFragment extends Fragment {
         boolean isGuest = isGuestUser();
         lastUserStatusIsGuest = isGuest;
         freshView();
-        
+
         RecyclerView recyclerView = view.findViewById(R.id.avidly_usermanger_listview);
         adatper = new UserManagerAdatper(getContext());
         recyclerView.setAdapter(adatper);
@@ -156,7 +156,8 @@ public class AccountUserManagerFragment extends Fragment {
                     R.drawable.avidly_icon_user,
                     UserOperationData.USER_OPERATION_TYPE_AVIDLY,
                     isgrid));
-        } else {
+        } else if (LoginUserManager.getCurrentActiveLoginUser() != null
+                && LoginUserManager.getCurrentActiveLoginUser().getLoginedMode() == Account.ACCOUNT_MODE_AVIDLY) {
             list.add(createGuestBindData(getString(R.string.avidly_string_usermanger_bind_alter_pwd),
                     R.drawable.avidly_icon_change_password,
                     UserOperationData.USER_OPERATION_TYPE_CHANGE_PWD,

@@ -16,6 +16,8 @@ public class AvidlyAccountSdkErrors {
     // 服务端数据请求时发生的异常，如超时,通讯异常等
     public static final int AVIDLY_LOGIN_ERROR_RESPONSE_USER_NOT_EXIST = 20506;
 
+    public static final int AVIDLY_OLD_PASSWORD_ALTER_ERROR = 20203;
+
     // facebook登录时，用户取消登录
     public static final int AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_CANCEL = 2001;
     // facebook登录时，不成功
