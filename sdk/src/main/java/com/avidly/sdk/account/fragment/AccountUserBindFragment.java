@@ -106,6 +106,7 @@ public class AccountUserBindFragment extends Fragment {
 
     private void fillGuestAdatper(UserAccountBindAdatper adatper, boolean isgrid) {
         List<UserBindData> list = new ArrayList<>(3);
+        LogUtils.i("fresh Bind Adapter, isgrid:" + isgrid);
 
         boolean isbind = isBindAccount(Account.ACCOUNT_MODE_FACEBOOK);
 

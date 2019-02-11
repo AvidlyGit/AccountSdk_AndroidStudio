@@ -187,12 +187,12 @@ public class AccountUserRootFragment extends BaseFragment {
         // 1.游客账号【绑定第三方，非avid.ly账号】 无法解绑
         // 2.直接facebook登录后 无法解绑
         // 3.avidly帐号登陆后，绑定facebook，可以解绑
-        if (user.getLoginedMode() == Account.ACCOUNT_MODE_FACEBOOK) {
-            Account account = user.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
-            if (account == null || !account.isBinded) {
+        if (user.getLoginedMode() == mode) {
+            //Account account = user.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
+            //if (account == null || !account.isBinded) {
                 Utils.showToastTip(getContext(), R.string.avidly_string_user_unbind_disable, true);
                 return;
-            }
+            //}
         }
 
         if (mode == Account.ACCOUNT_MODE_FACEBOOK) {
@@ -288,6 +288,11 @@ public class AccountUserRootFragment extends BaseFragment {
     }
 
     private void showChangePasswordUI() {
+        if (LoginUserManager.getCurrentActiveLoginUser() == null
+                || LoginUserManager.getCurrentActiveLoginUser().getLoginedMode() != Account.ACCOUNT_MODE_AVIDLY) {
+            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_disable, true);
+            return;
+        }
         getView().findViewById(R.id.avidly_fragment_user_alter_pwd_root).setVisibility(View.VISIBLE);
         isShowChangePwdUI = true;
         TextView textView = getView().findViewById(R.id.avidly_user_common_title_textview);

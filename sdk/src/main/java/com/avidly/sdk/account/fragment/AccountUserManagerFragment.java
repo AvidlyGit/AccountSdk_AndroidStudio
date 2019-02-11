@@ -63,9 +63,10 @@ public class AccountUserManagerFragment extends Fragment {
 
         if (adatper != null) {
             boolean isGuest = isGuestUser();
-            if (lastUserStatusIsGuest != isGuest) {
+            if (lastUserStatusIsGuest != isGuest || LoginCenter.isFreshUserManagerUI()) {
                 lastUserStatusIsGuest = isGuest;
                 freshView();
+                LoginCenter.setFreshUserManagerUI(false);
                 final int gridnum = LoginCenter.isScreenLandscape() ? 2 : 1;
                 fillGuestAdatper(adatper, gridnum > 1, isGuest);
             }
@@ -156,8 +157,8 @@ public class AccountUserManagerFragment extends Fragment {
                     R.drawable.avidly_icon_user,
                     UserOperationData.USER_OPERATION_TYPE_AVIDLY,
                     isgrid));
-        } else if (LoginUserManager.getCurrentActiveLoginUser() != null
-                && LoginUserManager.getCurrentActiveLoginUser().getLoginedMode() == Account.ACCOUNT_MODE_AVIDLY) {
+        } else /*if (LoginUserManager.getCurrentActiveLoginUser() != null
+                && LoginUserManager.getCurrentActiveLoginUser().getLoginedMode() == Account.ACCOUNT_MODE_AVIDLY)*/ {
             list.add(createGuestBindData(getString(R.string.avidly_string_usermanger_bind_alter_pwd),
                     R.drawable.avidly_icon_change_password,
                     UserOperationData.USER_OPERATION_TYPE_CHANGE_PWD,

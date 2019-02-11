@@ -19,6 +19,8 @@ import java.lang.ref.WeakReference;
 public class LoginCenter {
     private static String productId;
 
+    private static boolean freshUserManagerUI;
+
     private static AvidlyAccountLoginCallback loginCallback;
 
     private static int gameOrietation = 99999;
@@ -80,6 +82,14 @@ public class LoginCenter {
                 || gameOrietation == ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
                 || gameOrietation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
                 || gameOrietation == ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT;
+    }
+
+    public static boolean isFreshUserManagerUI() {
+        return freshUserManagerUI;
+    }
+
+    public static void setFreshUserManagerUI(boolean freshUserManagerUI) {
+        LoginCenter.freshUserManagerUI = freshUserManagerUI;
     }
 
     public static boolean isIsAutoLogin() {

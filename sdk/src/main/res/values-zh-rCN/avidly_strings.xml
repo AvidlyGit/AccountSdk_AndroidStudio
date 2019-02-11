@@ -62,6 +62,7 @@
     <string name="avidly_string_protocol_url">http://www.baidu.com</string>
 
     <!-- 以下需要增加翻译 -->
+    <string name="avidly_string_user_alter_pwd_disable">当前非avidly帐号登录，无须修改密码！</string>
     <string name="avidly_string_user_alter_pwd_empty_oldpwd">请输入原密码</string>
     <string name="avidly_string_user_alter_pwd_empty_newpwd">请输入新密码</string>
     <string name="avidly_string_user_alter_pwd_empty_newpwd2">请再次输入新密码</string>
@@ -76,7 +77,7 @@
 
     <string name="avidly_string_user_bind_send_success">绑定成功</string>
     <string name="avidly_string_user_bind_send_fail">绑定失败</string>
-    <string name="avidly_string_user_unbind_disable">当前状态不能解绑</string>
+    <string name="avidly_string_user_unbind_disable">当前登录状态不能解绑</string>
 
     <string name="avidly_string_user_unbind_send_success">解绑成功</string>
     <string name="avidly_string_user_unbind_send_fail">解绑失败</string>

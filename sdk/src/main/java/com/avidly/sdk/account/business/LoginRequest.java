@@ -71,6 +71,7 @@ public class LoginRequest {
                         if (user != null) {
                             bindOther(guest, user);
                         }
+                        LoginCenter.setFreshUserManagerUI(true);
                     }
                 } catch (Throwable e) {
                     callback.onFail(e, AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION);
@@ -131,6 +132,7 @@ public class LoginRequest {
                             bindOther(guest, user);
                             LoginUserManager.saveAccountUsers();
                         }
+                        LoginCenter.setFreshUserManagerUI(true);
                     }
                 } catch (Throwable e) {
                     callback.onFail(e, AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION);
@@ -159,6 +161,7 @@ public class LoginRequest {
                         callback.onSuccess(gameGuestId);
                         bindOther(guest, LoginUserManager.getAccountLoginUser());
                         LoginUserManager.saveAccountUsers();
+                        LoginCenter.setFreshUserManagerUI(true);
                     }
                 } catch (Throwable e) {
                     callback.onFail(e, AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION);
@@ -172,7 +175,7 @@ public class LoginRequest {
         });
     }
 
-    public static void facebookSdkBind(String ggid, String accessToken, String appid, final LoginRequestCallback<String> callback) {
+    public static void facebookSdkBind(String ggid, final String accessToken, String appid, final LoginRequestCallback<String> callback) {
         String url = URLConstant.getFacebookBindUrl(ggid, accessToken, appid);
         LogUtils.i("HttpBusiness facebookSdkBind url is " + url);
         HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
@@ -185,9 +188,21 @@ public class LoginRequest {
                         String gameGuestId = guest.getString("gameGuestId");
                         callback.onSuccess(gameGuestId);
 
-                        // TODO: 2019/1/31 此处处理一下facebook的nickname
                         bindOther(guest, LoginUserManager.getAccountLoginUser());
+                        // TODO: 2019/1/31 此处处理一下facebook的nickname
+                        JSONObject object = new JSONObject(result);
+                        object = object.getJSONObject("data");
+                        JSONObject facebook = object.optJSONObject("facebook");
+                        if (facebook != null) {
+                            String name = facebook.optString("name");
+                            Account account = LoginUserManager.getAccountLoginUser().findAccountByMode(Account.ACCOUNT_MODE_FACEBOOK);
+                            if (null != account) {
+                                account.nickname = name;
+                            }
+                        }
+
                         LoginUserManager.saveAccountUsers();
+                        LoginCenter.setFreshUserManagerUI(true);
                     }
                 } catch (Throwable e) {
                     callback.onFail(e, AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION);
@@ -215,6 +230,7 @@ public class LoginRequest {
                         callback.onSuccess("");
                         //bindOther(guest, LoginUserManager.getAccountLoginUser());
                         LoginUserManager.saveAccountUsers();
+                        LoginCenter.setFreshUserManagerUI(true);
                     } else {
                         callback.onFail(null, guest.optInt("code"));
                     }
