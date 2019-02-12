@@ -33,19 +33,19 @@ public class URLConstant {
     }
 
     public static String getAccountRegistOrBindApi(String gameGuestId, String userName, String password) {
-        String path = "gameGuestId=" + gameGuestId + "&username=" + userName + "&pwd=" + urlEncode(password)
+        String path = "gameGuestId=" + gameGuestId + "&username=" + userName + "&pwd=" + (password)
                 + "&pdtid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;
         return ACCOUNT_API + "/account/user/reg?" + path;
     }
 
     public static String getAccountLoginApi(String userName, String password) {
-        String path = "username=" + userName + "&pwd=" + urlEncode(password)
+        String path = "username=" + userName + "&pwd=" + (password)
                 + "&pdtid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;
         return ACCOUNT_API + "/account/user/login?" + path;
     }
 
     public static String getAlterPwdAPI(String userName, String odlpwd, String newpwd) {
-        String path = "username=" + userName + "&curPwd=" + urlEncode(odlpwd) + "&newPwd=" + urlEncode(newpwd)
+        String path = "username=" + userName + "&curPwd=" + (odlpwd) + "&newPwd=" + (newpwd)
                 + "&pdtid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;
         return ACCOUNT_API + "/account/user/modifyPwd?" + path;
     }

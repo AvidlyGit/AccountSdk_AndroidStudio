@@ -21,12 +21,6 @@ import android.util.TypedValue;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.avidly.sdk.account.base.Constants;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,31 +30,32 @@ public class Utils {
     private static String MD5 = "MD5";
     private static final String ENCODE_UTF8 = "UTF-8";
 
-    /**
-     * md5加密字符串
-     *
-     * @param value
-     * @return
-     * @throws Exception
-     */
-    public static String textOfMd5(String value) {
-        byte[] data = new byte[0];
-        try {
-            data = (value).getBytes(ENCODE_UTF8);
-        } catch (UnsupportedEncodingException e) {
-            data = (value).getBytes();
-        }
-        byte[] digest = new byte[0];
-        try {
-            MessageDigest messageDigest = MessageDigest.getInstance(MD5);
-            messageDigest.reset();
-            messageDigest.update(data);
-            digest = messageDigest.digest();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return Base64Utils.encode(digest);
-    }
+//    /**
+//     * md5加密字符串
+//     *
+//     * @param value
+//     * @return
+//     * @throws Exception
+//     */
+//    public static String textOfMd5(String value) {
+//        byte[] data = new byte[0];
+//        try {
+//            data = (value).getBytes(ENCODE_UTF8);
+//        } catch (UnsupportedEncodingException e) {
+//            data = (value).getBytes();
+//        }
+//        byte[] digest = new byte[0];
+//        try {
+//            MessageDigest messageDigest = MessageDigest.getInstance(MD5);
+//            messageDigest.reset();
+//            messageDigest.update(data);
+//            digest = messageDigest.digest();
+//            return new String(digest, ENCODE_UTF8);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return new String(digest);
+//    }
 
     public static String getMd5Uuid() {
         UUID uuid = UUID.randomUUID();

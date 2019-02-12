@@ -14,7 +14,13 @@ public class AvidlyAccountSdkErrors {
     public static final int AVIDLY_LOGIN_ERROR_RESPONSE_HTTP_EXCEPTION = -102;
 
     // 服务端数据请求时发生的异常，如超时,通讯异常等
+    public static final int AVIDLY_LOGIN_ERROR_WROGN_PASSWORD = 20302;
+
     public static final int AVIDLY_LOGIN_ERROR_RESPONSE_USER_NOT_EXIST = 20506;
+
+    public static final int AVIDLY_LOGIN_ERROR_GGID_NOT_BOUNDED_THIRD_SDK = 20105;
+
+    public static final int AVIDLY_LOGIN_ERROR_ACCESS_TOKEN_BOUNDED_OTHER_GGID = 20106;
 
     public static final int AVIDLY_OLD_PASSWORD_ALTER_ERROR = 20203;
 
@@ -23,8 +29,19 @@ public class AvidlyAccountSdkErrors {
     // facebook登录时，不成功
     public static final int AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_ERROR = 2002;
 
+    public static int getUnbindErrorMessage(int code) {
+        switch (code) {
+            case AVIDLY_LOGIN_ERROR_GGID_NOT_BOUNDED_THIRD_SDK:
+                return R.string.avidly_string_user_not_bind_any_third_sdk;
+            default:
+                return R.string.avidly_string_user_unbind_send_fail;
+        }
+    }
+
     public static int getMessgeResourceIdFromErrorCode(int errorCode) {
         switch (errorCode) {
+            case AVIDLY_LOGIN_ERROR_ACCESS_TOKEN_BOUNDED_OTHER_GGID:
+                return R.string.avidly_string_user_third_sdk_repeated_bound_fail;
             case AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION:
             case AVIDLY_LOGIN_ERROR_RESPONSE_MISMATCH_PRODUCT_ID:
             case AVIDLY_LOGIN_ERROR_RESPONSE_HTTP_EXCEPTION:
@@ -35,6 +52,8 @@ public class AvidlyAccountSdkErrors {
                 return R.string.avidly_string_facebook_login_cancel;
             case AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_ERROR:
                 return R.string.avidly_string_facebook_login_error;
+            case AVIDLY_LOGIN_ERROR_WROGN_PASSWORD:
+                return R.string.avidly_string_user_login_user_password_wrong;
             default:
                 return R.string.avidly_string_user_login_send_fail;
         }

@@ -28,6 +28,9 @@ import com.avidly.sdk.account.third.ThirdSdkFactory;
 import com.avidly.sdk.account.third.ThirdSdkLoginCallback;
 import com.sdk.avidly.account.R;
 
+import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_ACCESS_TOKEN_BOUNDED_OTHER_GGID;
+import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_GGID_NOT_BOUNDED_THIRD_SDK;
+
 public class AccountUserRootFragment extends BaseFragment {
 
     private boolean isShowChangePwdUI;
@@ -190,8 +193,8 @@ public class AccountUserRootFragment extends BaseFragment {
         if (user.getLoginedMode() == mode) {
             //Account account = user.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
             //if (account == null || !account.isBinded) {
-                Utils.showToastTip(getContext(), R.string.avidly_string_user_unbind_disable, true);
-                return;
+            Utils.showToastTip(getContext(), R.string.avidly_string_user_unbind_disable, true);
+            return;
             //}
         }
 
@@ -215,7 +218,14 @@ public class AccountUserRootFragment extends BaseFragment {
                 @Override
                 public void onFail(Throwable e, int code) {
                     hideLoadingUI();
-                    Utils.showToastTip(getContext(), R.string.avidly_string_user_unbind_send_fail, true);
+                    String message;
+                    if (code == AVIDLY_LOGIN_ERROR_GGID_NOT_BOUNDED_THIRD_SDK) {
+                        message = getResources().getString(AvidlyAccountSdkErrors.getUnbindErrorMessage(code), ThirdSdkFactory.nameOfAccountMode(mode));
+                    } else {
+                        message = getResources().getString(AvidlyAccountSdkErrors.getUnbindErrorMessage(code));
+                    }
+                    Utils.showToastTip(getContext(), message, true);
+                    //Utils.showToastTip(getContext(), R.string.avidly_string_user_unbind_send_fail, true);
                 }
             });
             showLoadingUI();
@@ -231,7 +241,7 @@ public class AccountUserRootFragment extends BaseFragment {
         }
     }
 
-    private void doThirdSdkBind(int mode) {
+    private void doThirdSdkBind(final int mode) {
         LogUtils.i("doThirdSdkBind, mode: " + mode);
         if (!ThirdSdkFactory.isExistSdkLib(mode)) {
             thirdLoginSdkDelegate = null;
@@ -264,7 +274,13 @@ public class AccountUserRootFragment extends BaseFragment {
                 public void onLoginFailed(int code) {
                     thirdLoginSdkDelegate = null;
                     hideLoadingUI();
-                    Utils.showToastTip(getContext(), getResources().getString(AvidlyAccountSdkErrors.getMessgeResourceIdFromErrorCode(code)), true);
+                    String message;
+                    if (code == AVIDLY_LOGIN_ERROR_ACCESS_TOKEN_BOUNDED_OTHER_GGID) {
+                        message = getResources().getString(AvidlyAccountSdkErrors.getMessgeResourceIdFromErrorCode(code), ThirdSdkFactory.nameOfAccountMode(mode));
+                    } else {
+                        message = getResources().getString(AvidlyAccountSdkErrors.getMessgeResourceIdFromErrorCode(code));
+                    }
+                    Utils.showToastTip(getContext(), message, true);
                 }
 
                 @Override
@@ -313,6 +329,8 @@ public class AccountUserRootFragment extends BaseFragment {
         isShowBindAccountUI = true;
         TextView textView = getView().findViewById(R.id.avidly_user_common_title_textview);
         textView.setText(R.string.avidly_string_usermanger_bind_other_title);
+        AccountUserBindFragment bindFragment = (AccountUserBindFragment) getChildFragmentManager().findFragmentById(R.id.avidly_fragment_user_account_bind_fragment);
+        bindFragment.freshAdapter();
     }
 
     private void hideBindOtherAccountUI() {
@@ -320,8 +338,7 @@ public class AccountUserRootFragment extends BaseFragment {
         isShowBindAccountUI = false;
         TextView textView = getView().findViewById(R.id.avidly_user_common_title_textview);
         textView.setText(R.string.avidly_string_usermanger_title);
-        AccountUserBindFragment bindFragment = (AccountUserBindFragment) getChildFragmentManager().findFragmentById(R.id.avidly_fragment_user_account_bind_fragment);
-        bindFragment.freshAdapter();
+
     }
 
     private void showLoadingUI() {

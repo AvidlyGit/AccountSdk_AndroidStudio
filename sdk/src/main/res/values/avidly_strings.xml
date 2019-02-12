@@ -66,14 +66,15 @@
     <string name="avidly_string_user_alter_pwd_empty_oldpwd">请输入原密码</string>
     <string name="avidly_string_user_alter_pwd_empty_newpwd">请输入新密码</string>
     <string name="avidly_string_user_alter_pwd_empty_newpwd2">请再次输入新密码</string>
+    <string name="avidly_string_user_alter_pwd_new_pwd">请输入不同于原密码的新密码</string>
     <string name="avidly_string_user_alter_pwd_send_success">密码设置成功</string>
     <string name="avidly_string_user_alter_pwd_send_fail">密码设置失败</string>
     <string name="avidly_string_user_alter_pwd_send_fail_wrong_pwd">密码设置失败，原密码不正确!</string>
 
     <string name="avidly_string_user_lookup_email_tip">请输入一个接收新密码的邮箱</string>
     <string name="avidly_string_user_lookup_eamil_wrong_tip">邮箱格式不对</string>
-    <string name="avidly_string_user_lookup_eamil_send_success">新密码请求提交成功</string>
-    <string name="avidly_string_user_lookup_eamil_send_fail">新密码请求提交失败</string>
+    <string name="avidly_string_user_lookup_eamil_send_success">请求发送成功</string>
+    <string name="avidly_string_user_lookup_eamil_send_fail">请求发送失败</string>
 
     <string name="avidly_string_user_bind_send_success">绑定成功</string>
     <string name="avidly_string_user_bind_send_fail">绑定失败</string>
@@ -81,10 +82,13 @@
     <string name="avidly_string_user_unbind_send_success">解绑成功</string>
     <string name="avidly_string_user_unbind_send_fail">解绑失败</string>
     <string name="avidly_string_user_unbind_disable">当前登录状态不能解绑</string>
+    <string name="avidly_string_user_not_bind_any_third_sdk">解绑失败，当前帐号尚未绑定到%1$s!</string>
 
+
+    <string name="avidly_string_user_third_sdk_repeated_bound_fail">当前%1$s帐号已被其它帐号绑定!</string>
     <string name="avidly_string_user_login_send_fail">登录失败，请稍后重试</string>
     <string name="avidly_string_user_login_user_not_exist">用户名不存在</string>
-    <string name="avidly_string_user_login_user_password_wrong">密码不对</string>
+    <string name="avidly_string_user_login_user_password_wrong">登录失败，密码不对!</string>
     <string name="avidly_string_user_login_user_existed">用户名已存在</string>
 
     <string name="avidly_string_facebook_login_cancel">facebook取消登录</string>

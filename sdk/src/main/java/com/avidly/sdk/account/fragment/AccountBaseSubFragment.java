@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.avidly.sdk.account.base.Constants;
+import com.avidly.sdk.account.base.utils.Md5Utils;
 import com.avidly.sdk.account.base.utils.Utils;
 import com.avidly.sdk.account.listener.AccountLoginListener;
 import com.sdk.avidly.account.R;
@@ -98,7 +99,7 @@ public class AccountBaseSubFragment extends Fragment implements View.OnClickList
             }
         }
 
-        mPassword = Utils.textOfMd5(password);
+        mPassword = Md5Utils.textOfMd5(password);
         return true;
     }
 

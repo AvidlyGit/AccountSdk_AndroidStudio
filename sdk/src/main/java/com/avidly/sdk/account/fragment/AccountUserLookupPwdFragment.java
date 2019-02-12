@@ -63,7 +63,7 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
         });
 
         TextView textView = view.findViewById(R.id.avidly_user_common_title_textview);
-        textView.setText(R.string.avidly_string_userpwd_lookup_btn);
+        textView.setText(R.string.avidly_string_userpwd_lookup_title);
 
         view.findViewById(R.id.avidly_fragment_user_lookup_btn).setOnClickListener(new View.OnClickListener() {
             @Override

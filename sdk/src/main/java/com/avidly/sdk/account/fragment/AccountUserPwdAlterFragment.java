@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.avidly.sdk.account.base.utils.LogUtils;
+import com.avidly.sdk.account.base.utils.Md5Utils;
 import com.avidly.sdk.account.base.utils.Utils;
 import com.avidly.sdk.account.data.user.Account;
 import com.avidly.sdk.account.data.user.LoginUser;
@@ -153,9 +154,15 @@ public class AccountUserPwdAlterFragment extends Fragment {
             return;
         }
 
+
+        if (newpwd1.equals(odlpwd)) {
+            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_new_pwd, true);
+            return;
+        }
+
         String userName = LoginUserManager.getAccountLoginUser().findAccountByMode(Account.ACCOUNT_MODE_AVIDLY).accountName;
-        odlpwd = Utils.textOfMd5(odlpwd);
-        final String newpwdmd5 = Utils.textOfMd5(newpwd1);
+        odlpwd = Md5Utils.textOfMd5(odlpwd);
+        final String newpwdmd5 = Md5Utils.textOfMd5(newpwd1);
         String url = URLConstant.getAlterPwdAPI(userName, odlpwd, newpwdmd5);
         LogUtils.i("alter pwd url:" + url);
         HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {

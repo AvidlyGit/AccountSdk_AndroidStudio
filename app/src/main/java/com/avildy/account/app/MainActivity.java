@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
                 mLoginButton.setVisibility(View.VISIBLE);
                 mUserCenterButton.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(), messge, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), messge, Toast.LENGTH_SHORT).show();
             }
         });
     }
