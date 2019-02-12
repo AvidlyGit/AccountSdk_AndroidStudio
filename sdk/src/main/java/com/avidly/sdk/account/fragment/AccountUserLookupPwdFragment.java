@@ -3,9 +3,11 @@ package com.avidly.sdk.account.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -15,6 +17,8 @@ import com.avidly.sdk.account.request.HttpCallback;
 import com.avidly.sdk.account.request.HttpRequest;
 import com.avidly.sdk.account.request.URLConstant;
 import com.sdk.avidly.account.R;
+
+import org.json.JSONObject;
 
 public class AccountUserLookupPwdFragment extends BaseFragment {
 
@@ -65,14 +69,31 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
         TextView textView = view.findViewById(R.id.avidly_user_common_title_textview);
         textView.setText(R.string.avidly_string_userpwd_lookup_title);
 
+        EditText editText = view.findViewById(R.id.avidly_editor_email_address);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                switch (actionId) {
+                    case EditorInfo.IME_ACTION_DONE:
+                        onLookupClick();
+                        break;
+                }
+                return false;
+            }
+        });
+
         view.findViewById(R.id.avidly_fragment_user_lookup_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText editText = view.findViewById(R.id.avidly_editor_email_address);
-                String address = editText.getText().toString();
-                checkAndSubmit(address);
+                onLookupClick();
             }
         });
+    }
+
+    private void onLookupClick() {
+        EditText editText = getView().findViewById(R.id.avidly_editor_email_address);
+        String address = editText.getText().toString();
+        checkAndSubmit(address);
     }
 
     private void checkAndSubmit(String address) {
@@ -93,7 +114,18 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
             @Override
             public void onResponseSuccess(String result) {
                 LogUtils.i("onResponseSuccess:" + result);
-                Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_success, true);
+                try {
+                    JSONObject object = new JSONObject(result);
+                    if (object.optBoolean("success")) {
+                        Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_success, true);
+                    } else {
+                        Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_fail, true);
+                    }
+                } catch (Exception e) {
+                    Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_fail, true);
+                    e.printStackTrace();
+                }
+
                 hideLoadingUI();
             }
 

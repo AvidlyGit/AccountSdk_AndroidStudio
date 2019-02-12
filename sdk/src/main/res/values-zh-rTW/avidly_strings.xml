@@ -88,6 +88,7 @@
     <string name="avidly_string_user_login_send_fail">登录失败，请稍后重试</string>
     <string name="avidly_string_user_login_user_not_exist">用户名不存在</string>
     <string name="avidly_string_user_login_user_password_wrong">登录失败，密码不对!</string>
+    <string name="avidly_string_user_login_user_not_existed">用户名不存在</string>
     <string name="avidly_string_user_login_user_existed">用户名已存在</string>
 
     <string name="avidly_string_facebook_login_cancel">facebook取消登录</string>

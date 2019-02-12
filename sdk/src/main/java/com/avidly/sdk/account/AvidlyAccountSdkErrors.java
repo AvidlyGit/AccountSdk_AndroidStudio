@@ -18,6 +18,8 @@ public class AvidlyAccountSdkErrors {
 
     public static final int AVIDLY_LOGIN_ERROR_RESPONSE_USER_NOT_EXIST = 20506;
 
+    public static final int AVIDLY_LOGIN_ERROR_RESPONSE_USER_IS_EXIST = 20504;
+
     public static final int AVIDLY_LOGIN_ERROR_GGID_NOT_BOUNDED_THIRD_SDK = 20105;
 
     public static final int AVIDLY_LOGIN_ERROR_ACCESS_TOKEN_BOUNDED_OTHER_GGID = 20106;
@@ -47,6 +49,8 @@ public class AvidlyAccountSdkErrors {
             case AVIDLY_LOGIN_ERROR_RESPONSE_HTTP_EXCEPTION:
                 return R.string.avidly_string_user_login_send_fail;
             case AVIDLY_LOGIN_ERROR_RESPONSE_USER_NOT_EXIST:
+                return R.string.avidly_string_user_login_user_not_existed;
+            case AVIDLY_LOGIN_ERROR_RESPONSE_USER_IS_EXIST:
                 return R.string.avidly_string_user_login_user_existed;
             case AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_CANCEL:
                 return R.string.avidly_string_facebook_login_cancel;
