@@ -13,11 +13,6 @@ import com.avidly.sdk.account.listener.AccountLoginListener;
 import com.avidly.sdk.account.view.AvidlyPagerAdapter;
 import com.sdk.avidly.account.R;
 
-/**
- * Created by t.wang on 2019/1/15.
- * <p>
- * Copyright © 2018 Adrealm. All rights reserved.
- */
 public class AccountLoginFragment extends DialogFragment implements View.OnClickListener, AccountLoginListener {
     private AccountLoginListener mLoginListener;
     private TabLayout mTabLayout;

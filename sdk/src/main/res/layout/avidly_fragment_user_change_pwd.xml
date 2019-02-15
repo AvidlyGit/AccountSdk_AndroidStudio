@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@color/avidly_color_white"
-             android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/avidly_color_white"
+    android:orientation="vertical">
 
     <include
         layout="@layout/avidly_user_manager_common_avidly_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:layout_marginTop="@dimen/avidly_user_manager_pwd_margintop"/>
+        android:layout_marginTop="@dimen/avidly_user_manager_pwd_margintop" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -38,8 +38,7 @@
             android:paddingRight="@dimen/avidly_user_account_editor_padding_left_or_rigjt"
             android:singleLine="true"
             android:textCursorDrawable="@drawable/avidly_edit_cusor_black"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/avidly_editor_chagne_new_pwd"
@@ -59,8 +58,7 @@
             android:paddingRight="@dimen/avidly_user_account_editor_padding_left_or_rigjt"
             android:singleLine="true"
             android:textCursorDrawable="@drawable/avidly_edit_cusor_black"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/avidly_editor_chagne_new_pwd2"
@@ -80,8 +78,7 @@
             android:paddingRight="@dimen/avidly_user_account_editor_padding_left_or_rigjt"
             android:singleLine="true"
             android:textCursorDrawable="@drawable/avidly_edit_cusor_black"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
 
 
         <android.support.v7.widget.CardView
@@ -93,8 +90,7 @@
             android:layout_marginBottom="@dimen/avidly_dimen_40dp"
             app:cardBackgroundColor="@color/avidly_color_card_background"
             app:cardCornerRadius="19dp"
-            app:cardElevation="8dp"
-            >
+            app:cardElevation="8dp">
 
             <Button
                 android:id="@+id/avidly_fragment_user_change_pwd_btn"
@@ -105,23 +101,15 @@
                 android:text="@string/avidly_string_userpwd_alter_btn"
                 android:textAlignment="center"
                 android:textColor="@color/avidly_color_white"
-                android:textSize="@dimen/avidly_dimen_text_size_14sp"
-                />
+                android:textSize="@dimen/avidly_dimen_text_size_14sp" />
 
         </android.support.v7.widget.CardView>
 
-        <!--<android.support.v7.widget.CardView-->
-        <!--android:id="@+id/card_title_banner"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="@dimen/avidly_user_account_editor_between_distance"-->
-        <!--android:background="@color/avildy_color_white"-->
-        <!--app:cardBackgroundColor="#173143"-->
-        <!--app:cardCornerRadius="10dp"-->
-        <!--app:cardElevation="12dp"-->
-        <!--&gt;-->
-        <!--</android.support.v7.widget.CardView>-->
-
     </LinearLayout>
+
+    <include
+        android:id="@+id/avidly_error_layout"
+        layout="@layout/avidly_view_error"
+        android:visibility="gone" />
 
 </FrameLayout>

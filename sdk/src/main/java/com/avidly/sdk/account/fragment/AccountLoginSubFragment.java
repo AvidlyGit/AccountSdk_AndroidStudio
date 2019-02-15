@@ -13,11 +13,6 @@ import com.avidly.sdk.account.data.user.LoginUser;
 import com.avidly.sdk.account.data.user.LoginUserManager;
 import com.sdk.avidly.account.R;
 
-/**
- * Created by t.wang on 2019/1/18.
- * <p>
- * Copyright © 2018 Adrealm. All rights reserved.
- */
 public class AccountLoginSubFragment extends AccountBaseSubFragment {
 
     @Override

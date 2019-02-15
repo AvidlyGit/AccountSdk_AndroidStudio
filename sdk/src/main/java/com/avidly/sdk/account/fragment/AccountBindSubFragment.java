@@ -10,11 +10,6 @@ import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.Md5Utils;
 import com.sdk.avidly.account.R;
 
-/**
- * Created by t.wang on 2019/1/18.
- * <p>
- * Copyright © 2018 Adrealm. All rights reserved.
- */
 public class AccountBindSubFragment extends AccountBaseSubFragment {
 
     @Override

@@ -8,11 +8,6 @@ import com.avidly.sdk.account.data.user.Account;
 import com.avidly.sdk.account.data.user.LoginUser;
 import com.avidly.sdk.account.data.user.LoginUserManager;
 
-/**
- * Created by t.wang on 2019/1/17.
- * <p>
- * Copyright © 2018 Adrealm. All rights reserved.
- */
 public class LoginPresenterImpl implements LoginPresenter {
 
     private AccountLoginInterface mView;

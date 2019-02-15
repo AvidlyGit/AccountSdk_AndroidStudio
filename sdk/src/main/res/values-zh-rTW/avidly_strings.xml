@@ -61,37 +61,35 @@
     <string name="avidly_string_user_bind_account_googleplay">Google Play</string>
     <string name="avidly_string_protocol_url">http://www.baidu.com</string>
 
-    <!-- 以下需要增加翻译 -->
-    <string name="avidly_string_user_alter_pwd_disable">当前非avidly帐号登录，无须修改密码！</string>
-    <string name="avidly_string_user_alter_pwd_empty_oldpwd">请输入原密码</string>
-    <string name="avidly_string_user_alter_pwd_empty_newpwd">请输入新密码</string>
-    <string name="avidly_string_user_alter_pwd_empty_newpwd2">请再次输入新密码</string>
-    <string name="avidly_string_user_alter_pwd_new_pwd">请输入不同于原密码的新密码</string>
-    <string name="avidly_string_user_alter_pwd_send_success">密码设置成功</string>
-    <string name="avidly_string_user_alter_pwd_send_fail">密码设置失败</string>
-    <string name="avidly_string_user_alter_pwd_send_fail_wrong_pwd">密码设置失败，原密码不正确!</string>
+    <string name="avidly_string_user_alter_pwd_disable">需要先綁定Avid.ly賬號後才能修改密碼</string>
+    <string name="avidly_string_user_alter_pwd_empty_oldpwd">請輸入原密碼</string>
+    <string name="avidly_string_user_alter_pwd_empty_newpwd">請輸入新密碼</string>
+    <string name="avidly_string_user_alter_pwd_empty_newpwd2">請再次輸入新密碼</string>
+    <string name="avidly_string_user_alter_pwd_new_pwd">新密碼不能和原密碼相同</string>
+    <string name="avidly_string_user_alter_pwd_send_success">密碼設置成功</string>
+    <string name="avidly_string_user_alter_pwd_send_fail">密碼設置失敗</string>
+    <string name="avidly_string_user_alter_pwd_send_fail_wrong_pwd">密碼設置失敗，原密碼不正確</string>
 
-    <string name="avidly_string_user_lookup_email_tip">请输入一个接收新密码的邮箱</string>
-    <string name="avidly_string_user_lookup_eamil_wrong_tip">邮箱格式不对</string>
-    <string name="avidly_string_user_lookup_eamil_send_success">请求发送成功</string>
-    <string name="avidly_string_user_lookup_eamil_send_fail">请求发送失败</string>
+    <string name="avidly_string_user_lookup_email_tip">請輸入賬號郵箱地址</string>
+    <string name="avidly_string_user_lookup_eamil_wrong_tip">郵箱格式不對</string>
+    <string name="avidly_string_user_lookup_eamil_send_success">請求發送成功</string>
+    <string name="avidly_string_user_lookup_eamil_send_fail">請求發送失敗</string>
 
-    <string name="avidly_string_user_bind_send_success">绑定成功</string>
-    <string name="avidly_string_user_bind_send_fail">绑定失败</string>
-    <string name="avidly_string_user_unbind_disable">当前登录状态不能解绑</string>
+    <string name="avidly_string_user_bind_send_success">綁定成功</string>
+    <string name="avidly_string_user_bind_send_fail">綁定失敗</string>
 
-    <string name="avidly_string_user_unbind_send_success">解绑成功</string>
-    <string name="avidly_string_user_unbind_send_fail">解绑失败</string>
-    <string name="avidly_string_user_not_bind_any_third_sdk">解绑失败，当前帐号尚未绑定到%1$s!</string>
+    <string name="avidly_string_user_unbind_send_success">解綁成功</string>
+    <string name="avidly_string_user_unbind_send_fail">解綁失敗</string>
+    <string name="avidly_string_user_unbind_disable">需要先綁定Avid.ly賬號後才能解綁</string>
+    <string name="avidly_string_user_not_bind_any_third_sdk">解綁失敗，當前帳號尚未綁定到%1$s</string>
 
-    <string name="avidly_string_user_third_sdk_repeated_bound_fail">当前%1$s帐号已被其它帐号绑定!</string>
-    <string name="avidly_string_user_login_send_fail">登录失败，请稍后重试</string>
-    <string name="avidly_string_user_login_user_not_exist">用户名不存在</string>
-    <string name="avidly_string_user_login_user_password_wrong">登录失败，密码不对!</string>
-    <string name="avidly_string_user_login_user_not_existed">用户名不存在</string>
-    <string name="avidly_string_user_login_user_existed">用户名已存在</string>
+    <string name="avidly_string_user_third_sdk_repeated_bound_fail">當前%1$s帳號已被其它帳號綁定</string>
+    <string name="avidly_string_user_login_send_fail">登錄失敗，請稍後重試</string>
+    <string name="avidly_string_user_login_user_not_exist">用戶名不存在</string>
+    <string name="avidly_string_user_login_user_password_wrong">登錄失敗，密碼不對</string>
+    <string name="avidly_string_user_login_user_existed">用戶名已存在</string>
 
-    <string name="avidly_string_facebook_login_cancel">facebook取消登录</string>
-    <string name="avidly_string_facebook_login_error">facebook登录失败</string>
+    <string name="avidly_string_facebook_login_cancel">facebook取消登錄</string>
+    <string name="avidly_string_facebook_login_error">facebook登錄失敗</string>
 
 </resources>

@@ -14,7 +14,7 @@
 
     <style name="AvidlyTablayoutstyle" parent="Base.Widget.Design.TabLayout">
         <item name="tabBackground">@color/avidly_color_white</item>
-        <item name="tabRippleColor">@color/avidly_color_white</item>
+        <!--<item name="tabRippleColor">@color/avidly_color_white</item> just api 28-->
         <item name="tabIndicatorColor">@color/avildy_color_line_red</item>
         <item name="tabIndicatorHeight">1.8dp</item>
         <item name="tabSelectedTextColor">@color/avildy_color_text_4</item>

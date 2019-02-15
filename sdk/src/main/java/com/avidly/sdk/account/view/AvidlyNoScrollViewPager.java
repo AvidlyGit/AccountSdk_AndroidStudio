@@ -5,11 +5,6 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-/**
- * Created by t.wang on 2019/1/18.
- * <p>
- * Copyright © 2018 Adrealm. All rights reserved.
- */
 public class AvidlyNoScrollViewPager extends ViewPager {
     private boolean isScroll;
 

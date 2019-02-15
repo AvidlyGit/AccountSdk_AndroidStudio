@@ -13,8 +13,7 @@
         <activity
             android:name="com.avildy.account.app.MainActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/AvidlyTranslucentStyle">
+            android:screenOrientation="portrait">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

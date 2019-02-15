@@ -11,7 +11,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.LogUtils;
+import com.avidly.sdk.account.base.utils.ThreadHelper;
 import com.avidly.sdk.account.base.utils.Utils;
 import com.avidly.sdk.account.request.HttpCallback;
 import com.avidly.sdk.account.request.HttpRequest;
@@ -21,7 +23,10 @@ import com.sdk.avidly.account.R;
 import org.json.JSONObject;
 
 public class AccountUserLookupPwdFragment extends BaseFragment {
-
+    private View mErrorLayout;
+    private TextView mMessgeText;
+    private View mMessgeClose;
+    private EditText mInputEmail;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +62,16 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
 
     private void initView(final View view) {
 
+        mErrorLayout = view.findViewById(R.id.avidly_error_layout);
+        mMessgeText = view.findViewById(R.id.avidly_error_message);
+        mMessgeClose = view.findViewById(R.id.avidly_error_close);
+        mMessgeClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideErrorMessage();
+            }
+        });
+
         view.findViewById(R.id.avidly_user_manager_title_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,8 +84,8 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
         TextView textView = view.findViewById(R.id.avidly_user_common_title_textview);
         textView.setText(R.string.avidly_string_userpwd_lookup_title);
 
-        EditText editText = view.findViewById(R.id.avidly_editor_email_address);
-        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        mInputEmail = view.findViewById(R.id.avidly_editor_email_address);
+        mInputEmail.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 switch (actionId) {
@@ -98,13 +113,15 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
 
     private void checkAndSubmit(String address) {
         if (TextUtils.isEmpty(address)) {
-            Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_email_tip, true);
+            showErrorMessage(getResources().getString(R.string.avidly_string_user_lookup_email_tip));
+//            Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_email_tip, true);
             return;
         }
 
 
         if (!Utils.validEmail1(address)) {
-            Utils.showToastTip(getContext(), R.string.avidly_string_email_format_error, true);
+            showErrorMessage(getResources().getString(R.string.avidly_string_email_format_error));
+//            Utils.showToastTip(getContext(), R.string.avidly_string_email_format_error, true);
             return;
         }
 
@@ -117,12 +134,15 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
                 try {
                     JSONObject object = new JSONObject(result);
                     if (object.optBoolean("success")) {
-                        Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_success, true);
+                        showErrorMessage(getResources().getString(R.string.avidly_string_user_lookup_eamil_send_success));
+//                        Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_success, true);
                     } else {
-                        Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_fail, true);
+                        showErrorMessage(getResources().getString(R.string.avidly_string_user_lookup_eamil_send_fail));
+//                        Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_fail, true);
                     }
                 } catch (Exception e) {
-                    Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_fail, true);
+                    showErrorMessage(getResources().getString(R.string.avidly_string_user_lookup_eamil_send_fail));
+//                    Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_fail, true);
                     e.printStackTrace();
                 }
 
@@ -132,7 +152,8 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
             @Override
             public void onResponedFail(Throwable e, int code) {
                 LogUtils.i("onResponedFail, exception:" + e + ", code:" + code);
-                Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_fail, true);
+                showErrorMessage(getResources().getString(R.string.avidly_string_user_lookup_eamil_send_fail));
+//                Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_fail, true);
                 hideLoadingUI();
             }
         });
@@ -159,4 +180,34 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
             }
         });
     }
+
+    private Runnable mHideErrorMessageRunnable = new Runnable() {
+        @Override
+        public void run() {
+            hideErrorMessage();
+        }
+    };
+
+    private void hideErrorMessage() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getView().findViewById(R.id.avidly_error_layout).setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void showErrorMessage(final String message) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mMessgeText.setText(message);
+                getView().findViewById(R.id.avidly_error_layout).setVisibility(View.VISIBLE);
+            }
+        });
+
+        ThreadHelper.removeOnWorkThread(mHideErrorMessageRunnable);
+        ThreadHelper.runOnWorkThread(mHideErrorMessageRunnable, Constants.AUTO_CLOSE_ERROR_LAYOUT_MILLS);
+    }
+
 }

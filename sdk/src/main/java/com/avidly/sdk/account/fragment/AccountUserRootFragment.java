@@ -14,6 +14,7 @@ import com.avidly.sdk.account.activity.AccountLoginActivity;
 import com.avidly.sdk.account.adapter.BaseAdapter;
 import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.LogUtils;
+import com.avidly.sdk.account.base.utils.ThreadHelper;
 import com.avidly.sdk.account.base.utils.Utils;
 import com.avidly.sdk.account.business.LoginRequest;
 import com.avidly.sdk.account.business.LoginRequestCallback;
@@ -32,6 +33,9 @@ import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_A
 import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_GGID_NOT_BOUNDED_THIRD_SDK;
 
 public class AccountUserRootFragment extends BaseFragment {
+    private View mErrorLayout;
+    private TextView mMessgeText;
+    private View mMessgeClose;
 
     private boolean isShowChangePwdUI;
     private boolean isShowBindAccountUI;
@@ -96,6 +100,16 @@ public class AccountUserRootFragment extends BaseFragment {
 
         AccountUserBindFragment bindFragment = (AccountUserBindFragment) getChildFragmentManager().findFragmentById(R.id.avidly_fragment_user_account_bind_fragment);
         bindFragment.setItemClickListener(userBindAccountListener);
+
+        mErrorLayout = view.findViewById(R.id.avidly_error_layout_root);
+        mMessgeText = mErrorLayout.findViewById(R.id.avidly_error_message);
+        mMessgeClose = mErrorLayout.findViewById(R.id.avidly_error_close);
+        mMessgeClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideErrorMessage();
+            }
+        });
 
         view.findViewById(R.id.avidly_user_manager_title_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,7 +207,8 @@ public class AccountUserRootFragment extends BaseFragment {
         if (user.getLoginedMode() == mode) {
             //Account account = user.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
             //if (account == null || !account.isBinded) {
-            Utils.showToastTip(getContext(), R.string.avidly_string_user_unbind_disable, true);
+            showErrorMessage(getResources().getString(R.string.avidly_string_user_unbind_disable));
+//            Utils.showToastTip(getContext(), R.string.avidly_string_user_unbind_disable, true);
             return;
             //}
         }
@@ -212,7 +227,8 @@ public class AccountUserRootFragment extends BaseFragment {
                     LoginUserManager.onThirdSdkUnbind(mode);
                     freshBindAdapterInMainThread();
                     hideLoadingUI();
-                    Utils.showToastTip(getContext(), R.string.avidly_string_user_unbind_send_success, true);
+                    showErrorMessage(getResources().getString(R.string.avidly_string_user_unbind_send_success));
+//                    Utils.showToastTip(getContext(), R.string.avidly_string_user_unbind_send_success, true);
                 }
 
                 @Override
@@ -224,8 +240,8 @@ public class AccountUserRootFragment extends BaseFragment {
                     } else {
                         message = getResources().getString(AvidlyAccountSdkErrors.getUnbindErrorMessage(code));
                     }
-                    Utils.showToastTip(getContext(), message, true);
-                    //Utils.showToastTip(getContext(), R.string.avidly_string_user_unbind_send_fail, true);
+                    showErrorMessage(message);
+//                    Utils.showToastTip(getContext(), message, true);
                 }
             });
             showLoadingUI();
@@ -266,7 +282,8 @@ public class AccountUserRootFragment extends BaseFragment {
                 public void onLoginSuccess(LoginUser loginUser) {
                     freshBindAdapterInMainThread();
                     hideLoadingUI();
-                    Utils.showToastTip(getContext(), R.string.avidly_string_user_bind_send_success, true);
+                    showErrorMessage(getResources().getString(R.string.avidly_string_user_bind_send_success));
+//                    Utils.showToastTip(getContext(), R.string.avidly_string_user_bind_send_success, true);
                     thirdLoginSdkDelegate = null;
                 }
 
@@ -280,7 +297,8 @@ public class AccountUserRootFragment extends BaseFragment {
                     } else {
                         message = getResources().getString(AvidlyAccountSdkErrors.getMessgeResourceIdFromErrorCode(code));
                     }
-                    Utils.showToastTip(getContext(), message, true);
+                    showErrorMessage(message);
+//                    Utils.showToastTip(getContext(), message, true);
                 }
 
                 @Override
@@ -306,7 +324,8 @@ public class AccountUserRootFragment extends BaseFragment {
     private void showChangePasswordUI() {
         if (LoginUserManager.getCurrentActiveLoginUser() == null
                 || LoginUserManager.getCurrentActiveLoginUser().getLoginedMode() != Account.ACCOUNT_MODE_AVIDLY) {
-            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_disable, true);
+            showErrorMessage(getResources().getString(R.string.avidly_string_user_alter_pwd_disable));
+//            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_disable, true);
             return;
         }
         getView().findViewById(R.id.avidly_fragment_user_alter_pwd_root).setVisibility(View.VISIBLE);
@@ -375,4 +394,34 @@ public class AccountUserRootFragment extends BaseFragment {
     protected interface LoadingUICallback {
         void notifyShowLoadingUI(boolean show, boolean keep);
     }
+
+    private Runnable mHideErrorMessageRunnable = new Runnable() {
+        @Override
+        public void run() {
+            hideErrorMessage();
+        }
+    };
+
+    private void hideErrorMessage() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mErrorLayout.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void showErrorMessage(final String message) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mMessgeText.setText(message);
+                mErrorLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        ThreadHelper.removeOnWorkThread(mHideErrorMessageRunnable);
+        ThreadHelper.runOnWorkThread(mHideErrorMessageRunnable, Constants.AUTO_CLOSE_ERROR_LAYOUT_MILLS);
+    }
+
 }

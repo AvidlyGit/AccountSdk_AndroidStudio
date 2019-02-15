@@ -49,7 +49,7 @@ public class AvidlyAccountSdkErrors {
             case AVIDLY_LOGIN_ERROR_RESPONSE_HTTP_EXCEPTION:
                 return R.string.avidly_string_user_login_send_fail;
             case AVIDLY_LOGIN_ERROR_RESPONSE_USER_NOT_EXIST:
-                return R.string.avidly_string_user_login_user_not_existed;
+                return R.string.avidly_string_user_login_user_not_exist;
             case AVIDLY_LOGIN_ERROR_RESPONSE_USER_IS_EXIST:
                 return R.string.avidly_string_user_login_user_existed;
             case AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_CANCEL:

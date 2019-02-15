@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLoginFail(int code, String msg) {
-                String messge = "MainActivity onLoginFail: " + code;
+                String messge = "MainActivity onLoginFail: " + msg;
                 LogUtils.i(messge);
 
                 mLoginButton.setVisibility(View.VISIBLE);

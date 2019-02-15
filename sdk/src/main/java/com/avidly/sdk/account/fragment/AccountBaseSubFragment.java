@@ -15,11 +15,6 @@ import com.avidly.sdk.account.base.utils.Utils;
 import com.avidly.sdk.account.listener.AccountLoginListener;
 import com.sdk.avidly.account.R;
 
-/**
- * Created by t.wang on 2019/1/18.
- * <p>
- * Copyright © 2018 Adrealm. All rights reserved.
- */
 public class AccountBaseSubFragment extends Fragment implements View.OnClickListener {
     protected AccountLoginListener mLoginListener;
     protected int mSubFragmentType;
@@ -69,12 +64,10 @@ public class AccountBaseSubFragment extends Fragment implements View.OnClickList
         String password = mInputPassword.getText().toString();
         if (TextUtils.isEmpty(email)) {
             mLoginListener.onLoginErrorOccured(getString(R.string.avidly_string_email_account_error));
+            mInputEmail.setBackgroundResource(R.drawable.avidly_edit_text_invalid);
             return false;
-        }
-
-        if (TextUtils.isEmpty(password)) {
-            mLoginListener.onLoginErrorOccured(getString(R.string.avidly_string_email_pwd_input_error));
-            return false;
+        } else {
+            mInputEmail.setBackgroundResource(R.drawable.avidly_edit_text_normal);
         }
 
         if (!Utils.checkEmailValid(email)) {
@@ -87,9 +80,20 @@ public class AccountBaseSubFragment extends Fragment implements View.OnClickList
             mInputEmail.setBackgroundResource(R.drawable.avidly_edit_text_normal);
         }
 
+        if (TextUtils.isEmpty(password)) {
+            mLoginListener.onLoginErrorOccured(getString(R.string.avidly_string_email_pwd_input_error));
+            mInputPassword.setBackgroundResource(R.drawable.avidly_edit_text_invalid);
+            return false;
+        } else {
+            mInputPassword.setBackgroundResource(R.drawable.avidly_edit_text_normal);
+        }
+
         if (password.length() < 6 || password.length() > 16) {
             mLoginListener.onLoginErrorOccured(getString(R.string.avidly_string_user_alter_pwd_length));
+            mInputPassword.setBackgroundResource(R.drawable.avidly_edit_text_invalid);
             return false;
+        } else {
+            mInputPassword.setBackgroundResource(R.drawable.avidly_edit_text_normal);
         }
 
         if (mSubFragmentType == Constants.SUB_FRAGMENT_TYPE_BIND || mSubFragmentType == Constants.SUB_FRAGMENT_TYPE_REGIST) {

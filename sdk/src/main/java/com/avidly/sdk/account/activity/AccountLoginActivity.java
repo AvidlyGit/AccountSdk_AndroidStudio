@@ -213,9 +213,9 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     @Override
     public void onGuestLoginClicked() {
         showLoadingUI();
-        LoginUser activedUser = LoginUserManager.getCurrentActiveLoginUser();
-        if (activedUser != null && activedUser.getLoginedMode() == Account.ACCOUNT_MODE_GUEST) {
-            mPresenter.guestLogin(activedUser);
+        LoginUser guestLoginUser = LoginUserManager.getGuestLoginUser();
+        if (guestLoginUser != null) {
+            mPresenter.guestLogin(guestLoginUser);
         } else {
             mPresenter.guestLogin(null);
         }

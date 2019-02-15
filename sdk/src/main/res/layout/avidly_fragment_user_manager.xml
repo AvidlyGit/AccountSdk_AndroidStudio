@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <include
         layout="@layout/avidly_user_manager_common_title_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -20,21 +19,21 @@
             android:id="@+id/avidly_fragment_user_manager_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clickable="true"
-            android:layout_gravity="top">
+            android:layout_gravity="top"
+            android:clickable="true">
 
             <include
                 layout="@layout/avidly_user_manager_common_avidly_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:layout_marginTop="@dimen/avidly_user_manager_common_avidly_image_margin_top"/>
+                android:layout_marginTop="@dimen/avidly_user_manager_common_avidly_image_margin_top" />
 
             <fragment
                 android:id="@+id/avidly_fragment_user_manager"
                 android:name="com.avidly.sdk.account.fragment.AccountUserManagerFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
         </FrameLayout>
 
         <!-- add user account bind ui-->
@@ -50,7 +49,7 @@
                 android:id="@+id/avidly_fragment_user_account_bind_fragment"
                 android:name="com.avidly.sdk.account.fragment.AccountUserBindFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
         </LinearLayout>
 
         <!-- add user alter password ui-->
@@ -66,14 +65,19 @@
                 android:id="@+id/avidly_fragment_user_alter_pwd_fragment"
                 android:name="com.avidly.sdk.account.fragment.AccountUserPwdAlterFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
         </LinearLayout>
 
         <include
+            android:id="@+id/avidly_error_layout_root"
+            layout="@layout/avidly_view_error"
+            android:visibility="gone" />
+
+        <include
             layout="@layout/avidly_view_loading"
-            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
     </FrameLayout>
 

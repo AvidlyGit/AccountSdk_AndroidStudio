@@ -1,10 +1,5 @@
 package com.avidly.sdk.account.base;
 
-/**
- * Created by t.wang on 2019/1/16.
- * <p>
- * Copyright © 2018 Adrealm. All rights reserved.
- */
 public class Constants {
     public static long AUTO_LOGIN_TIME_OUT_MILLS = 3 * 1000;
     public static long AUTO_CLOSE_ERROR_LAYOUT_MILLS = 2 * 1000;

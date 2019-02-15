@@ -13,11 +13,6 @@ import org.json.JSONObject;
 import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION;
 import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_RESPONSE_MISMATCH_PRODUCT_ID;
 
-/**
- * Created by t.wang on 2019/1/22.
- * <p>
- * Copyright © 2018 Adrealm. All rights reserved.
- */
 public class LoginRequest {
     private static JSONObject requestToDataJsonObject(String result, LoginRequestCallback<String> callback) {
         try {
@@ -189,7 +184,6 @@ public class LoginRequest {
                         callback.onSuccess(gameGuestId);
 
                         bindOther(guest, LoginUserManager.getAccountLoginUser());
-                        // TODO: 2019/1/31 此处处理一下facebook的nickname
                         JSONObject object = new JSONObject(result);
                         object = object.getJSONObject("data");
                         JSONObject facebook = object.optJSONObject("facebook");

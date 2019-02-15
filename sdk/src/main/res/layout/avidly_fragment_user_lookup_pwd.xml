@@ -90,6 +90,11 @@
         </LinearLayout>
 
         <include
+            android:id="@+id/avidly_error_layout"
+            layout="@layout/avidly_view_error"
+            android:visibility="gone" />
+
+        <include
             layout="@layout/avidly_view_loading"
             android:visibility="gone"
             android:layout_width="match_parent"

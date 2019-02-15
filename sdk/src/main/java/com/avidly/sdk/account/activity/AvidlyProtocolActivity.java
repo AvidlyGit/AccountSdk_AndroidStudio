@@ -8,12 +8,8 @@ import android.webkit.WebViewClient;
 
 import com.sdk.avidly.account.R;
 
-/**
- * Created by t.wang on 2019/1/23.
- * <p>
- * Copyright © 2018 Adrealm. All rights reserved.
- */
 public class AvidlyProtocolActivity extends FragmentActivity {
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +17,7 @@ public class AvidlyProtocolActivity extends FragmentActivity {
 
         WebView webView = findViewById(R.id.avidly_protocol_webview);
         webView.setWebViewClient(new WebViewClient());
+        // TODO: 2019/2/13 此处需要替换成用户协议地址
         webView.loadUrl(getString(R.string.avidly_string_protocol_url));
     }
 

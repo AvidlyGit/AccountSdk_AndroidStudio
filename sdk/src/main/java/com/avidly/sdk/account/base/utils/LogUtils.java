@@ -4,11 +4,6 @@ import android.util.Log;
 
 import com.sdk.avidly.account.BuildConfig;
 
-/**
- * Created by t.wang on 2019/1/21.
- * <p>
- * Copyright © 2018 Adrealm. All rights reserved.
- */
 public class LogUtils {
     private static final String TAG = "AccountLoginSdk_" + BuildConfig.VERSION_NAME;
 

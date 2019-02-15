@@ -18,11 +18,6 @@ import com.avidly.sdk.account.data.user.LoginUserManager;
 import com.avidly.sdk.account.listener.AccountLoadingListener;
 import com.sdk.avidly.account.R;
 
-/**
- * Created by t.wang on 2019/1/16.
- * <p>
- * Copyright © 2018 Adrealm. All rights reserved.
- */
 public class AccountLoadingFragment extends DialogFragment implements View.OnClickListener {
     private AccountLoadingListener mLoadingListener;
     private View mLoginLayout;

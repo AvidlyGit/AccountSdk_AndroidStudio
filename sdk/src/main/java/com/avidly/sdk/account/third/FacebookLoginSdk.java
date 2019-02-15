@@ -154,7 +154,7 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
             public void onSuccess(String result) {
                 LoginUser loginUser = null;
                 if (toBind) {
-                    /*loginUser = LoginUserManager.getCurrentActiveLoginUser();
+/*                    loginUser = LoginUserManager.getCurrentActiveLoginUser();
                     if (loginUser.findAccountByMode(Account.ACCOUNT_MODE_FACEBOOK) == null) {
                         loginUser.bindAccount(Account.ACCOUNT_MODE_FACEBOOK, true);
                     } else {

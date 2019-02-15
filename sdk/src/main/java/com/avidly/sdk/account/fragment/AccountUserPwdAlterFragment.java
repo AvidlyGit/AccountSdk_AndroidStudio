@@ -12,8 +12,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.base.utils.Md5Utils;
+import com.avidly.sdk.account.base.utils.ThreadHelper;
 import com.avidly.sdk.account.base.utils.Utils;
 import com.avidly.sdk.account.data.user.Account;
 import com.avidly.sdk.account.data.user.LoginUser;
@@ -28,6 +30,9 @@ import org.json.JSONObject;
 import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_OLD_PASSWORD_ALTER_ERROR;
 
 public class AccountUserPwdAlterFragment extends Fragment {
+    private View mErrorLayout;
+    private TextView mMessgeText;
+    private View mMessgeClose;
 
     private AccountUserRootFragment.LoadingUICallback loadingUICallback;
 
@@ -98,6 +103,17 @@ public class AccountUserPwdAlterFragment extends Fragment {
     }
 
     private void initView(final View rootview) {
+
+        mErrorLayout = rootview.findViewById(R.id.avidly_error_layout);
+        mMessgeText = mErrorLayout.findViewById(R.id.avidly_error_message);
+        mMessgeClose = mErrorLayout.findViewById(R.id.avidly_error_close);
+        mMessgeClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideErrorMessage();
+            }
+        });
+
         rootview.findViewById(R.id.avidly_fragment_user_change_pwd_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,33 +146,39 @@ public class AccountUserPwdAlterFragment extends Fragment {
 
     private void checkAndSubmit(String odlpwd, final String newpwd1, final String newpwd2) {
         if (TextUtils.isEmpty(odlpwd)) {
-            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_empty_oldpwd, true);
+            showErrorMessage(getResources().getString(R.string.avidly_string_user_alter_pwd_empty_oldpwd));
+//            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_empty_oldpwd, true);
             return;
         }
 
         if (TextUtils.isEmpty(newpwd1)) {
-            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_empty_newpwd, true);
+            showErrorMessage(getResources().getString(R.string.avidly_string_user_alter_pwd_empty_newpwd));
+//            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_empty_newpwd, true);
             return;
         }
 
         if (newpwd1.length() < 6 || newpwd1.length() >= 16) {
-            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_length, true);
+            showErrorMessage(getResources().getString(R.string.avidly_string_user_alter_pwd_length));
+//            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_length, true);
             return;
         }
 
         if (TextUtils.isEmpty(newpwd2)) {
-            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_empty_newpwd2, true);
+            showErrorMessage(getResources().getString(R.string.avidly_string_user_alter_pwd_empty_newpwd2));
+//            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_empty_newpwd2, true);
             return;
         }
 
         if (!newpwd2.equals(newpwd1)) {
-            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_wrong_newpwd2, true);
+            showErrorMessage(getResources().getString(R.string.avidly_string_user_alter_pwd_wrong_newpwd2));
+//            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_wrong_newpwd2, true);
             return;
         }
 
 
         if (newpwd1.equals(odlpwd)) {
-            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_new_pwd, true);
+            showErrorMessage(getResources().getString(R.string.avidly_string_user_alter_pwd_new_pwd));
+//            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_new_pwd, true);
             return;
         }
 
@@ -182,16 +204,20 @@ public class AccountUserPwdAlterFragment extends Fragment {
                             }
                         }
                         keep = false;
-                        Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_send_success, true);
+                        showErrorMessage(getResources().getString(R.string.avidly_string_user_alter_pwd_send_success));
+//                        Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_send_success, true);
                     } else {
                         if (AVIDLY_OLD_PASSWORD_ALTER_ERROR == jsonObject.optInt("code")) {
-                            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_send_fail_wrong_pwd, true);
+                            showErrorMessage(getResources().getString(R.string.avidly_string_user_alter_pwd_send_fail_wrong_pwd));
+//                            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_send_fail_wrong_pwd, true);
                         } else {
-                            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_send_fail, true);
+                            showErrorMessage(getResources().getString(R.string.avidly_string_user_alter_pwd_send_fail));
+//                            Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_send_fail, true);
                         }
                     }
                 } catch (Exception e) {
-                    Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_send_fail, true);
+                    showErrorMessage(getResources().getString(R.string.avidly_string_user_alter_pwd_send_fail));
+//                    Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_send_fail, true);
                     e.printStackTrace();
                 } finally {
                     if (loadingUICallback != null) {
@@ -207,7 +233,8 @@ public class AccountUserPwdAlterFragment extends Fragment {
                 if (loadingUICallback != null) {
                     loadingUICallback.notifyShowLoadingUI(false, false);
                 }
-                Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_send_fail, true);
+                showErrorMessage(getResources().getString(R.string.avidly_string_user_alter_pwd_send_fail));
+//                Utils.showToastTip(getContext(), R.string.avidly_string_user_alter_pwd_send_fail, true);
             }
         });
 
@@ -217,4 +244,32 @@ public class AccountUserPwdAlterFragment extends Fragment {
 
     }
 
+    private Runnable mHideErrorMessageRunnable = new Runnable() {
+        @Override
+        public void run() {
+            hideErrorMessage();
+        }
+    };
+
+    private void hideErrorMessage() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getView().findViewById(R.id.avidly_error_layout).setVisibility(View.GONE);
+            }
+        });
+    }
+
+    private void showErrorMessage(final String message) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mMessgeText.setText(message);
+                getView().findViewById(R.id.avidly_error_layout).setVisibility(View.VISIBLE);
+            }
+        });
+
+        ThreadHelper.removeOnWorkThread(mHideErrorMessageRunnable);
+        ThreadHelper.runOnWorkThread(mHideErrorMessageRunnable, Constants.AUTO_CLOSE_ERROR_LAYOUT_MILLS);
+    }
 }

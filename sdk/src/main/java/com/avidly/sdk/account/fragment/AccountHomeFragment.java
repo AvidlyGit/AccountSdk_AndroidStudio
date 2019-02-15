@@ -10,11 +10,6 @@ import com.avidly.sdk.account.listener.AccountHomeListener;
 
 import com.sdk.avidly.account.R;
 
-/**
- * Created by t.wang on 2019/1/14.
- * <p>
- * Copyright © 2018 Adrealm. All rights reserved.
- */
 public class AccountHomeFragment extends DialogFragment implements View.OnClickListener {
     private AccountHomeListener mHomeListener;
 
