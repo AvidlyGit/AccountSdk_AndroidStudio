@@ -192,7 +192,7 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                getView().findViewById(R.id.avidly_error_layout).setVisibility(View.GONE);
+                mErrorLayout.setVisibility(View.GONE);
             }
         });
     }
@@ -202,7 +202,7 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
             @Override
             public void run() {
                 mMessgeText.setText(message);
-                getView().findViewById(R.id.avidly_error_layout).setVisibility(View.VISIBLE);
+                mErrorLayout.setVisibility(View.VISIBLE);
             }
         });
 

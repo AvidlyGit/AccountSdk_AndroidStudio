@@ -2,7 +2,6 @@ package com.avidly.sdk.account;
 
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.camera2.CameraManager;
 
 import com.avidly.sdk.account.activity.UserLookupPwdActivity;
 import com.avidly.sdk.account.activity.UserManagerActivity;

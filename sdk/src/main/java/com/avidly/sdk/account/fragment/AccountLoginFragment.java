@@ -2,7 +2,7 @@ package com.avidly.sdk.account.fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +13,7 @@ import com.avidly.sdk.account.listener.AccountLoginListener;
 import com.avidly.sdk.account.view.AvidlyPagerAdapter;
 import com.sdk.avidly.account.R;
 
-public class AccountLoginFragment extends DialogFragment implements View.OnClickListener, AccountLoginListener {
+public class AccountLoginFragment extends Fragment implements View.OnClickListener, AccountLoginListener {
     private AccountLoginListener mLoginListener;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;

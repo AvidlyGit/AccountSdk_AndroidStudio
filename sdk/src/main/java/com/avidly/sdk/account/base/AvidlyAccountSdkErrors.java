@@ -1,4 +1,4 @@
-package com.avidly.sdk.account;
+package com.avidly.sdk.account.base;
 
 import com.sdk.avidly.account.R;
 
@@ -13,21 +13,26 @@ public class AvidlyAccountSdkErrors {
     // 服务端数据请求时发生的异常，如超时,通讯异常等
     public static final int AVIDLY_LOGIN_ERROR_RESPONSE_HTTP_EXCEPTION = -102;
 
-    // 服务端数据请求时发生的异常，如超时,通讯异常等
-    public static final int AVIDLY_LOGIN_ERROR_WROGN_PASSWORD = 20302;
-
-    public static final int AVIDLY_LOGIN_ERROR_RESPONSE_USER_NOT_EXIST = 20506;
-
-    public static final int AVIDLY_LOGIN_ERROR_RESPONSE_USER_IS_EXIST = 20504;
+    // 第三方SDK异常
+    public static final int AVIDLY_LOGIN_ERROR_THIRD_SDK_EXCEPTION = -103;
 
     public static final int AVIDLY_LOGIN_ERROR_GGID_NOT_BOUNDED_THIRD_SDK = 20105;
 
     public static final int AVIDLY_LOGIN_ERROR_ACCESS_TOKEN_BOUNDED_OTHER_GGID = 20106;
 
+    public static final int AVIDLY_LOGIN_ERROR_RESPONSE_USER_NOT_EXIST = 20201;
+
     public static final int AVIDLY_OLD_PASSWORD_ALTER_ERROR = 20203;
+
+    public static final int AVIDLY_LOGIN_ERROR_WROGN_PASSWORD = 20302;
+
+    public static final int AVIDLY_LOGIN_ERROR_RESPONSE_USER_IS_EXIST = 20504;
+
+    public static final int AVIDLY_LOGIN_ERROR_RESPONSE_USER_IS_BINDED = 20507;
 
     // facebook登录时，用户取消登录
     public static final int AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_CANCEL = 2001;
+
     // facebook登录时，不成功
     public static final int AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_ERROR = 2002;
 
@@ -52,6 +57,8 @@ public class AvidlyAccountSdkErrors {
                 return R.string.avidly_string_user_login_user_not_exist;
             case AVIDLY_LOGIN_ERROR_RESPONSE_USER_IS_EXIST:
                 return R.string.avidly_string_user_login_user_existed;
+            case AVIDLY_LOGIN_ERROR_RESPONSE_USER_IS_BINDED:
+                return R.string.avidly_string_user_bind_fail_binded;
             case AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_CANCEL:
                 return R.string.avidly_string_facebook_login_cancel;
             case AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_ERROR:

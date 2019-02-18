@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="avildy_editor_number_letter_digits">&#034;&#039;&#060;&#160;&#038;{}[]\|>/;:,.?`~!@#$%^*()_+-=1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM </string>
+    <string name="avidly_string_protocol_url">https://d5q0hty07mfa4.cloudfront.net/privacy_policy/pp_en.html</string>
 
     <string name="avidly_string_account">Account</string>
     <string name="avidly_string_guest_login">Quick Login</string>
@@ -59,7 +60,6 @@
     <string name="avidly_string_user_bind_account_facebook">Facebook</string>
     <string name="avidly_string_user_bind_account_twitter">Twitter</string>
     <string name="avidly_string_user_bind_account_googleplay">Google Play</string>
-    <string name="avidly_string_protocol_url">http://www.baidu.com</string>
 
     <string name="avidly_string_user_alter_pwd_disable">You need to bind Avid.ly account first to modify password</string>
     <string name="avidly_string_user_alter_pwd_empty_oldpwd">Please enter current password</string>
@@ -77,12 +77,12 @@
 
     <string name="avidly_string_user_bind_send_success">Account bound</string>
     <string name="avidly_string_user_bind_send_fail">Account bound failed</string>
+    <string name="avidly_string_user_bind_fail_binded">Account bound already</string>
 
     <string name="avidly_string_user_unbind_send_success">Account unbound</string>
     <string name="avidly_string_user_unbind_send_fail">Account unbound failed</string>
-    <string name="avidly_string_user_unbind_disable">You need to bind Avid.ly account first to unbind</string>
+    <string name="avidly_string_user_unbind_disable">You cannt unbind the current login account</string>
     <string name="avidly_string_user_not_bind_any_third_sdk">Account unbound failed, your current account has not bound to %1$s</string>
-
 
     <string name="avidly_string_user_third_sdk_repeated_bound_fail">%1$s has been bound to another account</string>
     <string name="avidly_string_user_login_send_fail">Login failed, please try again later</string>

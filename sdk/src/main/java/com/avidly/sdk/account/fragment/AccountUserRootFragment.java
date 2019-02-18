@@ -9,13 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.avidly.sdk.account.AvidlyAccountSdkErrors;
+import com.avidly.sdk.account.base.AvidlyAccountSdkErrors;
 import com.avidly.sdk.account.activity.AccountLoginActivity;
 import com.avidly.sdk.account.adapter.BaseAdapter;
 import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.base.utils.ThreadHelper;
-import com.avidly.sdk.account.base.utils.Utils;
 import com.avidly.sdk.account.business.LoginRequest;
 import com.avidly.sdk.account.business.LoginRequestCallback;
 import com.avidly.sdk.account.data.adapter.UserBindData;
@@ -29,8 +28,8 @@ import com.avidly.sdk.account.third.ThirdSdkFactory;
 import com.avidly.sdk.account.third.ThirdSdkLoginCallback;
 import com.sdk.avidly.account.R;
 
-import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_ACCESS_TOKEN_BOUNDED_OTHER_GGID;
-import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_GGID_NOT_BOUNDED_THIRD_SDK;
+import static com.avidly.sdk.account.base.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_ACCESS_TOKEN_BOUNDED_OTHER_GGID;
+import static com.avidly.sdk.account.base.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_GGID_NOT_BOUNDED_THIRD_SDK;
 
 public class AccountUserRootFragment extends BaseFragment {
     private View mErrorLayout;
@@ -358,6 +357,8 @@ public class AccountUserRootFragment extends BaseFragment {
         TextView textView = getView().findViewById(R.id.avidly_user_common_title_textview);
         textView.setText(R.string.avidly_string_usermanger_title);
 
+        AccountUserManagerFragment userManagerFragment = (AccountUserManagerFragment) getChildFragmentManager().findFragmentById(R.id.avidly_fragment_user_manager);
+        userManagerFragment.refreshNickName();
     }
 
     private void showLoadingUI() {
@@ -368,7 +369,6 @@ public class AccountUserRootFragment extends BaseFragment {
                 isShowLoadingUI = true;
             }
         });
-
     }
 
     private void hideLoadingUI() {

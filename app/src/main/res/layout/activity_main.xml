@@ -11,15 +11,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
+        android:background="@android:color/holo_green_light"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/holo_green_light"
-            android:gravity="center"
-            android:text="黄色背景是游戏中..."
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:gravity="center_horizontal"
+            android:text="@string/app_name"
             android:textSize="24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="180dp"
+            android:gravity="center_horizontal"
+            android:text="绿色背景是游戏中..."
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/tvGgid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="260dp"
+            android:gravity="center_horizontal"
+            android:textSize="18dp" />
+
+        <TextView
+            android:id="@+id/tvMode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="340dp"
+            android:gravity="center_horizontal"
+            android:textSize="18dp" />
 
         <Button
             android:id="@+id/login_id"

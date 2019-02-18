@@ -1,16 +1,15 @@
 package com.avidly.sdk.account.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.avidly.sdk.account.listener.AccountHomeListener;
-
 import com.sdk.avidly.account.R;
 
-public class AccountHomeFragment extends DialogFragment implements View.OnClickListener {
+public class AccountHomeFragment extends Fragment implements View.OnClickListener {
     private AccountHomeListener mHomeListener;
 
     public void setHomeListener(AccountHomeListener listener) {

@@ -20,8 +20,8 @@ import com.facebook.login.LoginResult;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_CANCEL;
-import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_ERROR;
+import static com.avidly.sdk.account.base.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_CANCEL;
+import static com.avidly.sdk.account.base.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_ERROR;
 
 public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
     ThirdSdkLoginCallback callback;
@@ -149,7 +149,7 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
             ggid = LoginUserManager.getCurrentGGID();
         }
 
-        LoginRequest.facebookSdkBind(ggid == null ? "" : ggid, token, accessToken.getApplicationId(), new LoginRequestCallback<String>() {
+        LoginRequest.facebookSdkLoginOrBind(ggid == null ? "" : ggid, token, accessToken.getApplicationId(), new LoginRequestCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 LoginUser loginUser = null;
@@ -165,7 +165,7 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
                 } else {
                     loginUser = LoginUserManager.onAccountLoginSuccess(Account.ACCOUNT_MODE_FACEBOOK, result);
                 }
-                
+
                 if (callback != null) {
                     callback.onLoginSuccess(loginUser);
                 }

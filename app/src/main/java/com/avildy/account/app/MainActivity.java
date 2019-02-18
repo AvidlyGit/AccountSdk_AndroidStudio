@@ -5,17 +5,24 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avidly.sdk.account.AvidlyAccountLoginCallback;
 import com.avidly.sdk.account.AvidlyAccountSdk;
-import com.avidly.sdk.account.base.utils.LogUtils;
+//import com.avidly.sdk.account.base.utils.LogUtils;
+//import com.avidly.sdk.account.data.user.LoginUser;
+//import com.avidly.sdk.account.data.user.LoginUserManager;
+//import com.avidly.sdk.account.third.ThirdSdkFactory;
 
+import account.avidly.com.accountsdk.BuildConfig;
 import account.avidly.com.accountsdk.R;
 
 public class MainActivity extends AppCompatActivity {
     private View mLoginButton;
     private View mUserCenterButton;
+    private TextView mGgidTextView;
+    private TextView mModeTextView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
         mLoginButton = findViewById(R.id.login_id);
         mUserCenterButton = findViewById(R.id.usermanager_id);
+        mGgidTextView = findViewById(R.id.tvGgid);
+        mModeTextView = findViewById(R.id.tvMode);
 
         startLogin();
 
@@ -49,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 //        account.accountPwd = "123456";
 //        LoginUserManager.saveAccountUsers();
 //        Log.i("xxxx", "guest:" + LoginUserManager.getGuestLoginUser());
-          // <<<<<<<<<<
+        // <<<<<<<<<<
 
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
@@ -68,11 +77,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startLogin() {
-        AvidlyAccountSdk.accountLogin(MainActivity.this, "610322", new AvidlyAccountLoginCallback() {
+        AvidlyAccountSdk.accountLogin(MainActivity.this, BuildConfig.productId, new AvidlyAccountLoginCallback() {
             @Override
             public void onLoginSuccess(String ggid) {
                 String messge = "MainActivity onLoginSuccess: " + ggid;
-                LogUtils.i(messge);
+                Log.i("AccountLoginSdk", "onLoginSuccess: " + messge);
 
                 mLoginButton.setVisibility(View.GONE);
                 mUserCenterButton.setVisibility(View.VISIBLE);
@@ -82,11 +91,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onLoginFail(int code, String msg) {
                 String messge = "MainActivity onLoginFail: " + msg;
-                LogUtils.i(messge);
+                Log.i("AccountLoginSdk", "onLoginFail: " + messge);
 
                 mLoginButton.setVisibility(View.VISIBLE);
                 mUserCenterButton.setVisibility(View.GONE);
-                //Toast.makeText(getApplicationContext(), messge, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), messge, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -95,5 +104,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.i("xxxxx", "onResume orientation: " + getResources().getConfiguration().orientation);
+
+//        String ggid = LoginUserManager.getCurrentGGID();
+//        mGgidTextView.setText("当前用户id是：" + (ggid == null ? "空" : ggid));
+//
+//        if (ggid != null) {
+//            LoginUser activedUser = LoginUserManager.getCurrentActiveLoginUser();
+//            if (activedUser.isNowLogined) {
+//                String mode = ThirdSdkFactory.nameOfAccountMode(activedUser.getLoginedMode());
+//                mModeTextView.setText("当前账户类型是：" + mode);
+//            }
+//        }
     }
 }

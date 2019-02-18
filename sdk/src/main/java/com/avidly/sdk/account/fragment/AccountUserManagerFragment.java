@@ -107,6 +107,13 @@ public class AccountUserManagerFragment extends Fragment {
         return user != null && user.getLoginedMode() == Account.ACCOUNT_MODE_GUEST;
     }
 
+    public void refreshNickName() {
+        if (LoginCenter.isFreshUserManagerUI()) {
+            freshView();
+            LoginCenter.setFreshUserManagerUI(false);
+        }
+    }
+
     private void freshView() {
         boolean isGuest = isGuestUser();
         TextView nameTextView = getView().findViewById(R.id.avidly_user_manager_username);
@@ -152,16 +159,16 @@ public class AccountUserManagerFragment extends Fragment {
     private void fillGuestAdatper(UserManagerAdatper adatper, boolean isgrid, boolean isguest) {
         List<UserOperationData> list = new ArrayList<>(3);
 
-        if (isguest) {
-            list.add(createGuestBindData(getString(R.string.avidly_string_usermanger_bind_avidly),
-                    R.drawable.avidly_icon_user,
-                    UserOperationData.USER_OPERATION_TYPE_AVIDLY,
-                    isgrid));
-        } else /*if (LoginUserManager.getCurrentActiveLoginUser() != null
-                && LoginUserManager.getCurrentActiveLoginUser().getLoginedMode() == Account.ACCOUNT_MODE_AVIDLY)*/ {
+        if (LoginUserManager.getCurrentActiveLoginUser() != null
+                && LoginUserManager.getCurrentActiveLoginUser().getLoginedMode() == Account.ACCOUNT_MODE_AVIDLY) {
             list.add(createGuestBindData(getString(R.string.avidly_string_usermanger_bind_alter_pwd),
                     R.drawable.avidly_icon_change_password,
                     UserOperationData.USER_OPERATION_TYPE_CHANGE_PWD,
+                    isgrid));
+        } else {
+            list.add(createGuestBindData(getString(R.string.avidly_string_usermanger_bind_avidly),
+                    R.drawable.avidly_icon_user,
+                    UserOperationData.USER_OPERATION_TYPE_AVIDLY,
                     isgrid));
         }
 

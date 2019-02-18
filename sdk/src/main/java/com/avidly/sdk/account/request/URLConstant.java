@@ -1,5 +1,7 @@
 package com.avidly.sdk.account.request;
 
+import android.text.TextUtils;
+
 import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.business.LoginCenter;
 
@@ -56,10 +58,16 @@ public class URLConstant {
         return ACCOUNT_API + "/account/user/resetPwd?" + path;
     }
 
-    public static String getFacebookBindUrl(String ggid, String accessToken, String appId) {
-        String path = "gameGuestId=" + ggid + "&access_token=" + accessToken + "&appId=" + appId
-                + "&pdtid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;
-        return ACCOUNT_API + "/third/fbbind?" + path;
+    public static String getFacebookLoginOrBindUrl(String ggid, String accessToken, String appId) {
+        if (TextUtils.isEmpty(ggid)) {
+            String path = "access_token=" + accessToken + "&appId=" + appId
+                    + "&pdtid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;
+            return ACCOUNT_API + "/third/fblogin?" + path;
+        } else {
+            String path = "gameGuestId=" + ggid + "&access_token=" + accessToken + "&appId=" + appId
+                    + "&pdtid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;
+            return ACCOUNT_API + "/third/fbbind?" + path;
+        }
     }
 
     public static String getFacebookUnBindUrl(String ggid, String accessToken) {

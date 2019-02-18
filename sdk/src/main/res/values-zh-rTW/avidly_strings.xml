@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="avildy_editor_number_letter_digits">&#034;&#039;&#060;&#160;&#038;{}[]\|>/;:,.?`~!@#$%^*()_+-=1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM </string>
+    <string name="avidly_string_protocol_url">https://d5q0hty07mfa4.cloudfront.net/privacy_policy/pp_tw.html</string>
 
     <string name="avidly_string_account">賬戶</string>
     <string name="avidly_string_guest_login">遊客登錄</string>
@@ -59,7 +60,6 @@
     <string name="avidly_string_user_bind_account_facebook">Facebook</string>
     <string name="avidly_string_user_bind_account_twitter">Twitter</string>
     <string name="avidly_string_user_bind_account_googleplay">Google Play</string>
-    <string name="avidly_string_protocol_url">http://www.baidu.com</string>
 
     <string name="avidly_string_user_alter_pwd_disable">需要先綁定Avid.ly賬號後才能修改密碼</string>
     <string name="avidly_string_user_alter_pwd_empty_oldpwd">請輸入原密碼</string>
@@ -77,10 +77,11 @@
 
     <string name="avidly_string_user_bind_send_success">綁定成功</string>
     <string name="avidly_string_user_bind_send_fail">綁定失敗</string>
+    <string name="avidly_string_user_bind_fail_binded">已經綁定過賬號</string>
 
     <string name="avidly_string_user_unbind_send_success">解綁成功</string>
     <string name="avidly_string_user_unbind_send_fail">解綁失敗</string>
-    <string name="avidly_string_user_unbind_disable">需要先綁定Avid.ly賬號後才能解綁</string>
+    <string name="avidly_string_user_unbind_disable"> 無法解綁當前登錄賬號</string>
     <string name="avidly_string_user_not_bind_any_third_sdk">解綁失敗，當前帳號尚未綁定到%1$s</string>
 
     <string name="avidly_string_user_third_sdk_repeated_bound_fail">當前%1$s帳號已被其它帳號綁定</string>

@@ -16,7 +16,6 @@ import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.base.utils.Md5Utils;
 import com.avidly.sdk.account.base.utils.ThreadHelper;
-import com.avidly.sdk.account.base.utils.Utils;
 import com.avidly.sdk.account.data.user.Account;
 import com.avidly.sdk.account.data.user.LoginUser;
 import com.avidly.sdk.account.data.user.LoginUserManager;
@@ -27,7 +26,7 @@ import com.sdk.avidly.account.R;
 
 import org.json.JSONObject;
 
-import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_OLD_PASSWORD_ALTER_ERROR;
+import static com.avidly.sdk.account.base.AvidlyAccountSdkErrors.AVIDLY_OLD_PASSWORD_ALTER_ERROR;
 
 public class AccountUserPwdAlterFragment extends Fragment {
     private View mErrorLayout;

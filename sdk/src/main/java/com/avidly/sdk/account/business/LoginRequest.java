@@ -10,8 +10,8 @@ import com.avidly.sdk.account.request.URLConstant;
 
 import org.json.JSONObject;
 
-import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION;
-import static com.avidly.sdk.account.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_RESPONSE_MISMATCH_PRODUCT_ID;
+import static com.avidly.sdk.account.base.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION;
+import static com.avidly.sdk.account.base.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_RESPONSE_MISMATCH_PRODUCT_ID;
 
 public class LoginRequest {
     private static JSONObject requestToDataJsonObject(String result, LoginRequestCallback<String> callback) {
@@ -170,13 +170,13 @@ public class LoginRequest {
         });
     }
 
-    public static void facebookSdkBind(String ggid, final String accessToken, String appid, final LoginRequestCallback<String> callback) {
-        String url = URLConstant.getFacebookBindUrl(ggid, accessToken, appid);
-        LogUtils.i("HttpBusiness facebookSdkBind url is " + url);
+    public static void facebookSdkLoginOrBind(String ggid, final String accessToken, String appid, final LoginRequestCallback<String> callback) {
+        String url = URLConstant.getFacebookLoginOrBindUrl(ggid, accessToken, appid);
+        LogUtils.i("HttpBusiness facebookSdkLoginOrBind url is " + url);
         HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
             @Override
             public void onResponseSuccess(String result) {
-                LogUtils.i("HttpBusiness facebookSdkBind result is " + result);
+                LogUtils.i("HttpBusiness facebookSdkLoginOrBind result is " + result);
                 try {
                     JSONObject guest = requestToDataJsonObject(result, callback);
                     if (guest != null) {

@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.avidly.sdk.account.AvidlyAccountSdk;
-import com.avidly.sdk.account.AvidlyAccountSdkErrors;
+import com.avidly.sdk.account.base.AvidlyAccountSdkErrors;
 import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.base.utils.ThreadHelper;
@@ -168,9 +168,9 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
 
     @Override
     public void onUserLoginFailed(final int errorCode) {
-        LogUtils.i("onUserLoginFailed: ");
         hideLoadingUI();
-        showErrorMessage(getResources().getString(AvidlyAccountSdkErrors.getMessgeResourceIdFromErrorCode(errorCode)));
+        final String message = getResources().getString(AvidlyAccountSdkErrors.getMessgeResourceIdFromErrorCode(errorCode));
+        showErrorMessage(message);
 
         if (LoginCenter.isIsAutoLogin()) {
             showAccountHomeFragment();
@@ -180,7 +180,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LoginCenter.getLoginCallback().onLoginFail(errorCode, "");
+                LoginCenter.getLoginCallback().onLoginFail(errorCode, message);
             }
         });
     }
@@ -231,7 +231,6 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
         LogUtils.i("onFacebookLoginClicked: ");
         showLoadingUI();
         doThirdSdkLogin(Account.ACCOUNT_MODE_FACEBOOK);
-
     }
 
     @Override
@@ -294,6 +293,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
         if (!ThirdSdkFactory.isExistSdkLib(mode)) {
             thirdLoginSdkDelegate = null;
             LogUtils.i("doThirdSdkLogin, the third login sdk is not exist. ");
+            onUserLoginFailed(AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_THIRD_SDK_EXCEPTION);
             return;
         }
 
@@ -306,6 +306,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
             thirdLoginSdkDelegate = ThirdSdkFactory.newThirdSdkLoginDeleage(mode);
             if (thirdLoginSdkDelegate == null) {
                 LogUtils.i("doThirdSdkLogin, fail to create third sdk delegate object.");
+                onUserLoginFailed(AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_THIRD_SDK_EXCEPTION);
                 return;
             }
             thirdLoginSdkDelegate.login(this, new ThirdSdkLoginCallback() {

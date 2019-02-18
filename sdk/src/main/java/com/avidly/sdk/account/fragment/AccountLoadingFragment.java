@@ -1,7 +1,7 @@
 package com.avidly.sdk.account.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +18,7 @@ import com.avidly.sdk.account.data.user.LoginUserManager;
 import com.avidly.sdk.account.listener.AccountLoadingListener;
 import com.sdk.avidly.account.R;
 
-public class AccountLoadingFragment extends DialogFragment implements View.OnClickListener {
+public class AccountLoadingFragment extends Fragment implements View.OnClickListener {
     private AccountLoadingListener mLoadingListener;
     private View mLoginLayout;
     private View mLoadingIcon;
