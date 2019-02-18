@@ -279,13 +279,20 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
 
     @Override
     public void onForgotPasswordClicked() {
-        AvidlyAccountSdk.showUserLookupPasswordrUI(getApplicationContext());
+        showUserLookupPasswordrUI(getApplicationContext());
     }
 
     @Override
     public void onReadProtocolClicked() {
         Intent intent = new Intent(this, AvidlyProtocolActivity.class);
         startActivity(intent);
+    }
+
+    private static void showUserLookupPasswordrUI(Context context) {
+        LoginCenter.checkScreenOrietation(context);
+        Intent intent = new Intent(context, UserLookupPwdActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     private void doThirdSdkLogin(int mode) {

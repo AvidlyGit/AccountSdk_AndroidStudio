@@ -22,11 +22,4 @@ public class AvidlyAccountSdk {
         context.startActivity(intent);
     }
 
-    public static void showUserLookupPasswordrUI(Context context) {
-        LoginCenter.checkScreenOrietation(context);
-        Intent intent = new Intent(context, UserLookupPwdActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
-
 }
