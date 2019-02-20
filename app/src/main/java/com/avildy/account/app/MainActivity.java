@@ -8,15 +8,16 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.avidly.sdk.account.AvidlyAccountLoginCallback;
+import com.avidly.sdk.account.AvidlyAccountCallback;
 import com.avidly.sdk.account.AvidlyAccountSdk;
+
+import account.avidly.com.accountsdk.BuildConfig;
+import account.avidly.com.accountsdk.R;
+
 //import com.avidly.sdk.account.base.utils.LogUtils;
 //import com.avidly.sdk.account.data.user.LoginUser;
 //import com.avidly.sdk.account.data.user.LoginUserManager;
 //import com.avidly.sdk.account.third.ThirdSdkFactory;
-
-import account.avidly.com.accountsdk.BuildConfig;
-import account.avidly.com.accountsdk.R;
 
 public class MainActivity extends AppCompatActivity {
     private View mLoginButton;
@@ -34,37 +35,33 @@ public class MainActivity extends AppCompatActivity {
         mGgidTextView = findViewById(R.id.tvGgid);
         mModeTextView = findViewById(R.id.tvMode);
 
-        startLogin();
+        AvidlyAccountSdk.initSdk(BuildConfig.productId, new AvidlyAccountCallback() {
+            @Override
+            public void onGameGuestIdLoginSuccess(String ggid) {
+                String messge = "MainActivity onLoginSuccess: " + ggid;
+                Toast.makeText(getApplicationContext(), messge, Toast.LENGTH_SHORT).show();
 
-        // >>>>>>> 以下是测试代码
-//        LoginUserManager.freshUserCache(this);
+                mLoginButton.setVisibility(View.GONE);
+                mUserCenterButton.setVisibility(View.VISIBLE);
 
-//        LoginUserManager.onGuestLoginSuccess("guest-2222");
-//        LoginUserManager.saveAccountUsers();
+                mGgidTextView.setText("当前用户id是：" + (ggid == null ? "空" : ggid));
+            }
 
-//        Log.i("xxxx", "current ggid:" + LoginUserManager.getCurrentGGID());
-//        Log.i("xxxx", "guest:" + LoginUserManager.getGuestLoginUser());
-//        if (LoginUserManager.getGuestLoginUser() != null) {
-//            Log.i("xxxx", "guest gson:" + LoginUserManager.getGuestLoginUser().thisToString());
-//        }
-//        if (LoginUserManager.getCurrentActiveLoginUser() != null) {
-//            Log.i("xxxx", "current actived user gson:" + LoginUserManager.getCurrentActiveLoginUser().thisToString());
-//        }
+            @Override
+            public void onGameGuestIdLoginFailed(int code, String msg) {
+                String messge = "MainActivity onLoginFail: " + msg;
+                Toast.makeText(getApplicationContext(), messge, Toast.LENGTH_SHORT).show();
 
-//        LoginUser user = LoginUserManager.onAccountLoginSuccess(Account.ACCOUNT_MODE_AVIDLY, "guest-1111");
-//        Account account = user.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
-//        account.accountName = "sam.liu@upltv.com";
-//        account.nickname = "yjfnapsu_007";
-//        account.accountPwd = "123456";
-//        LoginUserManager.saveAccountUsers();
-//        Log.i("xxxx", "guest:" + LoginUserManager.getGuestLoginUser());
-        // <<<<<<<<<<
+                mLoginButton.setVisibility(View.VISIBLE);
+                mUserCenterButton.setVisibility(View.GONE);
+            }
+        });
 
-
+        AvidlyAccountSdk.accountLogin(MainActivity.this);
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startLogin();
+                AvidlyAccountSdk.accountLogin(MainActivity.this);
             }
         });
 
@@ -72,30 +69,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AvidlyAccountSdk.showUserManagerUI(MainActivity.this);
-            }
-        });
-    }
-
-    private void startLogin() {
-        AvidlyAccountSdk.accountLogin(MainActivity.this, BuildConfig.productId, new AvidlyAccountLoginCallback() {
-            @Override
-            public void onLoginSuccess(String ggid) {
-                String messge = "MainActivity onLoginSuccess: " + ggid;
-                Log.i("AccountLoginSdk", "onLoginSuccess: " + messge);
-
-                mLoginButton.setVisibility(View.GONE);
-                mUserCenterButton.setVisibility(View.VISIBLE);
-                Toast.makeText(getApplicationContext(), messge, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onLoginFail(int code, String msg) {
-                String messge = "MainActivity onLoginFail: " + msg;
-                Log.i("AccountLoginSdk", "onLoginFail: " + messge);
-
-                mLoginButton.setVisibility(View.VISIBLE);
-                mUserCenterButton.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(), messge, Toast.LENGTH_SHORT).show();
             }
         });
     }

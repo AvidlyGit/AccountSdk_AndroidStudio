@@ -7,7 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.view.Display;
 import android.view.WindowManager;
 
-import com.avidly.sdk.account.AvidlyAccountLoginCallback;
+import com.avidly.sdk.account.AvidlyAccountCallback;
 import com.avidly.sdk.account.activity.AccountLoginActivity;
 import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.LogUtils;
@@ -21,7 +21,7 @@ public class LoginCenter {
 
     private static boolean freshUserManagerUI;
 
-    private static AvidlyAccountLoginCallback loginCallback;
+    private static AvidlyAccountCallback loginCallback;
 
     private static int gameOrietation = 99999;
 
@@ -41,11 +41,11 @@ public class LoginCenter {
         LoginCenter.productId = productId;
     }
 
-    public static AvidlyAccountLoginCallback getLoginCallback() {
+    public static AvidlyAccountCallback getLoginCallback() {
         return loginCallback;
     }
 
-    public static void setLoginCallback(AvidlyAccountLoginCallback loginCallback) {
+    public static void setLoginCallback(AvidlyAccountCallback loginCallback) {
         LoginCenter.loginCallback = loginCallback;
     }
 
@@ -101,10 +101,10 @@ public class LoginCenter {
     }
 
     public static void loginNow(Context context) {
-
         if (context == null) {
             throw new RuntimeException("context is null, fail to login.");
         }
+
         if (sContext == null || sContext.get() == null) {
             if (sContext != null) {
                 sContext.clear();
@@ -123,7 +123,7 @@ public class LoginCenter {
 //            if (accountUser.isNowLogined) {
 //                LogUtils.w("已经帐号登陆，不需要重复登陆");
 //                if (loginCallback != null) {
-//                    loginCallback.onLoginSuccess(accountUser.ggid);
+//                    loginCallback.onGameGuestIdLoginSuccess(accountUser.ggid);
 //                }
 //                return;
 //            }
@@ -137,7 +137,7 @@ public class LoginCenter {
 //            if (guestUser.isNowLogined) {
 //                LogUtils.w("已经游客登陆，不需要重复登陆");
 //                if (loginCallback != null) {
-//                    loginCallback.onLoginSuccess(accountUser.ggid);
+//                    loginCallback.onGameGuestIdLoginSuccess(accountUser.ggid);
 //                }
 //                return;
 //            }
@@ -147,12 +147,11 @@ public class LoginCenter {
 //        }
 
         LoginUser activedUser = LoginUserManager.getCurrentActiveLoginUser();
-
         if (activedUser != null) {
             if (activedUser.isNowLogined) {
                 LogUtils.w("已经登陆，不需要重复登陆, account mode:" + activedUser.getLoginedMode() + ", ggid:" + activedUser.ggid, null);
                 if (loginCallback != null) {
-                    loginCallback.onLoginSuccess(activedUser.ggid);
+                    loginCallback.onGameGuestIdLoginSuccess(activedUser.ggid);
                 }
             } else {
                 continueLogin(context);

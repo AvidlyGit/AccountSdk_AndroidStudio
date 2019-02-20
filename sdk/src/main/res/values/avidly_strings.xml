@@ -71,9 +71,10 @@
     <string name="avidly_string_user_alter_pwd_send_fail_wrong_pwd">Wrong Current Passwore, failed to modify password</string>
 
     <string name="avidly_string_user_lookup_email_tip">Please enter account email address</string>
-    <string name="avidly_string_user_lookup_eamil_wrong_tip">Wrong email format</string>
-    <string name="avidly_string_user_lookup_eamil_send_success">Request sent</string>
-    <string name="avidly_string_user_lookup_eamil_send_fail">Request failed</string>
+    <string name="avidly_string_user_lookup_email_wrong_tip">Wrong email format</string>
+    <string name="avidly_string_user_lookup_email_send_success">Request sent</string>
+    <string name="avidly_string_user_lookup_email_send_fail">Request failed</string>
+    <string name="avidly_string_user_lookup_email_frequently">Password recovery email has been sent to your mailbox, please do not repeat the application</string>
 
     <string name="avidly_string_user_bind_send_success">Account bound</string>
     <string name="avidly_string_user_bind_send_fail">Account bound failed</string>

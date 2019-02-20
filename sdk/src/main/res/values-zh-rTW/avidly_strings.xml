@@ -71,9 +71,10 @@
     <string name="avidly_string_user_alter_pwd_send_fail_wrong_pwd">密碼設置失敗，原密碼不正確</string>
 
     <string name="avidly_string_user_lookup_email_tip">請輸入賬號郵箱地址</string>
-    <string name="avidly_string_user_lookup_eamil_wrong_tip">郵箱格式不對</string>
-    <string name="avidly_string_user_lookup_eamil_send_success">請求發送成功</string>
-    <string name="avidly_string_user_lookup_eamil_send_fail">請求發送失敗</string>
+    <string name="avidly_string_user_lookup_email_wrong_tip">郵箱格式不對</string>
+    <string name="avidly_string_user_lookup_email_send_success">請求發送成功</string>
+    <string name="avidly_string_user_lookup_email_send_fail">請求發送失敗</string>
+    <string name="avidly_string_user_lookup_email_frequently">找回密碼郵件已經發送到您的郵箱，請不要重復申請</string>
 
     <string name="avidly_string_user_bind_send_success">綁定成功</string>
     <string name="avidly_string_user_bind_send_fail">綁定失敗</string>

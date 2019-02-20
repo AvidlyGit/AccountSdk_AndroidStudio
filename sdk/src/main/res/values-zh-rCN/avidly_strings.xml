@@ -71,9 +71,10 @@
     <string name="avidly_string_user_alter_pwd_send_fail_wrong_pwd">密码设置失败，原密码不正确</string>
 
     <string name="avidly_string_user_lookup_email_tip">请输入账号邮箱地址</string>
-    <string name="avidly_string_user_lookup_eamil_wrong_tip">邮箱格式不对</string>
-    <string name="avidly_string_user_lookup_eamil_send_success">请求发送成功</string>
-    <string name="avidly_string_user_lookup_eamil_send_fail">请求发送失败</string>
+    <string name="avidly_string_user_lookup_email_wrong_tip">邮箱格式不对</string>
+    <string name="avidly_string_user_lookup_email_send_success">请求发送成功</string>
+    <string name="avidly_string_user_lookup_email_send_fail">请求发送失败</string>
+    <string name="avidly_string_user_lookup_email_frequently">找回密码邮件已经发送到您的邮箱，请不要重复申请</string>
 
     <string name="avidly_string_user_bind_send_success">绑定成功</string>
     <string name="avidly_string_user_bind_send_fail">绑定失败</string>

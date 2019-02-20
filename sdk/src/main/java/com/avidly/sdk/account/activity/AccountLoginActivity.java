@@ -14,7 +14,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.avidly.sdk.account.AvidlyAccountSdk;
 import com.avidly.sdk.account.base.AvidlyAccountSdkErrors;
 import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.LogUtils;
@@ -161,7 +160,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LoginCenter.getLoginCallback().onLoginSuccess(loginUser.ggid);
+                LoginCenter.getLoginCallback().onGameGuestIdLoginSuccess(loginUser.ggid);
             }
         });
     }
@@ -169,7 +168,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     @Override
     public void onUserLoginFailed(final int errorCode) {
         hideLoadingUI();
-        final String message = getResources().getString(AvidlyAccountSdkErrors.getMessgeResourceIdFromErrorCode(errorCode));
+        final String message = getResources().getString(AvidlyAccountSdkErrors.getLoginErrorMessge(errorCode));
         showErrorMessage(message);
 
         if (LoginCenter.isIsAutoLogin()) {
@@ -180,7 +179,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LoginCenter.getLoginCallback().onLoginFail(errorCode, message);
+                LoginCenter.getLoginCallback().onGameGuestIdLoginFailed(errorCode, message);
             }
         });
     }
@@ -316,6 +315,7 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
                 onUserLoginFailed(AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_THIRD_SDK_EXCEPTION);
                 return;
             }
+
             thirdLoginSdkDelegate.login(this, new ThirdSdkLoginCallback() {
 
                 @Override

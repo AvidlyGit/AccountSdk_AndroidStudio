@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.avidly.sdk.account.base.AvidlyAccountSdkErrors;
 import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.base.utils.ThreadHelper;
@@ -134,14 +135,15 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
                 try {
                     JSONObject object = new JSONObject(result);
                     if (object.optBoolean("success")) {
-                        showErrorMessage(getResources().getString(R.string.avidly_string_user_lookup_eamil_send_success));
+                        showErrorMessage(getResources().getString(R.string.avidly_string_user_lookup_email_send_success));
 //                        Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_success, true);
                     } else {
-                        showErrorMessage(getResources().getString(R.string.avidly_string_user_lookup_eamil_send_fail));
+                        int code = object.optInt("code");
+                        showErrorMessage(getResources().getString(AvidlyAccountSdkErrors.getLookupPwdErrorMessage(code)));
 //                        Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_fail, true);
                     }
                 } catch (Exception e) {
-                    showErrorMessage(getResources().getString(R.string.avidly_string_user_lookup_eamil_send_fail));
+                    showErrorMessage(getResources().getString(R.string.avidly_string_user_lookup_email_send_fail));
 //                    Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_fail, true);
                     e.printStackTrace();
                 }
@@ -152,7 +154,7 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
             @Override
             public void onResponedFail(Throwable e, int code) {
                 LogUtils.i("onResponedFail, exception:" + e + ", code:" + code);
-                showErrorMessage(getResources().getString(R.string.avidly_string_user_lookup_eamil_send_fail));
+                showErrorMessage(getResources().getString(R.string.avidly_string_user_lookup_email_send_fail));
 //                Utils.showToastTip(getContext(), R.string.avidly_string_user_lookup_eamil_send_fail, true);
                 hideLoadingUI();
             }

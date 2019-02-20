@@ -40,7 +40,7 @@ android {
         demo1 {
             applicationId "account.avidly.sdk.demo1"
 
-            resValue "string", "app_name", "account.demo1"
+            resValue "string", "app_name", "account1"
             resValue "string", "facebook_app_id", "1878201782477856"
             resValue "string", "fb_login_protocol_scheme", "fb1878201782477856"
 
@@ -50,7 +50,7 @@ android {
         demo2 {
             applicationId "account.avidly.sdk.demo2"
 
-            resValue "string", "app_name", "account.demo2"
+            resValue "string", "app_name", "account2"
             resValue "string", "facebook_app_id", "121674058472542"
             resValue "string", "fb_login_protocol_scheme", "fb121674058472542"
 
@@ -73,12 +73,13 @@ dependencies {
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation('com.facebook.android:facebook-login:[4,5)') {
+        // values.xml中增加facebook_app_id，fb_login_protocol_scheme
         exclude group: 'com.android.support'//排除组织依赖
         exclude module: 'appcompat-v7'//排除模块依赖
     }
 
-//    implementation project(':sdk')
-    implementation(name: 'sdk-release', ext: 'aar')
+    implementation project(':sdk')
+//    implementation(name: 'sdk-release', ext: 'aar')
 
 }
 

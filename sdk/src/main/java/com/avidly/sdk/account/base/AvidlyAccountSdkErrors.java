@@ -24,6 +24,8 @@ public class AvidlyAccountSdkErrors {
 
     public static final int AVIDLY_OLD_PASSWORD_ALTER_ERROR = 20203;
 
+    public static final int AVIDLY_LOOKUP_PASSWORD_TOO_FREQUENTLY = 20205;
+
     public static final int AVIDLY_LOGIN_ERROR_WROGN_PASSWORD = 20302;
 
     public static final int AVIDLY_LOGIN_ERROR_RESPONSE_USER_IS_EXIST = 20504;
@@ -36,16 +38,27 @@ public class AvidlyAccountSdkErrors {
     // facebook登录时，不成功
     public static final int AVIDLY_LOGIN_ERROR_FACEBOOK_LOGIN_ERROR = 2002;
 
-    public static int getUnbindErrorMessage(int code) {
+    public static int getLookupPwdErrorMessage(int code) {
         switch (code) {
-            case AVIDLY_LOGIN_ERROR_GGID_NOT_BOUNDED_THIRD_SDK:
-                return R.string.avidly_string_user_not_bind_any_third_sdk;
+            case AVIDLY_LOOKUP_PASSWORD_TOO_FREQUENTLY:
+                return R.string.avidly_string_user_lookup_email_frequently;
+            case AVIDLY_LOGIN_ERROR_RESPONSE_USER_NOT_EXIST:
+                return R.string.avidly_string_user_login_user_not_exist;
             default:
                 return R.string.avidly_string_user_unbind_send_fail;
         }
     }
 
-    public static int getMessgeResourceIdFromErrorCode(int errorCode) {
+    public static int getUnbindErrorMessage(int code) {
+        switch (code) {
+            case AVIDLY_LOGIN_ERROR_GGID_NOT_BOUNDED_THIRD_SDK:
+                return R.string.avidly_string_user_not_bind_any_third_sdk;
+            default:
+                return R.string.avidly_string_user_lookup_email_send_fail;
+        }
+    }
+
+    public static int getLoginErrorMessge(int errorCode) {
         switch (errorCode) {
             case AVIDLY_LOGIN_ERROR_ACCESS_TOKEN_BOUNDED_OTHER_GGID:
                 return R.string.avidly_string_user_third_sdk_repeated_bound_fail;

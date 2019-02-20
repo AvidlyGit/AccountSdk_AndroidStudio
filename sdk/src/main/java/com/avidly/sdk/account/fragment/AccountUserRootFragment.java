@@ -292,9 +292,9 @@ public class AccountUserRootFragment extends BaseFragment {
                     hideLoadingUI();
                     String message;
                     if (code == AVIDLY_LOGIN_ERROR_ACCESS_TOKEN_BOUNDED_OTHER_GGID) {
-                        message = getResources().getString(AvidlyAccountSdkErrors.getMessgeResourceIdFromErrorCode(code), ThirdSdkFactory.nameOfAccountMode(mode));
+                        message = getResources().getString(AvidlyAccountSdkErrors.getLoginErrorMessge(code), ThirdSdkFactory.nameOfAccountMode(mode));
                     } else {
-                        message = getResources().getString(AvidlyAccountSdkErrors.getMessgeResourceIdFromErrorCode(code));
+                        message = getResources().getString(AvidlyAccountSdkErrors.getLoginErrorMessge(code));
                     }
                     showErrorMessage(message);
 //                    Utils.showToastTip(getContext(), message, true);
