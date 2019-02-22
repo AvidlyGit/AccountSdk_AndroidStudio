@@ -251,7 +251,7 @@ public class AccountUserPwdAlterFragment extends Fragment {
     };
 
     private void hideErrorMessage() {
-        getActivity().runOnUiThread(new Runnable() {
+        ThreadHelper.runOnMainThread(new Runnable() {
             @Override
             public void run() {
                 getView().findViewById(R.id.avidly_error_layout).setVisibility(View.GONE);
@@ -260,7 +260,7 @@ public class AccountUserPwdAlterFragment extends Fragment {
     }
 
     private void showErrorMessage(final String message) {
-        getActivity().runOnUiThread(new Runnable() {
+        ThreadHelper.runOnMainThread(new Runnable() {
             @Override
             public void run() {
                 mMessgeText.setText(message);

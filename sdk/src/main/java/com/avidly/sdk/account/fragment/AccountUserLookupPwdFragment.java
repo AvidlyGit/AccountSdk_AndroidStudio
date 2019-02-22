@@ -165,7 +165,7 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
     }
 
     private void showLoadingUI() {
-        getActivity().runOnUiThread(new Runnable() {
+        ThreadHelper.runOnMainThread(new Runnable() {
             @Override
             public void run() {
                 getView().findViewById(R.id.avidly_loading_layout).setVisibility(View.VISIBLE);
@@ -175,7 +175,7 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
     }
 
     private void hideLoadingUI() {
-        getActivity().runOnUiThread(new Runnable() {
+        ThreadHelper.runOnMainThread(new Runnable() {
             @Override
             public void run() {
                 getView().findViewById(R.id.avidly_loading_layout).setVisibility(View.GONE);
@@ -191,7 +191,7 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
     };
 
     private void hideErrorMessage() {
-        getActivity().runOnUiThread(new Runnable() {
+        ThreadHelper.runOnMainThread(new Runnable() {
             @Override
             public void run() {
                 mErrorLayout.setVisibility(View.GONE);
@@ -200,7 +200,7 @@ public class AccountUserLookupPwdFragment extends BaseFragment {
     }
 
     private void showErrorMessage(final String message) {
-        getActivity().runOnUiThread(new Runnable() {
+        ThreadHelper.runOnMainThread(new Runnable() {
             @Override
             public void run() {
                 mMessgeText.setText(message);
