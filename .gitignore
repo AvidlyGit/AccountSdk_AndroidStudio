@@ -12,3 +12,7 @@
 
 gradle.properties
 /.idea
+
+#release包不提交
+/demo1
+/demo2
