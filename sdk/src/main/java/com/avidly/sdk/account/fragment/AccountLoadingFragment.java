@@ -1,7 +1,9 @@
 package com.avidly.sdk.account.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.TextView;
 
 import com.avidly.sdk.account.base.Constants;
+import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.base.utils.ThreadHelper;
 import com.avidly.sdk.account.data.user.Account;
 import com.avidly.sdk.account.data.user.LoginUser;
@@ -23,6 +26,7 @@ public class AccountLoadingFragment extends Fragment implements View.OnClickList
     private View mLoginLayout;
     private View mLoadingIcon;
     private View mSwitchUser;
+    Runnable timeCountRun;
 
     public void setLoadingListener(AccountLoadingListener listener) {
         mLoadingListener = listener;
@@ -51,12 +55,15 @@ public class AccountLoadingFragment extends Fragment implements View.OnClickList
             }
         }
 
-        ThreadHelper.runOnMainThread(new Runnable() {
+
+        timeCountRun = new Runnable() {
             @Override
             public void run() {
                 startAutoLogin();
             }
-        }, Constants.AUTO_LOGIN_TIME_OUT_MILLS);
+        };
+
+        ThreadHelper.runOnMainThread(timeCountRun, Constants.AUTO_LOGIN_TIME_OUT_MILLS);
 
         return view;
     }
@@ -80,6 +87,18 @@ public class AccountLoadingFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+        synchronized (Thread.currentThread()) {
+            if (timeCountRun != null) {
+                try {
+                    ThreadHelper.removeOnMainThread(timeCountRun);
+                } catch (Exception e) {
+                    timeCountRun = null;
+                }
+            }
+
+
+        }
+
         int id = view.getId();
         if (mLoadingListener == null) {
 

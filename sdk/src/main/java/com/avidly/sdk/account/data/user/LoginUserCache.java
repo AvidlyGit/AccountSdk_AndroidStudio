@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.avidly.sdk.account.base.Constants;
 import com.avidly.sdk.account.base.utils.SpHelper;
 
 public class LoginUserCache {
@@ -72,7 +73,7 @@ public class LoginUserCache {
 
     private void initSpShare(Context context) {
         if (null == spHelper) {
-            spHelper = new SpHelper(context, "a.ly.loginuser.cache-v1.0");
+                spHelper = new SpHelper(context, Constants.SP_NAME);
         }
     }
 

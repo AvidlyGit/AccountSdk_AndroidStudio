@@ -44,7 +44,6 @@ public class ThreadHelper {
 
     public static void runOnMainThread(Runnable r, long delay) {
         initMainHandler();
-
         mMainHandler.postDelayed(r, delay);
     }
 

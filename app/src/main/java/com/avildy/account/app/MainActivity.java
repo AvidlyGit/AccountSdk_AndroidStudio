@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import com.avidly.sdk.account.AvidlyAccountCallback;
 import com.avidly.sdk.account.AvidlyAccountSdk;
+import com.avidly.sdk.account.base.utils.DeviceInfoHelper;
+import com.avidly.sdk.account.base.utils.LogUtils;
 
 import account.avidly.com.accountsdk.BuildConfig;
 import account.avidly.com.accountsdk.R;
@@ -38,11 +40,15 @@ public class MainActivity extends AppCompatActivity {
         AvidlyAccountSdk.initSdk(BuildConfig.productId, new AvidlyAccountCallback() {
             @Override
             public void onGameGuestIdLoginSuccess(String ggid) {
+
+                String customGaid= DeviceInfoHelper.getGaid(MainActivity.this);
+                LogUtils.i("gaid is "+customGaid);
                 String messge = "MainActivity onLoginSuccess: " + ggid;
                 Toast.makeText(getApplicationContext(), messge, Toast.LENGTH_SHORT).show();
 
                 mLoginButton.setVisibility(View.GONE);
                 mUserCenterButton.setVisibility(View.VISIBLE);
+
 
                 mGgidTextView.setText("当前用户id是：" + (ggid == null ? "空" : ggid));
             }

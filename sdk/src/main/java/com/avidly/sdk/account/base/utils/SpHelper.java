@@ -3,6 +3,8 @@ package com.avidly.sdk.account.base.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.avidly.sdk.account.base.Constants;
+
 /**
  * Created by sam on 2018/11/5.
  */
@@ -34,6 +36,15 @@ public class SpHelper {
 
     public String getString(String key) {
         return mSp.getString(key, null);
+    }
+
+    public static String getString(Context context, String key) {
+        if(context == null) {
+            return "";
+        } else {
+            SharedPreferences var2 = context.getSharedPreferences(Constants.SP_NAME, 0);
+            return var2.getString(key, (String)null);
+        }
     }
 
     public boolean contains(String key) {

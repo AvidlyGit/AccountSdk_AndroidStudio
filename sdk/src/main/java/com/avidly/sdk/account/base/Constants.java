@@ -16,4 +16,6 @@ public class Constants {
     public static int SUB_FRAGMENT_TYPE_LOGIN = 2;
     public static int SUB_FRAGMENT_TYPE_REGIST = 3;
 
+
+    public static String SP_NAME="a.ly.loginuser.cache-v1.0";
 }

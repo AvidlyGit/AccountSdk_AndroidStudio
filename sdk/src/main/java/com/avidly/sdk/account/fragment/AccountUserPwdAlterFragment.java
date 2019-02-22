@@ -254,7 +254,10 @@ public class AccountUserPwdAlterFragment extends Fragment {
         ThreadHelper.runOnMainThread(new Runnable() {
             @Override
             public void run() {
-                getView().findViewById(R.id.avidly_error_layout).setVisibility(View.GONE);
+                if (getView()!=null){
+                    getView().findViewById(R.id.avidly_error_layout).setVisibility(View.GONE);
+                }
+
             }
         });
     }
