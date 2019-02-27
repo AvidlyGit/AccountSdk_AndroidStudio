@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.avidly.sdk.account.AvidlyAccountCallback;
 import com.avidly.sdk.account.AvidlyAccountSdk;
-import com.avidly.sdk.account.base.utils.LogUtils;
 
 import account.avidly.com.accountsdk.BuildConfig;
 import account.avidly.com.accountsdk.R;
@@ -23,6 +22,7 @@ import account.avidly.com.accountsdk.R;
 //import com.avidly.sdk.account.third.ThirdSdkFactory;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "AccountLoginSdk_";
     private View mLoginButton;
     private View mUserCenterButton;
     private TextView mGgidTextView;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             public void onGameGuestIdLoginSuccess(String ggid) {
 
                 String messge = "MainActivity onLoginSuccess: " + ggid;
-                LogUtils.i(messge);
+                Log.i(TAG, "onGameGuestIdLoginSuccess: "+messge);
                 mLoginButton.setVisibility(View.GONE);
                 mUserCenterButton.setVisibility(View.VISIBLE);
                 mGgidTextView.setText("当前用户id是：" + (ggid == null ? "空" : ggid));
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onGameGuestIdLoginFailed(int code, String msg) {
                 String messge = "MainActivity onLoginFail: " + msg;
-                LogUtils.i(messge);
+                Log.i(TAG, "onGameGuestIdLoginFailed: "+messge);
                 mLoginButton.setVisibility(View.VISIBLE);
                 mUserCenterButton.setVisibility(View.GONE);
             }
