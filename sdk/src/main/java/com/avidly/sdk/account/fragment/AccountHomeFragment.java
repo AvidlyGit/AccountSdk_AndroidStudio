@@ -33,7 +33,6 @@ public class AccountHomeFragment extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         int id = view.getId();
         if (mHomeListener == null) {
-
             return;
         }
 

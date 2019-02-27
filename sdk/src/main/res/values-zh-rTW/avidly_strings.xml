@@ -62,6 +62,10 @@
     <string name="avidly_string_user_bind_account_googleplay">Google Play</string>
 
     <string name="avidly_string_user_alter_pwd_disable">需要先綁定Avid.ly賬號後才能修改密碼</string>
+    <!--如果用户使用fb登录，且此fb账号已经在之前绑定过avidly账号-->
+    <string name="avidly_string_user_bind_avidly_disable">您之前已經綁定過avidly賬號</string>
+  <!--fb token 为空的提示-->
+    <string name="avidly_fb_disable">请登錄到已綁定的facebook賬號解綁</string>
     <string name="avidly_string_user_alter_pwd_empty_oldpwd">請輸入原密碼</string>
     <string name="avidly_string_user_alter_pwd_empty_newpwd">請輸入新密碼</string>
     <string name="avidly_string_user_alter_pwd_empty_newpwd2">請再次輸入新密碼</string>

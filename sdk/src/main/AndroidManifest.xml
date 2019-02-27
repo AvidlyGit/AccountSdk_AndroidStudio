@@ -12,7 +12,7 @@
 
         <activity
             android:name="com.avidly.sdk.account.activity.AccountLoginActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation|locale|layoutDirection"
             android:theme="@style/AvidlyTranslucentStyle" />
 
         <activity

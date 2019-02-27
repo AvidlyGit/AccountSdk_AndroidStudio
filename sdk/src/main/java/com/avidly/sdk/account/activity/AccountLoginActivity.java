@@ -2,11 +2,14 @@ package com.avidly.sdk.account.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,12 +48,14 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     private TextView mMessgeText;
     private View mMessgeClose;
     private ThirdLoginSdkDelegate thirdLoginSdkDelegate;
+    private AccountHomeFragment homeFragment;
+    private FragmentTransaction transaction;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avidly_activity_login);
-
+        Log.i("wan", "onCreate has been called: ");
         mPresenter = new LoginPresenterImpl(this);
         mErrorLayout = findViewById(R.id.avidly_error_layout);
         mMessgeText = findViewById(R.id.avidly_error_message);
@@ -62,7 +67,26 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
             }
         });
 
+//        if(savedInstanceState == null)
+//        {
+//            parseIntent();
+//        }
         parseIntent();
+
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        Log.i("wan", "onSaveInstanceState");
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.i("wan", "onRestoreInstanceState");
     }
 
     @Override
@@ -340,9 +364,9 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
     }
 
     private void showAccountHomeFragment() {
-        AccountHomeFragment homeFragment = new AccountHomeFragment();
+        homeFragment = new AccountHomeFragment();
         homeFragment.setHomeListener(this);
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
+        transaction = mFragmentManager.beginTransaction();
         transaction.replace(R.id.avidly_fragment_login, homeFragment);
         transaction.commitAllowingStateLoss();
     }
@@ -413,5 +437,20 @@ public class AccountLoginActivity extends AppCompatActivity implements AccountLo
             return true;//不执行父类点击事件
         }
         return super.onKeyDown(keyCode, event);//继续执行父类其他点击事件
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Log.i("wan", "onConfigurationChanged is " + newConfig.toString());
+         transaction.remove(homeFragment);
+         showAccountHomeFragment();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("wan", "onDestroy");
     }
 }

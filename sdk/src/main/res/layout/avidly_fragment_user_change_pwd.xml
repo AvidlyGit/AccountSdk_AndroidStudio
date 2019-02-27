@@ -38,7 +38,7 @@
             android:paddingRight="@dimen/avidly_user_account_editor_padding_left_or_rigjt"
             android:singleLine="true"
             android:textCursorDrawable="@drawable/avidly_edit_cusor_black"
-            android:textSize="16sp" />
+            android:textSize="13sp" />
 
         <EditText
             android:id="@+id/avidly_editor_chagne_new_pwd"
@@ -58,7 +58,7 @@
             android:paddingRight="@dimen/avidly_user_account_editor_padding_left_or_rigjt"
             android:singleLine="true"
             android:textCursorDrawable="@drawable/avidly_edit_cusor_black"
-            android:textSize="16sp" />
+            android:textSize="13sp" />
 
         <EditText
             android:id="@+id/avidly_editor_chagne_new_pwd2"
@@ -78,7 +78,7 @@
             android:paddingRight="@dimen/avidly_user_account_editor_padding_left_or_rigjt"
             android:singleLine="true"
             android:textCursorDrawable="@drawable/avidly_edit_cusor_black"
-            android:textSize="16sp" />
+            android:textSize="13sp" />
 
 
         <android.support.v7.widget.CardView

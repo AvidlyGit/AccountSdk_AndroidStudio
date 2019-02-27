@@ -2,6 +2,7 @@ package com.avidly.sdk.account.fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,11 +27,18 @@ public class AccountLoadingFragment extends Fragment implements View.OnClickList
     private View mLoginLayout;
     private View mLoadingIcon;
     private View mSwitchUser;
-    Runnable timeCountRun;
+
+    Runnable timeCountRun = new Runnable() {
+        @Override
+        public void run() {
+            startAutoLogin();
+        }
+    };
 
     public void setLoadingListener(AccountLoadingListener listener) {
         mLoadingListener = listener;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,14 +62,6 @@ public class AccountLoadingFragment extends Fragment implements View.OnClickList
                 userNameText.setText(activedUser.findActivedAccount().nickname);
             }
         }
-
-
-        timeCountRun = new Runnable() {
-            @Override
-            public void run() {
-                startAutoLogin();
-            }
-        };
 
         ThreadHelper.runOnMainThread(timeCountRun, Constants.AUTO_LOGIN_TIME_OUT_MILLS);
 

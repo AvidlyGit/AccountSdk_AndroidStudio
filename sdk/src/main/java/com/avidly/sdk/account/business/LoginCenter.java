@@ -18,6 +18,8 @@ import java.lang.ref.WeakReference;
 
 public class LoginCenter {
     private static String productId;
+    //用户的gaid
+    private static String gaid;
 
     private static boolean freshUserManagerUI;
 
@@ -39,6 +41,15 @@ public class LoginCenter {
 
     public static void setProductId(String productId) {
         LoginCenter.productId = productId;
+    }
+
+    public static String getGaid() {
+        return gaid == null ? "" : gaid;
+
+    }
+
+    public static void setGaid(String gaid) {
+        LoginCenter.gaid = gaid;
     }
 
     public static AvidlyAccountCallback getLoginCallback() {

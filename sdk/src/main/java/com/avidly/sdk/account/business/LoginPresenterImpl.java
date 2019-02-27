@@ -3,6 +3,7 @@ package com.avidly.sdk.account.business;
 import android.text.TextUtils;
 
 import com.avidly.sdk.account.activity.AccountLoginInterface;
+import com.avidly.sdk.account.base.utils.DeviceInfoHelper;
 import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.data.user.Account;
 import com.avidly.sdk.account.data.user.LoginUser;
@@ -19,7 +20,7 @@ public class LoginPresenterImpl implements LoginPresenter {
     @Override
     public void guestLogin(final LoginUser user) {
         if (user != null && !TextUtils.isEmpty(user.ggid)) {
-            LoginRequest.guestLogin(user.ggid, new LoginRequestCallback<String>() {
+            LoginRequest.guestLogin(user.ggid,new LoginRequestCallback<String>() {
                 @Override
                 public void onSuccess(String result) {
                     LoginUser loginUser = LoginUserManager.onGuestLoginSuccess(user.ggid);

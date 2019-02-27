@@ -51,7 +51,7 @@ public class LoginRequest {
     }
 
     public static void guestLogin(String gameGuestId, final LoginRequestCallback<String> callback) {
-        String url = URLConstant.getGuestLoginApi(gameGuestId);
+        String url = URLConstant.getGuestLoginApi(gameGuestId,LoginCenter.getGaid());
         LogUtils.i("HttpBusiness guestLogin url is " + url);
         HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
             @Override
@@ -81,7 +81,7 @@ public class LoginRequest {
     }
 
     public static void guestRegist(final LoginRequestCallback<String> callback) {
-        String url = URLConstant.getGuestRegistApi();
+        String url = URLConstant.getGuestRegistApi(LoginCenter.getGaid());
         LogUtils.i("HttpBusiness guestRegist url is " + url);
         HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
             @Override
@@ -111,7 +111,7 @@ public class LoginRequest {
 
     public static void accountLogin(final String userName, final String password,
                                     final LoginRequestCallback<String> callback) {
-        String url = URLConstant.getAccountLoginApi(userName, password);
+        String url = URLConstant.getAccountLoginApi(userName, password,LoginCenter.getGaid());
         LogUtils.i("HttpBusiness accountLogin url is " + url);
         HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
             @Override
@@ -143,7 +143,7 @@ public class LoginRequest {
 
     public static void accountRegistOrBind(final String gameGuestId, final String userName, final String password,
                                            final LoginRequestCallback<String> callback) {
-        String url = URLConstant.getAccountRegistOrBindApi(gameGuestId, userName, password);
+        String url = URLConstant.getAccountRegistOrBindApi(gameGuestId, userName, password,LoginCenter.getGaid());
         LogUtils.i("HttpBusiness accountRegistOrBind url is " + url);
         HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
             @Override
@@ -171,7 +171,7 @@ public class LoginRequest {
     }
 
     public static void facebookSdkLoginOrBind(String ggid, final String accessToken, String appid, final LoginRequestCallback<String> callback) {
-        String url = URLConstant.getFacebookLoginOrBindUrl(ggid, accessToken, appid);
+        String url = URLConstant.getFacebookLoginOrBindUrl(ggid, accessToken, appid,LoginCenter.getGaid());
         LogUtils.i("HttpBusiness facebookSdkLoginOrBind url is " + url);
         HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
             @Override
@@ -211,7 +211,7 @@ public class LoginRequest {
     }
 
     public static void facebookSdkUnBind(String ggid, String accessToken, final LoginRequestCallback<String> callback) {
-        String url = URLConstant.getFacebookUnBindUrl(ggid, accessToken);
+        String url = URLConstant.getFacebookUnBindUrl(ggid, accessToken,LoginCenter.getGaid());
         LogUtils.i("HttpBusiness facebookSdkUnBind url is " + url);
         HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
             @Override
@@ -238,6 +238,10 @@ public class LoginRequest {
                 callback.onFail(e, code);
             }
         });
+    }
+
+    public void getGaid(){
+
     }
 
 }

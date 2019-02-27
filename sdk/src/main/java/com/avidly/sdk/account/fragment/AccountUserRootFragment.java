@@ -216,6 +216,7 @@ public class AccountUserRootFragment extends BaseFragment {
             String token = FacebookLoginSdk.getToken();
             if (TextUtils.isEmpty(token)) {
                 LogUtils.w("this facebook sdk's token is null, need login again.", null);
+                showErrorMessage(getResources().getString(R.string.avidly_fb_disable));
                 return;
             }
 
@@ -308,10 +309,23 @@ public class AccountUserRootFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 绑定avidly账号
+     */
     private void toBindAvidlyAccount() {
-        Intent intent = new Intent(getActivity(), AccountLoginActivity.class);
-        intent.setAction(Constants.INTENT_KEY_ACTION_BIND);
-        getActivity().startActivity(intent);
+        LoginUser user = LoginUserManager.getCurrentActiveLoginUser();
+        if (user!=null){
+            //没有绑定avidly
+            if (user.findAccountByMode(2)==null){
+                //如果之前没有绑定过，需要弹框显示
+                Intent intent = new Intent(getActivity(), AccountLoginActivity.class);
+                intent.setAction(Constants.INTENT_KEY_ACTION_BIND);
+                getActivity().startActivity(intent);
+            }else{
+                //如果fb登录的账号之前有绑定过，就不再弹框
+                showErrorMessage(getResources().getString(R.string.avidly_string_user_bind_avidly_disable));
+            }
+        }
     }
 
     private void toSwithAccount() {

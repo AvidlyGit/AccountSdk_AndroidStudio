@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import com.avidly.sdk.account.base.Constants;
+import com.avidly.sdk.account.business.LoginCenter;
 
 import java.util.Iterator;
 import java.util.List;
@@ -53,6 +54,7 @@ public class DeviceInfoHelper {
 
                             LogUtils.i("got gaid " + DeviceInfoHelper.gaid);
                             spHelper.putString("key_gaid", DeviceInfoHelper.gaid);
+                            LoginCenter.setGaid(DeviceInfoHelper.gaid);
                         } catch (Throwable var4) {
                         }
                     }
@@ -62,16 +64,7 @@ public class DeviceInfoHelper {
 
     }
 
-    public static void setGaid(Context var0, String var1) {
-        SpHelper mSp = new SpHelper(var0,Constants.SP_NAME);
-        if(var0 != null) {
-            String var2 = SpHelper.getString(var0, "key_gaid");
-            if(TextUtils.isEmpty(var2)) {
-                mSp.putString( "key_gaid", var1);
-            }
-        }
 
-    }
 
     public static String getGaid(Context var0) {
         if(var0 != null) {

@@ -1,5 +1,6 @@
 package com.avildy.account.app;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,9 +9,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.avidly.sdk.account.AvidlyAccountCallback;
 import com.avidly.sdk.account.AvidlyAccountSdk;
-import com.avidly.sdk.account.base.utils.DeviceInfoHelper;
 import com.avidly.sdk.account.base.utils.LogUtils;
 
 import account.avidly.com.accountsdk.BuildConfig;
@@ -41,23 +42,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onGameGuestIdLoginSuccess(String ggid) {
 
-                String customGaid= DeviceInfoHelper.getGaid(MainActivity.this);
-                LogUtils.i("gaid is "+customGaid);
                 String messge = "MainActivity onLoginSuccess: " + ggid;
-                Toast.makeText(getApplicationContext(), messge, Toast.LENGTH_SHORT).show();
-
+                LogUtils.i(messge);
                 mLoginButton.setVisibility(View.GONE);
                 mUserCenterButton.setVisibility(View.VISIBLE);
-
-
                 mGgidTextView.setText("当前用户id是：" + (ggid == null ? "空" : ggid));
             }
 
             @Override
             public void onGameGuestIdLoginFailed(int code, String msg) {
                 String messge = "MainActivity onLoginFail: " + msg;
-                Toast.makeText(getApplicationContext(), messge, Toast.LENGTH_SHORT).show();
-
+                LogUtils.i(messge);
                 mLoginButton.setVisibility(View.VISIBLE);
                 mUserCenterButton.setVisibility(View.GONE);
             }
@@ -96,5 +91,10 @@ public class MainActivity extends AppCompatActivity {
 //        }
     }
 
-
+//    @Override
+//    public void onConfigurationChanged(Configuration newConfig) {
+//        super.onConfigurationChanged(newConfig);
+//
+//        Log.i("wan", "onConfigurationChanged: ........................");
+//    }
 }
