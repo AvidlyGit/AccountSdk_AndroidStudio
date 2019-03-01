@@ -16,3 +16,4 @@ gradle.properties
 #release包不提交
 /demo1
 /demo2
+/sdk
