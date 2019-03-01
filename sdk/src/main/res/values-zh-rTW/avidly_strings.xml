@@ -89,7 +89,7 @@
     <string name="avidly_string_user_unbind_disable"> 無法解綁當前登錄賬號</string>
     <string name="avidly_string_user_not_bind_any_third_sdk">解綁失敗，當前帳號尚未綁定到%1$s</string>
 
-    <string name="avidly_string_user_third_sdk_repeated_bound_fail">當前%1$s帳號已被其它帳號綁定</string>
+    <string name="avidly_string_user_third_sdk_repeated_bound_fail">該FB賬號已存在，請綁定其他FB賬號。</string>
     <string name="avidly_string_user_login_send_fail">登錄失敗，請稍後重試</string>
     <string name="avidly_string_user_login_user_not_exist">用戶名不存在</string>
     <string name="avidly_string_user_login_user_password_wrong">登錄失敗，密碼不對</string>

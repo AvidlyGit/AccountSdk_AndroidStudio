@@ -37,4 +37,5 @@ dependencies {
 
     provided files('libs/play-services-basement-11.0.4.jar')
     provided(name: 'play-services-base-11.0.4', ext: 'aar')
+
 }

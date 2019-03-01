@@ -87,7 +87,7 @@
     <string name="avidly_string_user_unbind_disable">You cannt unbind the current login account</string>
     <string name="avidly_string_user_not_bind_any_third_sdk">Account unbound failed, your current account has not bound to %1$s</string>
 
-    <string name="avidly_string_user_third_sdk_repeated_bound_fail">%1$s has been bound to another account</string>
+    <string name="avidly_string_user_third_sdk_repeated_bound_fail">This FB account already exists, please bind another FB account.</string>
     <string name="avidly_string_user_login_send_fail">Login failed, please try again later</string>
     <string name="avidly_string_user_login_user_not_exist">User name not exist</string>
     <string name="avidly_string_user_login_user_password_wrong">Login failed, wrong password</string>

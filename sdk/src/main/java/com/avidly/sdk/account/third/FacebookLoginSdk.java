@@ -89,6 +89,7 @@ public class FacebookLoginSdk implements ThirdLoginSdkDelegate {
             return;
         }
         callbackManager = CallbackManager.Factory.create();
+
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override

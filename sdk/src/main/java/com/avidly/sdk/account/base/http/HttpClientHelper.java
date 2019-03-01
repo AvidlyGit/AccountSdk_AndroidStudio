@@ -1,7 +1,10 @@
 package com.avidly.sdk.account.base.http;
 
 import android.text.TextUtils;
+import android.util.Log;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
@@ -50,23 +53,112 @@ public class HttpClientHelper {
         return httpSend("post", url, requestBody, userAgent, enctyType);
     }
 
+    public static HttpResponse httpPost(final String url, final String requestBody, final Map<String, String> heardMap,final String userAgent, final String enctyType) throws Exception {
+        return httpSend("post", url, requestBody,heardMap, userAgent, enctyType);
+    }
+
+
     private static HttpResponse httpSend(String type, final String url, final String requestBody, final String userAgent, final String enctyType) throws Exception {
         HttpResponse body = null;
 //        try {
-            HttpClient client = HttpClient.builder().setUrl(url);
-            if (type.equals("post")) {
-                client.setRequestMethod(HttpClient.METHOD_POST);
+        HttpClient client = HttpClient.builder().setUrl(url);
+        if (type.equals("post")) {
+            client.setRequestMethod(HttpClient.METHOD_POST);
+        }
+        if (!TextUtils.isEmpty(requestBody)) {
+            client.setRequestBody(requestBody);
+        }
+        if (!TextUtils.isEmpty(userAgent)) {
+            client.setUserAgent(userAgent);
+        }
+        if (!TextUtils.isEmpty(enctyType)) {
+            client.setEnctyType(enctyType);
+        }
+        body = client.request();
+//        } catch (UnknownHostException e) {
+//            String domain = getDnsDomain(url);
+//            boolean log = System.currentTimeMillis() - SpHelper.getLong(UpBaseSdk.getContext(), KEY_UNKOWNHOST + domain) > DateUtils.DAY_IN_MILLIS;
+//            if (log) {
+//                SpHelper.putLong(UpBaseSdk.getContext(), KEY_UNKOWNHOST + domain, System.currentTimeMillis());
+//                TrackingHelper.build().error("HttpClientHelper httpSend log1: " + url + " " + e.getMessage());
+//
+//                HashMap<String, String> map = new HashMap<>();
+//                map.put("__hostname", domain);
+//                TrackingHelper.build().setKey("_NEW_HOST_NO_OK").addParams(map).log();
+//            }
+//
+//            String newUrl = getIpUrl(url);
+//
+//            if (!TextUtils.isEmpty(newUrl)) {
+//                try {
+//                    newUrl = newUrl.replace("https", "http");
+//                    HttpClient client = HttpClient.builder().setUrl(newUrl);
+//                    if (type.equals("post")) {
+//                        client.setRequestMethod(HttpClient.METHOD_POST);
+//                    }
+//                    if (!TextUtils.isEmpty(requestBody)) {
+//                        client.setRequestBody(requestBody);
+//                    }
+//                    if (!TextUtils.isEmpty(userAgent)) {
+//                        client.setUserAgent(userAgent);
+//                    }
+//                    client.setRequestHeader("Host", domain);
+//                    body = client.request().getBody();
+//                } catch (Throwable ex) {
+//                    log = System.currentTimeMillis() - SpHelper.getLong(UpBaseSdk.getContext(), KEY_EXCEPTION_LOG2) > DateUtils.DAY_IN_MILLIS;
+//                    if (log) {
+//                        SpHelper.putLong(UpBaseSdk.getContext(), KEY_EXCEPTION_LOG2, System.currentTimeMillis());
+//                        TrackingHelper.build().error("HttpClientHelper httpSend log2: " + newUrl + " " + ex.getMessage());
+//                    }
+//                }
+//            }
+//        } catch (Throwable e) {
+//
+//        }
+        return body;
+    }
+
+    /**
+     * 使用带有header的http请求
+     * @param type
+     * @param url
+     * @param requestBody
+     * @param headerMap
+     * @param userAgent
+     * @param enctyType
+     * @return
+     * @throws Exception
+     */
+    private static HttpResponse httpSend(String type, final String url, final String requestBody, final Map<String, String> headerMap, final String userAgent, final String enctyType) throws Exception {
+        HttpResponse body = null;
+//        try {
+        HttpClient client = HttpClient.builder().setUrl(url);
+        if (type.equals("post")) {
+            client.setRequestMethod(HttpClient.METHOD_POST);
+        }
+        if (!TextUtils.isEmpty(requestBody)) {
+            client.setRequestBody(requestBody);
+        }
+        if (!TextUtils.isEmpty(userAgent)) {
+            client.setUserAgent(userAgent);
+        }
+        if (!TextUtils.isEmpty(enctyType)) {
+            client.setEnctyType(enctyType);
+        }
+        if (!TextUtils.isEmpty(enctyType)) {
+            client.setEnctyType(enctyType);
+        }
+        if (headerMap!=null&&headerMap.size()!=0){
+            Iterator<Map.Entry<String, String>> iterator = headerMap.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, String> entry = iterator.next();
+                String key = entry.getKey();
+                String value = entry.getValue();
+                client.setRequestHeader(key,value);
+                Log.i("wan", "httpSend: key is "+key+" --value---"+value);
             }
-            if (!TextUtils.isEmpty(requestBody)) {
-                client.setRequestBody(requestBody);
-            }
-            if (!TextUtils.isEmpty(userAgent)) {
-                client.setUserAgent(userAgent);
-            }
-            if (!TextUtils.isEmpty(enctyType)) {
-                client.setEnctyType(enctyType);
-            }
-            body = client.request();
+        }
+        body = client.request();
 //        } catch (UnknownHostException e) {
 //            String domain = getDnsDomain(url);
 //            boolean log = System.currentTimeMillis() - SpHelper.getLong(UpBaseSdk.getContext(), KEY_UNKOWNHOST + domain) > DateUtils.DAY_IN_MILLIS;

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -317,13 +319,23 @@ public class AccountUserRootFragment extends BaseFragment {
         if (user!=null){
             //没有绑定avidly
             if (user.findAccountByMode(2)==null){
+                Log.i("wan", "user.findAccountByMode(2): is null ");
                 //如果之前没有绑定过，需要弹框显示
                 Intent intent = new Intent(getActivity(), AccountLoginActivity.class);
                 intent.setAction(Constants.INTENT_KEY_ACTION_BIND);
                 getActivity().startActivity(intent);
             }else{
-                //如果fb登录的账号之前有绑定过，就不再弹框
-                showErrorMessage(getResources().getString(R.string.avidly_string_user_bind_avidly_disable));
+                if (user.findAccountByMode(2).accountName.equals("")){
+                    Log.i("wan", "user.findAccountByMode(2): is null ");
+                    //如果之前没有绑定过，需要弹框显示
+                    Intent intent = new Intent(getActivity(), AccountLoginActivity.class);
+                    intent.setAction(Constants.INTENT_KEY_ACTION_BIND);
+                    getActivity().startActivity(intent);
+                }else{
+                    Log.i("wan", "user.findAccountByMode(2): is  "+user.findAccountByMode(2).toString());
+                    //如果fb登录的账号之前有绑定过，就不再弹框
+                    showErrorMessage(getResources().getString(R.string.avidly_string_user_bind_avidly_disable));
+                }
             }
         }
     }
@@ -356,6 +368,9 @@ public class AccountUserRootFragment extends BaseFragment {
         textView.setText(R.string.avidly_string_usermanger_title);
     }
 
+    /**
+     * 修改头部标题为 绑定第三方账户
+     */
     private void showBindOtherAccountUI() {
         getView().findViewById(R.id.avidly_fragment_user_account_bind_root).setVisibility(View.VISIBLE);
         isShowBindAccountUI = true;
@@ -364,13 +379,14 @@ public class AccountUserRootFragment extends BaseFragment {
         AccountUserBindFragment bindFragment = (AccountUserBindFragment) getChildFragmentManager().findFragmentById(R.id.avidly_fragment_user_account_bind_fragment);
         bindFragment.freshAdapter();
     }
-
+    /**
+     * 修改头部标题为 用户中心
+     */
     private void hideBindOtherAccountUI() {
         getView().findViewById(R.id.avidly_fragment_user_account_bind_root).setVisibility(View.GONE);
         isShowBindAccountUI = false;
         TextView textView = getView().findViewById(R.id.avidly_user_common_title_textview);
         textView.setText(R.string.avidly_string_usermanger_title);
-
         AccountUserManagerFragment userManagerFragment = (AccountUserManagerFragment) getChildFragmentManager().findFragmentById(R.id.avidly_fragment_user_manager);
         userManagerFragment.refreshNickName();
     }

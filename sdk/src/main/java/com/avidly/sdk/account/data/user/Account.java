@@ -12,7 +12,7 @@ public class Account extends JsonData {
 
     public int mode;
 
-    public String accountName; // 帐号
+    public String accountName=""; // 帐号
 
     public String accountPwd; // 密码
 
@@ -47,5 +47,16 @@ public class Account extends JsonData {
             e.printStackTrace();
         }
         return object;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "mode=" + mode +
+                ", accountName='" + accountName + '\'' +
+                ", accountPwd='" + accountPwd + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", isBinded=" + isBinded +
+                '}';
     }
 }

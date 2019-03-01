@@ -1,5 +1,6 @@
 package com.avidly.sdk.account.business;
 
+import com.avidly.sdk.account.base.auth.RandomString;
 import com.avidly.sdk.account.base.utils.LogUtils;
 import com.avidly.sdk.account.data.user.Account;
 import com.avidly.sdk.account.data.user.LoginUser;
@@ -7,8 +8,13 @@ import com.avidly.sdk.account.data.user.LoginUserManager;
 import com.avidly.sdk.account.request.HttpCallback;
 import com.avidly.sdk.account.request.HttpRequest;
 import com.avidly.sdk.account.request.URLConstant;
+import com.facebook.login.LoginManager;
 
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import static com.avidly.sdk.account.base.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_RESPONSE_JSON_EXCEPTION;
 import static com.avidly.sdk.account.base.AvidlyAccountSdkErrors.AVIDLY_LOGIN_ERROR_RESPONSE_MISMATCH_PRODUCT_ID;
@@ -83,7 +89,19 @@ public class LoginRequest {
     public static void guestRegist(final LoginRequestCallback<String> callback) {
         String url = URLConstant.getGuestRegistApi(LoginCenter.getGaid());
         LogUtils.i("HttpBusiness guestRegist url is " + url);
-        HttpRequest.requestHttpByPost(url, null, new HttpCallback<String>() {
+        RandomString randomString=new RandomString();
+        //产生一个随机字符串 此处使用uuid ,客户端可使用其他方式
+        String aValue = UUID.randomUUID().toString();
+        RandomString.Validate validates = randomString.getValidates(aValue);
+        String key = validates.getbValue().toString();
+        String code = validates.getcValue();
+        System.out.println("aValue=" + aValue + "," + "key=" + key + ",code=" + code);
+
+        Map<String,String> heardMap=new HashMap<>();
+        heardMap.put("Avidly-validate-chars",aValue);
+        heardMap.put("Avidly-validate-key",key);
+        heardMap.put("Avidly-validate-code",code);
+        HttpRequest.requestHttpByPost(url, null, heardMap,new HttpCallback<String>() {
             @Override
             public void onResponseSuccess(String result) {
                 LogUtils.i("HttpBusiness guestRegist result is " + result);
@@ -225,6 +243,8 @@ public class LoginRequest {
                         //bindOther(guest, LoginUserManager.getAccountLoginUser());
                         LoginUserManager.saveAccountUsers();
                         LoginCenter.setFreshUserManagerUI(true);
+                        //fb的登出操作
+                        LoginManager.getInstance().logOut();
                     } else {
                         callback.onFail(null, guest.optInt("code"));
                     }

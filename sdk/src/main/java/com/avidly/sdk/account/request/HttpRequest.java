@@ -48,6 +48,44 @@ public class HttpRequest {
         }));
     }
 
+
+    public static void requestHttpByPost(final String url, final Map<String, String> requestParams,final Map<String,String> heardMap,  final HttpCallback<String> callback) {
+        mSingleThreadPool.execute(new RunWrapper(new Runnable() {
+            @Override
+            public void run() {
+                int code = 0;
+                String result = null;
+                String request = null;
+                if (requestParams != null && requestParams.size() > 0) {
+                    request = new UrlQuery().addParams(requestParams).toString();
+                }
+                try {
+                    HttpResponse response = HttpClientHelper.httpPost(url, request, heardMap,null,"UPF-8");
+                    code = response.getResponseCode();
+                    if (code == 200) {
+                        result = response.getBody();
+                    }
+                } catch (Throwable e) {
+                    if (null != callback) {
+                        callback.onResponedFail(e, AVIDLY_LOGIN_ERROR_RESPONSE_HTTP_EXCEPTION);
+                    }
+                    return;
+                }
+
+                if (null != callback) {
+                    if (200 == code) {
+                        callback.onResponseSuccess(result);
+                    } else {
+                        callback.onResponedFail(null, code);
+                    }
+                }
+            }
+        }));
+    }
+
+
+
+
     private static class RunWrapper implements Runnable {
         Runnable runnable;
 

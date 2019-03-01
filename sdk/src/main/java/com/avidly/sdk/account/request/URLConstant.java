@@ -93,7 +93,6 @@ public class URLConstant {
                     + "&pdtid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;
             return ACCOUNT_API + "/third/fblogin?" + path;
         } else {
-
             //fb绑定
             String path = "gameGuestId=" + ggid + "&access_token=" + accessToken +"&gaid=" + gaid+ "&appId=" + appId
                     + "&pdtid=" + LoginCenter.getProductId() + "&platform=" + Constants.PLATFORM_ANDROID;

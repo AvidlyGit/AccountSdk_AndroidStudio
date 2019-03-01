@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +23,16 @@ import com.sdk.avidly.account.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/***
+ * 用于用户绑定操作
+ */
 public class AccountUserBindFragment extends Fragment {
 
     private BaseAdapter.onRecyclerViewItemClickListener itemClickListener;
 
     private UserAccountBindAdatper adatper;
 
-
+  private  RecyclerView recyclerView;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,6 +43,7 @@ public class AccountUserBindFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //如果用户是绑定过fb或者使用fb登录的话，ui隐藏
         initView(view);
     }
 
@@ -58,14 +63,12 @@ public class AccountUserBindFragment extends Fragment {
     }
 
     private void initView(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.avidly_useraccount_bind_listview);
+         recyclerView = view.findViewById(R.id.avidly_useraccount_bind_listview);
         adatper = new UserAccountBindAdatper(getContext());
         recyclerView.setAdapter(adatper);
         if (!LoginCenter.isScreenLandscape() && !LoginCenter.isScreenPortrait()) {
             LoginCenter.checkScreenOrietation(getActivity());
         }
-
-        freshAdapter();
 
         adatper.setOnRecyclerViewItemClickListener(new BaseAdapter.onRecyclerViewItemClickListener() {
             @Override
@@ -77,6 +80,35 @@ public class AccountUserBindFragment extends Fragment {
                 }
             }
         });
+
+        freshAdapter();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //如果 用户是绑定过fb的  或者使用fb登录的话，ui隐藏  2019-2-28
+        LoginUser activedUser = LoginUserManager.getCurrentActiveLoginUser();
+        Log.i("wan", "登录用户: "+activedUser.toString());
+        switch (activedUser.getLoginedMode()) {
+            case Account.ACCOUNT_MODE_AVIDLY:
+                // 现存账号是avidly
+                Account avidlyAccount = activedUser.findAccountByMode(Account.ACCOUNT_MODE_AVIDLY);
+                if (avidlyAccount!=null){
+                    Account fbAccount=activedUser.findAccountByMode(Account.ACCOUNT_MODE_FACEBOOK);
+                    if (fbAccount!=null){
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
+                }
+                break;
+            case Account.ACCOUNT_MODE_FACEBOOK:
+                recyclerView.setVisibility(View.GONE);
+                break;
+            default:
+                recyclerView.setVisibility(View.VISIBLE);
+        }
+        freshAdapter();
     }
 
     public void freshAdapter() {

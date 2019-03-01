@@ -112,4 +112,15 @@ public class LoginUser extends JsonData implements Serializable {
 
         return o;
     }
+
+    @Override
+    public String toString() {
+        return "LoginUser{" +
+                "accounts=" + accounts +
+                ", loginedMode=" + loginedMode +
+                ", isActived=" + isActived +
+                ", isNowLogined=" + isNowLogined +
+                ", ggid='" + ggid + '\'' +
+                '}';
+    }
 }
