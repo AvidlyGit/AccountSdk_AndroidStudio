@@ -2,6 +2,7 @@ package com.avidly.sdk.account;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.avidly.sdk.account.activity.UserManagerActivity;
 import com.avidly.sdk.account.base.utils.DeviceInfoHelper;
@@ -27,6 +28,7 @@ public class AvidlyAccountSdk {
     public static void accountLogin(Context context) {
         LoginCenter.loginNow(context);
         DeviceInfoHelper.init(context);
+        Log.d("wan", "accountLogin: ");
     }
 
     /**
