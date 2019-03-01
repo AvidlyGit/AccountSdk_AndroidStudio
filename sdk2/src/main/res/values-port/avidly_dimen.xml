@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="avidly_user_manager_pwd_margintop">35dp</dimen>
-    <dimen name="avidly_user_manager_pwd_marginbottom">45dp</dimen>
-
-    <dimen name="avidly_user_account_editor_between_distance">12dp</dimen>
-</resources>
