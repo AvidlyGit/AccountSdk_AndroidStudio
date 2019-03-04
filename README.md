@@ -58,6 +58,33 @@ AccountSdk本地文件中，提供了aar形式的依赖库，以备在网络不�
 > 如果你只想通过本地添加Facebook login所依赖的aar文件，也可以在gradle文件中忽略此配置。
 
 
+
+##### 2. 在manifest中添加facebook的登录参数
+
+下面实例中'facebook_app_id' 和 'fb_login_protocol_scheme'是您在facebook登录授权中需要使用到的参数。详细信息您可以[参考](https://developers.facebook.com/docs/facebook-login/android/ "facebook docs")。
+
+      <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+
 ####  2. 添加其它外部依赖
 
 由于一些社交平台运行时，需要其它额外的Android Api支持，因此还必须添加如下外部依赖库。
@@ -131,6 +158,7 @@ dependencies {
     compile(name: 'recyclerview-v7-26.1.0', ext: 'aar')
 }
 ```
+
 
 ### 四、Demo工程
 为帮助您更好的了解广告SDK的接入以及使用，我们在这里提供了一个简单的[Demo工程](https://github.com/AvidlyGit/AvidlyAccountSdk_AndroidStudio/tree/nosdk "Demo工程")。
