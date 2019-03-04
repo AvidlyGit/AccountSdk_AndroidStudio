@@ -1,2 +1,2 @@
-# AvidlyAccountSdkDemo_AndroidStudio
+# AvidlyAccountSdk_AndroidStudio
 用户登录的demo
