@@ -39,7 +39,6 @@ android {
     productFlavors {
         demo1 {
             applicationId "account.avidly.sdk.demo1"
-
             resValue "string", "app_name", "account1"
             resValue "string", "facebook_app_id", "2079037042150041"
             resValue "string", "fb_login_protocol_scheme", "fb2079037042150041"
