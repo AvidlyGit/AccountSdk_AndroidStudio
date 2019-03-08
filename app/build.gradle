@@ -1,0 +1,86 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        multiDexEnabled true
+        flavorDimensions "default"
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('accountsdk_sign_debug.jks')
+            keyAlias 'debug_accountsdk'
+            keyPassword '123456'
+            storePassword '123456'
+        }
+
+        debug {
+            storeFile file('accountsdk_sign_debug.jks')
+            keyAlias 'debug_accountsdk'
+            keyPassword '123456'
+            storePassword '123456'
+        }
+    }
+
+    productFlavors {
+        demo1 {
+            applicationId "account.avidly.sdk.demo1"
+            resValue "string", "app_name", "account1"
+            resValue "string", "facebook_app_id", "2079037042150041"
+            resValue "string", "fb_login_protocol_scheme", "fb2079037042150041"
+
+            buildConfigField "String", "productId", '"800001"'
+        }
+
+        demo2 {
+            applicationId "account.avidly.sdk.demo2"
+
+            resValue "string", "app_name", "account2"
+            resValue "string", "facebook_app_id", "2079037042150041"
+            resValue "string", "fb_login_protocol_scheme", "fb2079037042150041"
+
+            buildConfigField "String", "productId", '"800002"'
+        }
+
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    // CP工程中需要引入下列依赖
+    implementation (name:'AvidlyAccountSDK_1.0.01', ext:'aar')
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:customtabs:28.0.0'
+    implementation('com.facebook.android:facebook-login:[4,5)') {
+        // values.xml中增加facebook_app_id，fb_login_protocol_scheme
+        exclude group: 'com.android.support'//排除组织依赖
+        exclude module: 'appcompat-v7'//排除模块依赖
+    }
+    implementation 'com.android.support:multidex:1.0.1'
+}
+
