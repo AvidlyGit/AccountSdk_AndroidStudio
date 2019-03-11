@@ -108,4 +108,11 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         Log.i("xxxxx", "onResume orientation: " + getResources().getConfiguration().orientation);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        //模拟退出游戏
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
 }
