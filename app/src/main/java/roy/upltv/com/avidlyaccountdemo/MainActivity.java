@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
 //      setAvidlyAccountGgidCallback();
 
         setAvidlyAccountTokenCallback();
-
         AvidlyAccountSdk.accountLogin(this);
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
