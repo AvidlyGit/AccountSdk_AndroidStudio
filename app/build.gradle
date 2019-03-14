@@ -46,7 +46,7 @@ android {
             resValue "string", "facebook_app_id", "2079037042150041"
             resValue "string", "fb_login_protocol_scheme", "fb2079037042150041"
 
-            buildConfigField "String", "productId", '"800001"'
+            buildConfigField "String", "productId", '"10001"'
         }
 
         demo2 {
@@ -56,7 +56,7 @@ android {
             resValue "string", "facebook_app_id", "2079037042150041"
             resValue "string", "fb_login_protocol_scheme", "fb2079037042150041"
 
-            buildConfigField "String", "productId", '"800002"'
+            buildConfigField "String", "productId", '"10002"'
         }
 
     }
