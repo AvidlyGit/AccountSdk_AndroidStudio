@@ -47,6 +47,14 @@
             android:gravity="center_horizontal"
             android:text="tvmode"
             android:textSize="18dp" />
+        <TextView
+            android:id="@+id/tv_fb_token"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="440dp"
+            android:gravity="center_horizontal"
+            android:text="fbtoken"
+            android:textSize="12dp" />
 
         <Button
             android:id="@+id/login_id"
@@ -66,6 +74,17 @@
             android:layout_marginTop="32dp"
             android:text="用户中心"
             android:visibility="gone" />
+
+
+        <Button
+            android:id="@+id/btn_fb_token"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="16dp"
+            android:text="fb token"
+            android:visibility="visible" />
 
     </RelativeLayout>
 
