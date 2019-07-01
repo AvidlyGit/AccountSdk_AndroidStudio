@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="roy.upltv.com.avidlyaccountdemo">
+    package="roy.upltv.com.demo">
 
     <application
         android:name="android.support.multidex.MultiDexApplication"
@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
+            android:name="roy.upltv.com.accountdemo.MainActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation|locale|layoutDirection">
 
             <intent-filter>

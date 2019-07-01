@@ -1,4 +1,4 @@
-package roy.upltv.com.avidlyaccountdemo;
+package roy.upltv.com.accountdemo;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +11,10 @@ import com.aas.sdk.account.AASGgidCallback;
 import com.aas.sdk.account.AASTokenCallback;
 import com.aas.sdk.account.AASdk;
 import com.aly.sdk.ALYAnalysis;
+
+import roy.upltv.com.demo.BuildConfig;
+import roy.upltv.com.demo.R;
+
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "AccountLoginSdk_";
@@ -37,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         AASdk.initSdk(this, BuildConfig.productId);
 
-        setAvidlyAccountTokenCallback();
+        setAccountTokenCallback();
 
         AASdk.accountLogin(this);
         AASdk.getFacebookLoginedToken();
@@ -73,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 用于获得ggid的回调
      */
-    public void setAvidlyAccountGgidCallback() {
+    public void setAccountGgidCallback() {
         AASdk.setAAUGgidCallback(new AASGgidCallback() {
             @Override
             public void onGameGuestIdLoginSuccess(String ggid, int mode) {
@@ -98,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 用于获得登录token的回调
      */
-    public void setAvidlyAccountTokenCallback() {
+    public void setAccountTokenCallback() {
         AASdk.setAAUTokenCallback(new AASTokenCallback() {
             @Override
             public void onUserTokenLoginSuccess(String token, int mode) {
