@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             public void onUserTokenLoginSuccess(String token, int mode) {
                 String messge = "MainActivity onLoginSuccess: " + token;
                 Log.i(TAG, "onUserTokenLoginSuccess: " + messge);
-//                mLoginButton.setVisibility(View.GONE);
+                
                 mUserCenterButton.setVisibility(View.VISIBLE);
                 mGgidTextView.setText("当前用户token是：" + (token == null ? "空" : token));
                 mModeTextView.setText("当前登录类型是：" + mode);
@@ -128,32 +128,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i("xxxxx", "onResume orientation: " + getResources().getConfiguration().orientation);
-
-//        String ggid = LoginUserManager.getCurrentGGID();
-//        mGgidTextView.setText("当前用户id是：" + (ggid == null ? "空" : ggid));
-//
-//        if (ggid != null) {
-//            LoginUser activedUser = LoginUserManager.getCurrentActiveLoginUser();
-//            if (activedUser.isNowLogined) {
-//                String mode = ThirdSdkFactory.nameOfAccountMode(activedUser.getLoginedMode());
-//                mModeTextView.setText("当前账户类型是：" + mode);
-//            }
-//        }
-    }
-
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//
-//        Log.i("wan", "onConfigurationChanged: ........................");
-//    }
-
 
     @Override
     public void onBackPressed() {
