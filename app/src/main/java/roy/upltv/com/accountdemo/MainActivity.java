@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             public void onUserTokenLoginSuccess(String token, int mode) {
                 String messge = "MainActivity onLoginSuccess: " + token;
                 Log.i(TAG, "onUserTokenLoginSuccess: " + messge);
-                
+
                 mUserCenterButton.setVisibility(View.VISIBLE);
                 mGgidTextView.setText("当前用户token是：" + (token == null ? "空" : token));
                 mModeTextView.setText("当前登录类型是：" + mode);
