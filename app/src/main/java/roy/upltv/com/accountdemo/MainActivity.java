@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.aas.sdk.account.AASCloseUserCenterCallBack;
 import com.aas.sdk.account.AASGgidCallback;
 import com.aas.sdk.account.AASTokenCallback;
 import com.aas.sdk.account.AASdk;
@@ -37,12 +39,17 @@ public class MainActivity extends AppCompatActivity {
         mModeTextView = findViewById(R.id.tvMode);
         mFbTokenTextView=findViewById(R.id.tv_fb_token);
 
-        ALYAnalysis.init(this,"888888","32401");
+        ALYAnalysis.init(this,"600180","32401");
 
         AASdk.initSdk(this, BuildConfig.productId);
-
+        AASdk.setAASCloseUserCenterCallBack(new AASCloseUserCenterCallBack() {
+            @Override
+            public void onClosed() {
+                Toast.makeText(MainActivity.this, "关闭了", Toast.LENGTH_SHORT).show();
+            }
+        });
         setAccountTokenCallback();
-
+        setAccountGgidCallback();
         AASdk.accountLogin(this);
         AASdk.getFacebookLoginedToken();
         mLoginButton.setOnClickListener(new View.OnClickListener() {
